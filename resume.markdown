@@ -1,109 +1,51 @@
-Stephen Tudor
+Tiny Wu
 =============
 
-Front-end Web Developer
+Graphics Developer
 -----------------------
 
-- Phone: [610-590-4484](tel://610-590-4484)
+- Phone: [86-15861657693](tel://86-15861657693)
 - Email: <tinysilk@hotmail.com>
-- Blog: [stephentudor.com](http://stephentudor.com)
-- Github: [smt](http://github.com/smt)
-- Twitter: [\@tagsoup](http://twitter.com/tagsoup)
+- Blog out of China: [tinyslik.github.io](http://tinyslik.github.io)
+- Blog in China: [tinyslik.coding.me](http://tinyslik.coding.me)
+- Github: [TinySlik](http://github.com/TinySlik)
 
 
 Summary
 -------
 
-I am an experienced front-end developer who has led development for multiple
-successful $1MM+ projects. I am passionate about building high quality apps and
-user interfaces with modern web technologies. Through being conversant in
-server-side engineering, visual/UX design, and project management practices,
+I am an young graphics developer who has 4 years program experience.
+successful $1MM+ projects. I am passionate about building high quality apps 
 I am able to execute end-to-end on a product or project.
 
 
 Specialties
 -----------
 
-Authoring great user experiences with JavaScript, HTML, and CSS. Advocating for
-the open web. Managing and mentoring dev teams. Performing code reviews.
-Writing white papers and API documentation. Particating in the black art of
-software estimation. Drawing from a strong background in many diverse web
-technologies and frameworks.
-
+Authoring great user experiences with openGL(include ES and web), HTML5+CSS, C/C++ ,Lua;
+use cocos2d-x,uinity3d for a lone time .
 
 Experience
 ----------
 
-### **UX Developer** at [eBay Enterprise](http://ebayenterprise.com)
+### **C/C++ Developer** at [MoChang inc](https://www.mochang.net/)
 
-*November 2013 - Present*
+*November 2014 - Present*
 
-As a member of the Solution Innovations team, I am creating a RWD pattern
-library as the system of record and living style guide for the next version of
-the Magento reference store. I also support sales activities by building and
-deploying various tools and services, such as a third-party JavaScript app that
-enables users to annotate any website with content authored in a WordPress
-blog.
+not good at English.
 
-### **Senior Software Engineer** at [EPAM Empathy Lab](http://epam.com/empathylab)
-
-*December 2012 - November 2013* (1 year)
-
-Championed a more collaborative process for responsive web design between the
-UX and development disciplines. Curated an internal static web framework and
-responsive pattern library to be used on multiple projects. Lead development
-on responsive prototypes for NBC Universal, DIRECTV, AIG, Lionsgate, and the
-USA Network.
-
-### **Senior Web Developer** at [Empathy Lab](http://empathylab.com)
-
-*April 2010 - December 2012* (2 years 9 months)
-
-Created front-end web applications on tight deadlines for marquee clientele.
-Responsible for estimating work, vetting UX designs prior to development,
-developing key features, assisting team members on challenging sections of
-code, performing code reviews, and coordinating releases.
-
-### **Web Developer** at [Empathy Lab](http://empathylab.com)
-
-*April 2009 - April 2010* (1 year 1 month)
-
-Authored standards-based HTML, CSS, and JavaScript for websites representing
-a broad range of internationally recognized brands: Sesame Street, Sprout,
-Lexmark, StrideRite, Walgreens, Verizon, Comcast, 21st Century Insurance,
-Liberty Global, American Red Cross.
-
-### **IT Director** at [Artisan Custom Doorworks](http://artisandoorworks.com)
-
-*December 2005 - April 2009* (3 years 5 months)
-
-Designed the corporate website with a library of over 8,000 searchable PDF
-docemunts. Developed in-house sales and management application in Rails, while
-supporting and customizing business systems and applications.
-
-### **President** at [Tudor Studio](http://tudorstudio.com)
-
-*January 2002 - Present*
-
-Providing professional web consulting and development services, from
-individuals and small businesses to Fortune 500 companies. Designing and
-developing hosted web applications with open source frameworks like Ruby on
-Rails. Integrating CMS and eCommerce applications.
-
-
-Skills & Expertise
-------------------
 
 These are languages, tools, and practices to which I have had exposure over the
-past 6 years or so. Those things which enjoy routine usage in my daily work are
+past 4 years or so. Those things which enjoy routine usage in my daily work are
 denoted with a ^†^ symbol.
 
 ### Programming Languages
 
-- [JavaScript](http://developer.mozilla.org/en/JavaScript)^†^
-- [PHP](http://php.net)
-- [Ruby](http://ruby-lang.org)^†^
-
+- [C/C++](http://developer.mozilla.org/en/JavaScript)^†^
+- [Lua](http://php.net)
+- [javaScript](http://ruby-lang.org)^†^
+- [java](http://ruby-lang.org)
+- [object-C](http://developer.mozilla.org/en/JavaScript)^†^
 ### Markup/Templating Languages & Preprocessors
 
 - [CoffeeScript](http://coffeescript.org)
