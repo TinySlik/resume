@@ -161,5 +161,5 @@ Interests
 * Making and listening to http://www.rdio.com/people/smtudor[music]
 * Watching and contributing to Open Source Software
 
-©2014 http://s17r.com/resume[Stephen Tudor]. All rights reserved. Direct
-contact only desired (no recruiters please).
+©2016 http://tinyslik.github.io/resume[Tiny Wu]. All rights reserved.
+Direct contact only desired (no recruiters please).
