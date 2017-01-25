@@ -5,7 +5,7 @@ Front-end Web Developer
 -----------------------
 
 -  Phone: `610-590-4484 <tel://610-590-4484>`__
--  Email: smt@stephentudor.com
+-  Email: tinysilk@hotmail.com
 -  Blog: `stephentudor.com <http://stephentudor.com>`__
 -  Github: `smt <http://github.com/smt>`__
 -  Twitter: `@tagsoup <http://twitter.com/tagsoup>`__
@@ -198,7 +198,7 @@ Education
 ---------
 
 | `Saint Joseph's University <http://sju.edu>`__, Erivan K. Haub School
-of Business
+  of Business
 | BS, Information Systems, 1996 - 2000
 
 Honors and Awards

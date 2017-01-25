@@ -9,7 +9,7 @@
   <title>Stephen Tudor</title>
   <sect2 id="front-end-web-developer">
     <title>Front-end Web Developer</title>
-    <itemizedlist>
+    <itemizedlist spacing="compact">
       <listitem>
         <para>
           Phone: <ulink url="tel://610-590-4484">610-590-4484</ulink>
@@ -17,7 +17,7 @@
       </listitem>
       <listitem>
         <para>
-          Email: <email>smt@stephentudor.com</email>
+          Email: <email>tinysilk@hotmail.com</email>
         </para>
       </listitem>
       <listitem>
@@ -165,7 +165,7 @@
     </para>
     <sect3 id="programming-languages">
       <title>Programming Languages</title>
-      <itemizedlist>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://developer.mozilla.org/en/JavaScript">JavaScript</ulink><superscript>†</superscript>
@@ -185,7 +185,7 @@
     </sect3>
     <sect3 id="markuptemplating-languages-preprocessors">
       <title>Markup/Templating Languages &amp; Preprocessors</title>
-      <itemizedlist>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://coffeescript.org">CoffeeScript</ulink>
@@ -280,7 +280,7 @@
     </sect3>
     <sect3 id="frameworks-apis">
       <title>Frameworks &amp; APIs</title>
-      <itemizedlist>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://backbonejs.org">Backbone.js</ulink><superscript>†</superscript>
@@ -395,7 +395,7 @@
     </sect3>
     <sect3 id="software-tools">
       <title>Software &amp; Tools</title>
-      <itemizedlist>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://www.adobe.com/products/creativesuite.html">Adobe
@@ -555,23 +555,17 @@
   </sect2>
   <sect2 id="education">
     <title>Education</title>
-    <para>
-      <ulink url="http://sju.edu">Saint Joseph’s University</ulink>,
-      Erivan K. Haub School of Business<literallayout>
-</literallayout>BS, Information Systems, 1996 - 2000
-    </para>
+<literallayout><ulink url="http://sju.edu">Saint Joseph’s University</ulink>, Erivan K. Haub School of Business
+BS, Information Systems, 1996 - 2000</literallayout>
   </sect2>
   <sect2 id="honors-and-awards">
     <title>Honors and Awards</title>
-    <para>
-      <emphasis>Unsung Hero</emphasis>, Empathy Lab, May 2011<literallayout>
-</literallayout>A peer-awarded honor which I’ll always be terribly proud
-      to have won.
-    </para>
+<literallayout><emphasis>Unsung Hero</emphasis>, Empathy Lab, May 2011
+A peer-awarded honor which I’ll always be terribly proud to have won.</literallayout>
   </sect2>
   <sect2 id="interests">
     <title>Interests</title>
-    <itemizedlist>
+    <itemizedlist spacing="compact">
       <listitem>
         <para>
           Being a dad and spending time with my family

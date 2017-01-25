@@ -1,31 +1,36 @@
-\startmode[*mkii]
-  \enableregime[utf-8]  
-  \setupcolors[state=start]
-\stopmode
-
 % Enable hyperlinks
-\setupinteraction[state=start, color=middleblue]
+\setupinteraction
+  [state=start,
+  style=,
+  color=,
+  contrastcolor=]
+% make chapter, section bookmarks visible when opening document
+\placebookmarks[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][chapter, section]
+\setupinteractionscreen[option=bookmark]
+\setuptagging[state=start]
 
-\setuppapersize [letter][letter]
-\setuplayout    [width=middle,  backspace=1.5in, cutspace=1.5in,
-                 height=middle, topspace=0.75in, bottomspace=0.75in]
-
-\setuppagenumbering[location={footer,center}]
-
-\setupbodyfont[11pt]
-
+% use microtypography
+\definefontfeature[default][default][script=latn, protrusion=quality, expansion=quality, itlc=yes, textitalics=yes, onum=yes, pnum=yes]
+\definefontfeature[smallcaps][script=latn, protrusion=quality, expansion=quality, smcp=yes, onum=yes, pnum=yes]
+\setupalign[hz,hanging]
+\setupitaliccorrection[global, always]
+\setupbodyfontenvironment[default][em=italic] % use italic as em, not slanted
+\usemodule[simplefonts]
+\setmainfontfallback[DejaVu Serif][range={greekandcoptic, greekextended}, force=yes, rscale=auto]
 \setupwhitespace[medium]
 
-\setuphead[chapter]      [style=\tfd]
-\setuphead[section]      [style=\tfc]
-\setuphead[subsection]   [style=\tfb]
-\setuphead[subsubsection][style=\bf]
+\setuphead[chapter]            [style=\tfd,header=empty]
+\setuphead[section]            [style=\tfc]
+\setuphead[subsection]         [style=\tfb]
+\setuphead[subsubsection]      [style=\bf]
+\setuphead[subsubsubsection]   [style=\sc]
+\setuphead[subsubsubsubsection][style=\it]
 
-\setuphead[chapter, section, subsection, subsubsection][number=no]
+\setuphead[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][number=no]
 
 \definedescription
   [description]
-  [headstyle=bold, style=normal, location=hanging, width=broad, margin=1cm]
+  [headstyle=bold, style=normal, location=hanging, width=broad, margin=1cm, alternative=hanging]
 
 \setupitemize[autointro]    % prevent orphan list intro
 \setupitemize[indentnext=no]
@@ -34,13 +39,6 @@
 \setupfloat[table][default={here,nonumber}]
 
 \setupthinrules[width=15em] % width of horizontal rules
-
-\setupdelimitedtext
-  [blockquote]
-  [before={\blank[medium]},
-   after={\blank[medium]},
-   indentnext=no,
-  ]
 
 
 \starttext
@@ -54,7 +52,7 @@
   Phone: \useURL[url1][tel://610-590-4484][][610-590-4484]\from[url1]
 \item
   Email:
-  \useURL[url2][mailto:smt@stephentudor.com][][\hyphenatedurl{smt@stephentudor.com}]\from[url2]
+  \useURL[url2][mailto:tinysilk@hotmail.com][][tinysilk@hotmail.com]\from[url2]
 \item
   Blog:
   \useURL[url3][http://stephentudor.com][][stephentudor.com]\from[url3]
