@@ -165,8 +165,10 @@ Interests
 Download
 ~~~~~~~~
 
-You may need my resume in link:./raw/master/resume.docx[doc]
-link:./raw/master/resume.pdf[pdf] link:./raw/master/resume.epub[epub]
+You may need my resume in
+https://github.com/TinySlik/resume/raw/master/resume.docx[doc]
+https://github.com/TinySlik/resume/raw/master/resume.pdf[pdf]
+https://github.com/TinySlik/resume/raw/master/resume.epub[epub]
 
 Thank you for your watching. ©2016 http://tinyslik.github.io/resume[Tiny
 Wu]. All rights reserved. Direct contact only desired
