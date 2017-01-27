@@ -145,4 +145,13 @@ Interests
 - Making and listening to [music](http://www.rdio.com/people/smtudor)
 - Watching and contributing to Open Source Software
 
+Download
+---------
+
+You may need my resume in 
+[doc](./raw/master/resume.docx)
+[pdf](./raw/master/resume.pdf)
+[epub](./raw/master/resume.epub)
+
+Thank you for your watching.
 ©2016 [Tiny Wu](http://tinyslik.github.io/resume). All rights reserved. Direct contact only desired (no&nbsp;recruiters&nbsp;please).

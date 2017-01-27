@@ -508,9 +508,19 @@ A peer-awarded honor which I’ll always be terribly proud to have won.</literal
         </para>
       </listitem>
     </itemizedlist>
+  </sect2>
+  <sect2 id="download">
+    <title>Download</title>
     <para>
-      ©2016 <ulink url="http://tinyslik.github.io/resume">Tiny
-      Wu</ulink>. All rights reserved. Direct contact only desired
+      You may need my resume in
+      <ulink url="./raw/master/resume.docx">doc</ulink>
+      <ulink url="./raw/master/resume.pdf">pdf</ulink>
+      <ulink url="./raw/master/resume.epub">epub</ulink>
+    </para>
+    <para>
+      Thank you for your watching. ©2016
+      <ulink url="http://tinyslik.github.io/resume">Tiny Wu</ulink>. All
+      rights reserved. Direct contact only desired
       (no recruiters please).
     </para>
   </sect2>
