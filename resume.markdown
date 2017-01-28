@@ -149,9 +149,13 @@ Download
 ---------
 
 You may need my resume in 
+
 [doc](https://github.com/TinySlik/resume/raw/master/resume.docx)
+
 [pdf](https://github.com/TinySlik/resume/raw/master/resume.pdf)
+
 [epub](https://github.com/TinySlik/resume/raw/master/resume.epub)
 
 Thank you for your watching.
+
 ©2016 [Tiny Wu](http://tinyslik.github.io/resume). All rights reserved. Direct contact only desired (no&nbsp;recruiters&nbsp;please).
