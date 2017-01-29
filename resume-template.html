@@ -50,8 +50,894 @@ $toc$
 </nav>
 $endif$
 $body$
+
 $for(include-after)$
 $include-after$
 $endfor$
+
+<link rel="stylesheet" href="./GLSL Sandbox_files/codemirror.css">
+    <link rel="stylesheet" href="./GLSL Sandbox_files/default.css">
+
+    <script src="./GLSL Sandbox_files/lzma.js"></script>
+    <script src="./GLSL Sandbox_files/jquery.js"></script>
+    <script src="./GLSL Sandbox_files/helpers.js"></script>
+    <script src="./GLSL Sandbox_files/codemirror.js"></script>
+    <script src="./GLSL Sandbox_files/glsl.js"></script>
+
+    <script id="example" type="x-shader/x-fragment">#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+void main( void ) {
+
+  vec2 position = ( gl_FragCoord.xy / resolution.xy ) + mouse / 4.0;
+
+  float color = 0.0;
+  color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+  color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+  color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+  color *= sin( time / 10.0 ) * 0.5;
+
+  gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
+
+}</script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+      #ifdef GL_ES
+      precision mediump float;
+      #endif
+
+      uniform vec2 resolution;
+      uniform sampler2D texture;
+
+      void main() {
+
+        vec2 uv = gl_FragCoord.xy / resolution.xy;
+        gl_FragColor = texture2D( texture, uv );
+
+      }
+
+    </script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+      attribute vec3 position;
+
+      void main() {
+
+        gl_Position = vec4( position, 1.0 );
+
+      }
+
+    </script>
+
+    <script id="surfaceVertexShader" type="x-shader/x-vertex">
+
+      attribute vec3 position;
+      attribute vec2 surfacePosAttrib;
+      varying vec2 surfacePosition;
+
+      void main() {
+
+        surfacePosition = surfacePosAttrib;
+        gl_Position = vec4( position, 1.0 );
+
+      }
+
+    </script>
+
+    <script>
+
+      initialize_helper();
+
+      var compressor=initialize_compressor();
+
+      if ( !window.requestAnimationFrame ) {
+
+        window.requestAnimationFrame = ( function() {
+
+          return window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function ( callback, element ) {
+
+              window.setTimeout( callback, 1000 / 60 );
+
+            };
+
+        } )();
+
+      }
+
+      // Get older browsers safely through init code, so users can read the
+      // message about how to download newer browsers.
+      if (!Date.now) {
+        Date.now = function() {
+          return +new Date();
+        };
+      }
+
+      // Greetings to Iq/RGBA! ;)
+
+      var quality = 2, quality_levels = [ 0.5, 1, 2, 4, 8 ];
+      var toolbar, compileButton, fullscreenButton, compileTimer, errorLines = [];
+      var code, canvas, gl, buffer, currentProgram, vertexPosition, screenVertexPosition, panButton,
+      parameters = { startTime: Date.now(), time: 0, mouseX: 0.5, mouseY: 0.5, screenWidth: 0, screenHeight: 0 },
+      surface = { centerX: 0, centerY: 0, width: 1, height: 1, isPanning: false, isZooming: false, lastX: 0, lastY: 0 },
+      frontTarget, backTarget, screenProgram, getWebGL, resizer = {}, compileOnChangeCode = true;
+
+      init();
+      if (gl) { animate(); }
+
+      function init() {
+
+        if (!document.addEventListener) {
+          document.location = 'http://get.webgl.org/';
+          return;
+        }
+
+        canvas = document.createElement( 'canvas' );
+        canvas.style.display = 'block';
+        document.body.appendChild( canvas );
+
+        //
+
+
+        //
+
+        // toolbar = document.createElement( 'div' );
+        // toolbar.style.position = 'absolute';
+        // toolbar.style.top = '25px';
+        // toolbar.style.left = '25px';
+        // document.body.appendChild( toolbar );
+
+        // var rightside = document.createElement( 'div' );
+        // rightside.style.cssFloat = 'right';
+        // toolbar.appendChild( rightside );
+
+        // panButton = document.createElement( 'button' );
+        // panButton.textContent = 'pan/zoom';
+        // panButton.style.cursor = 'move';
+        // panButton.style.display = 'none';
+        // panButton.title = "Pan: left-drag, Zoom: right-drag. Use 'hide code' for a large pan/zoom area.";
+        // rightside.appendChild( panButton );
+
+        // fullscreenButton = document.createElement( 'button' );
+        // fullscreenButton.textContent = 'fullscreen';
+        // fullscreenButton.title = 'Press F11 to enter or leave fullscreen mode';
+        // fullscreenButton.addEventListener( 'click', function ( event ) {
+
+        //  if (document.body.requestFullScreen) {
+        //    document.body.requestFullScreen();
+        //  } else if (document.body.mozRequestFullScreen) {
+        //    document.body.mozRequestFullScreen();
+        //  } else if (document.body.webkitRequestFullScreen) {
+        //    document.body.webkitRequestFullScreen( Element.ALLOW_KEYBOARD_INPUT );
+        //  }
+
+        // }, false );
+
+        // rightside.appendChild( fullscreenButton );
+
+        // var button = document.createElement( 'a' );
+        // button.textContent = 'gallery';
+        // button.href = '/';
+        // // rightside.appendChild( button );
+
+        // var button = document.createElement( 'button' );
+        // button.textContent = 'hide code';
+        // button.addEventListener( 'click', function ( event ) {
+
+        //  if ( isCodeVisible() ) {
+
+        //    button.textContent = 'show code';
+        //    code.getWrapperElement().style.display = 'none';
+        //    compileButton.style.visibility = 'hidden';
+        //    set_save_button('hidden');
+        //    set_parent_button('hidden');
+        //    stopHideUI();
+
+        //  } else {
+
+        //    button.textContent = 'hide code';
+        //    code.getWrapperElement().style.display = 'none';
+        //    compileButton.style.visibility = 'hidden';
+        //    set_save_button('hidden');
+        //    set_parent_button('hidden');
+
+        //  }
+
+        // }, false );
+        // toolbar.appendChild( button );
+
+        // var select = document.createElement( 'select' );
+
+        // for ( var i = 0; i < quality_levels.length; i ++ ) {
+
+        //  var option = document.createElement( 'option' );
+        //  option.textContent = quality_levels[ i ];
+        //  if ( quality_levels[ i ] == quality ) option.selected = true;
+        //  select.appendChild( option );
+
+        // }
+
+        // select.addEventListener( 'change', function ( event ) {
+
+        //  quality = quality_levels[ event.target.selectedIndex ];
+        //  onWindowResize();
+
+        // }, false );
+
+        // toolbar.appendChild( select );
+
+        compileButton = document.createElement( 'button' );
+        compileButton.textContent = 'compile';
+        compileButton.addEventListener( 'click', function ( event ) {
+
+          compile();
+
+        }, false );
+        // toolbar.appendChild( compileButton );
+
+        // from helper.js
+        add_server_buttons();
+
+        // Initialise WebGL
+
+        try {
+
+          gl = canvas.getContext( 'experimental-webgl', { preserveDrawingBuffer: true } );
+
+        } catch( error ) { }
+
+        if ( !gl ) {
+
+          alert("WebGL not supported, but code will be shown.");
+
+        } else {
+          
+          // enable dFdx, dFdy, fwidth
+          gl.getExtension('OES_standard_derivatives');
+
+          // Create vertex buffer (2 triangles)
+
+          buffer = gl.createBuffer();
+          gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+          gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( [ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ] ), gl.STATIC_DRAW );
+
+          // Create surface buffer (coordinates at screen corners)
+
+          surface.buffer = gl.createBuffer();
+        }
+
+        // initialize code editor
+        code = CodeMirror(document.body, {
+          lineNumbers: true,
+          matchBrackets: true,
+          indentWithTabs: true,
+          tabSize: 8,
+          indentUnit: 8,
+          mode: "text/x-glsl",
+          onChange: function () {
+            if (compileOnChangeCode) {
+              clearTimeout(compileTimer);
+              compileTimer = setTimeout(compile, 500);
+            }
+          }
+        });
+        code.getWrapperElement().style.display = '';
+
+        resizer.offsetMouseX = 0;
+        resizer.offsetMouseY = 0;
+        resizer.isResizing = false;
+        resizer.currentWidth = 100;
+        resizer.currentHeight = 100;
+        resizer.minWidth = 100;
+        resizer.minHeight = 100;
+        resizer.maxWidth = 100;
+        resizer.maxHeight = 100;
+        resizer.element = document.createElement( 'div' );
+        resizer.element.className = 'resizer';
+        code.getWrapperElement().appendChild(resizer.element);
+
+        resizer.element.addEventListener( 'mousedown', function ( event ) {
+          if (event.button !== 2) {
+            resizer.offsetMouseX = event.clientX - resizer.currentWidth;
+            resizer.offsetMouseY = event.clientY - resizer.currentHeight;
+            resizer.isResizing = true;
+            event.preventDefault();
+          }
+        }, false );
+        
+        if (gl) {
+
+          var surfaceMouseDown = function ( event ) {
+
+            if (event.shiftKey) {
+              resetSurface();
+            }
+
+            if (event.button === 0) {
+              surface.isPanning = true;
+              document.body.style.cursor = 'move';
+            } else {
+              surface.isZooming = true;
+              document.body.style.cursor = 'se-resize';
+              // panButton.style.cursor = 'se-resize';
+            }
+
+            surface.lastX = event.clientX;
+            surface.lastY = event.clientY;
+            event.preventDefault();
+
+          };
+
+          var noContextMenu = function ( event ) {
+
+            event.preventDefault();
+
+          };
+
+          canvas.addEventListener( 'mousedown', surfaceMouseDown, false );
+          // panButton.addEventListener( 'mousedown', surfaceMouseDown, false );
+
+          canvas.addEventListener( 'contextmenu', noContextMenu, false);
+          // panButton.addEventListener( 'contextmenu', noContextMenu, false);
+        }
+        
+        var clientXLast, clientYLast;
+
+        document.addEventListener( 'mousemove', function ( event ) {
+
+          var clientX = event.clientX;
+          var clientY = event.clientY;
+
+          if (clientXLast == clientX && clientYLast == clientY)
+            return;
+
+          clientXLast = clientX;
+          clientYLast = clientY;
+
+          // stopHideUI();
+
+          var codeElement, dx, dy;
+          
+          parameters.mouseX = clientX / window.innerWidth;
+          parameters.mouseY = 1 - clientY / window.innerHeight;
+            
+          if (resizer.isResizing) {
+
+            resizer.currentWidth = Math.max(Math.min(clientX - resizer.offsetMouseX, resizer.maxWidth), resizer.minWidth);
+            resizer.currentHeight = Math.max(Math.min(clientY - resizer.offsetMouseY, resizer.maxHeight), resizer.minWidth);
+            codeElement = code.getWrapperElement();
+            codeElement.style.width = resizer.currentWidth + 'px';
+            codeElement.style.height = resizer.currentHeight + 'px';
+            code.refresh();
+            event.preventDefault();
+
+          } else if (surface.isPanning) {
+
+            dx = clientX - surface.lastX;
+            dy = clientY - surface.lastY;
+            surface.centerX -= dx * surface.width / window.innerWidth;
+            surface.centerY += dy * surface.height / window.innerHeight;
+            surface.lastX = clientX;
+            surface.lastY = clientY;
+            computeSurfaceCorners();
+            event.preventDefault();
+
+          } else if (surface.isZooming) {
+
+            dx = clientX - surface.lastX;
+            dy = clientY - surface.lastY;
+            surface.height *= Math.pow(0.997, dx + dy);
+            surface.lastX = clientX;
+            surface.lastY = clientY;
+            computeSurfaceCorners();
+            event.preventDefault();
+
+          }
+        }, false );
+
+        function settleDown ( event ) {
+          resizer.isResizing = surface.isPanning = surface.isZooming = false;
+          document.body.style.cursor = 'default';
+          // panButton.style.cursor = 'move';
+        }
+
+        function mouseLeave(event) {
+          settleDown(event);
+
+          if (!isCodeVisible())
+            startHideUITimer();
+        }
+
+        document.addEventListener( 'mouseup', settleDown, false );
+        document.addEventListener( 'mouseleave', mouseLeave, false );
+
+        onWindowResize();
+        window.addEventListener( 'resize', onWindowResize, false );
+        load_url_code();
+
+        compileScreenProgram();
+
+      }
+
+      function isCodeVisible() {
+        return code && code.getWrapperElement().style.display !== 'none';
+      }
+
+      var hideUITimer;
+      var isUIHidden = false;
+
+      function startHideUITimer () {
+
+        stopHideUITimer();
+        if (!isUIHidden && !isCodeVisible())
+          hideUITimer = window.setTimeout(onHideUITimer, 1000 * 5 );
+
+        function onHideUITimer() {
+
+          stopHideUITimer();
+          if (!isUIHidden && !isCodeVisible()) {
+
+            isUIHidden = true;
+            // toolbar.style.display = 'none';
+            document.body.style.cursor = 'none';
+          }
+        }
+
+        function stopHideUITimer () {
+
+          if (hideUITimer) {
+
+            window.clearTimeout(hideUITimer);
+            hideUITimer = 0;
+          }
+        }
+      }
+
+      function stopHideUI () {
+
+        if (isUIHidden) {
+
+          isUIHidden = false;
+          // toolbar.style.display = '';
+          document.body.style.cursor = '';
+        }
+        startHideUITimer();
+      }
+
+
+      function computeSurfaceCorners() {
+
+        if (gl) {
+
+          surface.width = surface.height * parameters.screenWidth / parameters.screenHeight;
+          
+          var halfWidth = surface.width * 0.5, halfHeight = surface.height * 0.5;
+          
+          gl.bindBuffer( gl.ARRAY_BUFFER, surface.buffer );
+          gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( [
+            surface.centerX - halfWidth, surface.centerY - halfHeight,
+            surface.centerX + halfWidth, surface.centerY - halfHeight,
+            surface.centerX - halfWidth, surface.centerY + halfHeight,
+            surface.centerX + halfWidth, surface.centerY - halfHeight,
+            surface.centerX + halfWidth, surface.centerY + halfHeight,
+            surface.centerX - halfWidth, surface.centerY + halfHeight ] ), gl.STATIC_DRAW );
+
+        }
+
+      }
+
+      function resetSurface() {
+
+        surface.centerX = surface.centerY = 0;
+        surface.height = 1;
+        computeSurfaceCorners();
+
+      }
+
+      function compile() {
+      
+        if (!gl) {
+        
+          if (!getWebGL) {
+          
+            getWebGL = true;
+            compileButton.addEventListener( 'click', function ( event ) {
+
+              document.location = 'http://get.webgl.org/';
+
+            }, false );
+            compileButton.title = 'http://get.webgl.org/';
+            compileButton.style.color = '#ff0000';
+            compileButton.textContent = 'WebGL not supported!';
+            set_save_button('hidden');
+            
+          }
+          return;
+          
+        }
+
+        var program = gl.createProgram();
+        var fragment = code.getValue();
+        var vertex = document.getElementById( 'surfaceVertexShader' ).textContent;
+
+        var vs = createShader( vertex, gl.VERTEX_SHADER );
+        var fs = createShader( fragment, gl.FRAGMENT_SHADER );
+
+        if ( vs == null || fs == null ) return null;
+
+        gl.attachShader( program, vs );
+        gl.attachShader( program, fs );
+
+        gl.deleteShader( vs );
+        gl.deleteShader( fs );
+
+        gl.linkProgram( program );
+
+        if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+
+          var error = gl.getProgramInfoLog( program );
+
+          compileButton.title = error;
+          console.error( error );
+
+          console.error( 'VALIDATE_STATUS: ' + gl.getProgramParameter( program, gl.VALIDATE_STATUS ), 'ERROR: ' + gl.getError() );
+          compileButton.style.color = '#ff0000';
+          compileButton.textContent = 'compiled with errors';
+
+          set_save_button('hidden');
+
+          return;
+
+        }
+
+        if ( currentProgram ) {
+
+          gl.deleteProgram( currentProgram );
+          setURL( fragment );
+
+        }
+
+        currentProgram = program;
+
+        compileButton.style.color = '#00ff00';
+        compileButton.textContent = 'compiled successfully';
+
+        set_save_button('visible');
+
+        // panButton.style.display = (fragment.indexOf('varying vec2 surfacePosition;') >= 0) ? 'inline' : 'none';
+
+        // Cache uniforms
+
+        cacheUniformLocation( program, 'time' );
+        cacheUniformLocation( program, 'mouse' );
+        cacheUniformLocation( program, 'resolution' );
+        cacheUniformLocation( program, 'backbuffer' );
+        cacheUniformLocation( program, 'surfaceSize' );
+
+        // Load program into GPU
+
+        gl.useProgram( currentProgram );
+
+        // Set up buffers
+
+        surface.positionAttribute = gl.getAttribLocation(currentProgram, "surfacePosAttrib");
+        gl.enableVertexAttribArray(surface.positionAttribute);
+
+        vertexPosition = gl.getAttribLocation(currentProgram, "position");
+        gl.enableVertexAttribArray( vertexPosition );
+
+      }
+
+      function compileScreenProgram() {
+      
+        if (!gl) { return; }
+
+        var program = gl.createProgram();
+        var fragment = document.getElementById( 'fragmentShader' ).textContent;
+        var vertex = document.getElementById( 'vertexShader' ).textContent;
+
+        var vs = createShader( vertex, gl.VERTEX_SHADER );
+        var fs = createShader( fragment, gl.FRAGMENT_SHADER );
+
+        gl.attachShader( program, vs );
+        gl.attachShader( program, fs );
+
+        gl.deleteShader( vs );
+        gl.deleteShader( fs );
+
+        gl.linkProgram( program );
+
+        if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+
+          console.error( 'VALIDATE_STATUS: ' + gl.getProgramParameter( program, gl.VALIDATE_STATUS ), 'ERROR: ' + gl.getError() );
+
+          return;
+
+        }
+
+        screenProgram = program;
+
+        gl.useProgram( screenProgram );
+
+        cacheUniformLocation( program, 'resolution' );
+        cacheUniformLocation( program, 'texture' );
+
+        screenVertexPosition = gl.getAttribLocation(screenProgram, "position");
+        gl.enableVertexAttribArray( screenVertexPosition );
+
+      }
+
+      function cacheUniformLocation( program, label ) {
+
+        if ( program.uniformsCache === undefined ) {
+
+          program.uniformsCache = {};
+
+        }
+
+        program.uniformsCache[ label ] = gl.getUniformLocation( program, label );
+
+      }
+
+      //
+
+      function createTarget( width, height ) {
+
+        var target = {};
+
+        target.framebuffer = gl.createFramebuffer();
+        target.renderbuffer = gl.createRenderbuffer();
+        target.texture = gl.createTexture();
+
+        // set up framebuffer
+
+        gl.bindTexture( gl.TEXTURE_2D, target.texture );
+        gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null );
+
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE );
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE );
+
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, target.framebuffer );
+        gl.framebufferTexture2D( gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, target.texture, 0 );
+
+        // set up renderbuffer
+
+        gl.bindRenderbuffer( gl.RENDERBUFFER, target.renderbuffer );
+
+        gl.renderbufferStorage( gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height );
+        gl.framebufferRenderbuffer( gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, target.renderbuffer );
+
+        // clean up
+
+        gl.bindTexture( gl.TEXTURE_2D, null );
+        gl.bindRenderbuffer( gl.RENDERBUFFER, null );
+        gl.bindFramebuffer( gl.FRAMEBUFFER, null);
+
+        return target;
+
+      }
+
+      function createRenderTargets() {
+
+        frontTarget = createTarget( parameters.screenWidth, parameters.screenHeight );
+        backTarget = createTarget( parameters.screenWidth, parameters.screenHeight );
+
+      }
+
+      //
+
+      var dummyFunction = function() {};
+
+
+      //
+      
+      function htmlEncode(str){
+
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+
+      }
+
+      //
+
+      function createShader( src, type ) {
+      
+        var shader = gl.createShader( type );
+        var line, lineNum, lineError, index = 0, indexEnd;
+
+        while (errorLines.length > 0) {
+          line = errorLines.pop();
+          code.setLineClass(line, null);
+          code.clearMarker(line);
+        }
+
+        gl.shaderSource( shader, src );
+        gl.compileShader( shader );
+
+        compileButton.title = '';
+
+        if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
+
+          var error = gl.getShaderInfoLog( shader );
+          
+          // Remove trailing linefeed, for FireFox's benefit.
+          while ((error.length > 1) && (error.charCodeAt(error.length - 1) < 32)) {
+            error = error.substring(0, error.length - 1);
+          }
+
+          compileButton.title = error;
+          console.error( error );
+
+          compileButton.style.color = '#ff0000';
+          compileButton.textContent = 'compiled with errors';
+
+          set_save_button('hidden');
+
+          while (index >= 0) {
+            index = error.indexOf("ERROR: 0:", index);
+            if (index < 0) { break; }
+            index += 9;
+            indexEnd = error.indexOf(':', index);
+            if (indexEnd > index) {
+              lineNum = parseInt(error.substring(index, indexEnd));
+              if ((!isNaN(lineNum)) && (lineNum > 0)) {
+                index = indexEnd + 1;
+                indexEnd = error.indexOf("ERROR: 0:", index);
+                lineError = htmlEncode((indexEnd > index) ? error.substring(index, indexEnd) : error.substring(index));
+                line = code.setMarker(lineNum - 1, '<abbr title="' + lineError + '">' + lineNum + '</abbr>', "errorMarker");
+                code.setLineClass(line, "errorLine");
+                errorLines.push(line);
+              }
+            }
+          }
+
+          return null;
+
+        }
+
+        return shader;
+
+      }
+
+      //
+
+      function onWindowResize( event ) {
+
+        var isMaxWidth = ((resizer.currentWidth === resizer.maxWidth) || (resizer.currentWidth === resizer.minWidth)),
+          isMaxHeight = ((resizer.currentHeight === resizer.maxHeight) || (resizer.currentHeight === resizer.minHeight));
+
+        // toolbar.style.width = window.innerWidth - 47 + 'px';
+
+        resizer.isResizing = false;
+        resizer.maxWidth = window.innerWidth - 75;
+        resizer.maxHeight = window.innerHeight - 125;
+        if (isMaxWidth || (resizer.currentWidth > resizer.maxWidth)) {
+          resizer.currentWidth = resizer.maxWidth;
+        }
+        if (isMaxHeight || (resizer.currentHeight > resizer.maxHeight)) {
+          resizer.currentHeight = resizer.maxHeight;
+        }
+        if (resizer.currentWidth < resizer.minWidth) { resizer.currentWidth = resizer.minWidth; }
+        if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
+
+        code.getWrapperElement().style.top = '75px';
+        code.getWrapperElement().style.left = '25px';
+        code.getWrapperElement().style.width = resizer.currentWidth + 'px';
+        code.getWrapperElement().style.height = resizer.currentHeight + 'px';
+
+        canvas.width = window.innerWidth / quality;
+        canvas.height = window.innerHeight / quality;
+
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+
+        parameters.screenWidth = canvas.width;
+        parameters.screenHeight = canvas.height;
+
+        computeSurfaceCorners();
+
+        if (gl) {
+        
+          gl.viewport( 0, 0, canvas.width, canvas.height );
+
+          createRenderTargets();
+          
+        }
+      }
+
+      //
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+        render();
+
+      }
+
+      function render() {
+
+        if ( !currentProgram ) return;
+
+        parameters.time = Date.now() - parameters.startTime;
+
+        // Set uniforms for custom shader
+
+        gl.useProgram( currentProgram );
+
+        gl.uniform1f( currentProgram.uniformsCache[ 'time' ], parameters.time / 1000 );
+        gl.uniform2f( currentProgram.uniformsCache[ 'mouse' ], parameters.mouseX, parameters.mouseY );
+        gl.uniform2f( currentProgram.uniformsCache[ 'resolution' ], parameters.screenWidth, parameters.screenHeight );
+        gl.uniform1i( currentProgram.uniformsCache[ 'backbuffer' ], 0 );
+        gl.uniform2f( currentProgram.uniformsCache[ 'surfaceSize' ], surface.width, surface.height );
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, surface.buffer );
+        gl.vertexAttribPointer( surface.positionAttribute, 2, gl.FLOAT, false, 0, 0 );
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+        gl.vertexAttribPointer( vertexPosition, 2, gl.FLOAT, false, 0, 0 );
+
+        gl.activeTexture( gl.TEXTURE0 );
+        gl.bindTexture( gl.TEXTURE_2D, backTarget.texture );
+
+        // Render custom shader to front buffer
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, frontTarget.framebuffer );
+
+        gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+        gl.drawArrays( gl.TRIANGLES, 0, 6 );
+
+        // Set uniforms for screen shader
+
+        gl.useProgram( screenProgram );
+
+        gl.uniform2f( screenProgram.uniformsCache[ 'resolution' ], parameters.screenWidth, parameters.screenHeight );
+        gl.uniform1i( screenProgram.uniformsCache[ 'texture' ], 1 );
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+        gl.vertexAttribPointer( screenVertexPosition, 2, gl.FLOAT, false, 0, 0 );
+        
+        gl.activeTexture( gl.TEXTURE1 );
+        gl.bindTexture( gl.TEXTURE_2D, frontTarget.texture );
+
+        // Render front buffer to screen
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, null );
+
+        gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+        gl.drawArrays( gl.TRIANGLES, 0, 6 );
+
+        // Swap buffers
+
+        var tmp = frontTarget;
+        frontTarget = backTarget;
+        backTarget = tmp;
+
+
+
+      }
+      code.getWrapperElement().style.display = 'none';
+    </script><canvas style="display: block; width: 583px; height: 682px;" width="291" height="341"></canvas><div style="position: absolute; top: -125px; left: 25px; width: 536px;"><div style="float: right;"><button title="Pan: left-drag, Zoom: right-drag. Use &#39;hide code&#39; for a large pan/zoom area." style="cursor: move; display: inline;">pan/zoom</button><button title="Press F11 to enter or leave fullscreen mode">fullscreen</button><a href="http://www.glslsandbox.com/">gallery</a></div><button>show code</button><select><option>0.5</option><option>1</option><option>2</option><option>4</option><option>8</option></select><button title="" style="color: rgb(0, 255, 0); visibility: hidden;">compiled successfully</button><button style="visibility: hidden;">fork</button><a href="http://www.glslsandbox.com/e#38074.0" style="visibility: hidden;">parent</a><a href="http://www.glslsandbox.com/diff#38074.0-vs-38096.3" style="visibility: hidden;">diff</a></div><div class="CodeMirror" style="top: 75px; left: 25px; width: 508px; height: 557px; display: none;"><div style="overflow: hidden; position: relative; width: 1px; height: 0px; top: 0px; left: 0px;"><textarea style="position: absolute; width: 10000px;" wrap="off" autocorrect="off" autocapitalize="off"></textarea></div><div class="CodeMirror-scroll cm-s-default"><div style="position: relative; height: 4662px;"><div style="position: relative; top: 0px;"><div class="CodeMirror-gutter" style="height: 2276px;"><div class="CodeMirror-gutter-text"><pre>&nbsp;&nbsp;1</pre><pre>2</pre><pre>3</pre><pre>4</pre><pre>5</pre><pre>6</pre><pre>7</pre><pre>8</pre><pre>9</pre><pre>10</pre><pre>11</pre><pre>12</pre><pre>13</pre><pre>14</pre><pre>15</pre><pre>16</pre><pre>17</pre><pre>18</pre><pre>19</pre><pre>20</pre><pre>21</pre><pre>22</pre><pre>23</pre><pre>24</pre><pre>25</pre><pre>26</pre><pre>27</pre><pre>28</pre><pre>29</pre><pre>30</pre><pre>31</pre><pre>32</pre><pre>33</pre><pre>34</pre><pre>35</pre><pre>36</pre><pre>37</pre><pre>38</pre><pre>39</pre><pre>40</pre><pre>41</pre><pre>42</pre><pre>43</pre><pre>44</pre><pre>45</pre><pre>46</pre><pre>47</pre><pre>48</pre><pre>49</pre><pre>50</pre><pre>51</pre><pre>52</pre><pre>53</pre><pre>54</pre><pre>55</pre><pre>56</pre><pre>57</pre><pre>58</pre><pre>59</pre><pre>60</pre><pre>61</pre><pre>62</pre><pre>63</pre><pre>64</pre><pre>65</pre><pre>66</pre><pre>67</pre><pre>68</pre><pre>69</pre><pre>70</pre><pre>71</pre><pre>72</pre><pre>73</pre><pre>74</pre><pre>75</pre><pre>76</pre><pre>77</pre><pre>78</pre><pre>79</pre><pre>80</pre><pre>81</pre><pre>82</pre><pre>83</pre><pre>84</pre><pre>85</pre><pre>86</pre><pre>87</pre><pre>88</pre><pre>89</pre><pre>90</pre><pre>91</pre><pre>92</pre><pre>93</pre><pre>94</pre><pre>95</pre><pre>96</pre><pre>97</pre><pre>98</pre><pre>99</pre><pre>100</pre><pre>101</pre><pre>102</pre><pre>103</pre><pre>104</pre><pre>105</pre><pre>106</pre><pre>107</pre><pre>108</pre><pre>109</pre><pre>110</pre><pre>111</pre><pre>112</pre><pre>113</pre><pre>114</pre><pre>115</pre><pre>116</pre><pre>117</pre><pre>118</pre><pre>119</pre><pre>120</pre><pre>121</pre><pre>122</pre><pre>123</pre><pre>124</pre><pre>125</pre><pre>126</pre><pre>127</pre><pre>128</pre><pre>129</pre><pre>130</pre><pre>131</pre><pre>132</pre><pre>133</pre><pre>134</pre><pre>135</pre><pre>136</pre><pre>137</pre><pre>138</pre><pre>139</pre><pre>140</pre><pre>141</pre><pre>142</pre><pre>143</pre><pre>144</pre><pre>145</pre><pre>146</pre><pre>147</pre><pre>148</pre><pre>149</pre><pre>150</pre><pre>151</pre></div></div><div class="CodeMirror-lines"><div style="position: relative; margin-left: 36px;"><div style="position: absolute; width: 100%; height: 0; overflow: hidden; visibility: hidden"><pre>x<br>x<br>x<br>x<br>x<br>x<br>x<br>x<br>x<br>x</pre></div><pre class="CodeMirror-cursor" style="top: 0px; left: 0px;">&nbsp;</pre><div><pre><span class="cm-meta">#ifdef GL_ES</span></pre><pre><span class="cm-keyword">precision</span> <span class="cm-keyword">mediump</span> <span class="cm-keyword">float</span><span class="cm-bracket">;</span></pre><pre><span class="cm-meta">#endif</span></pre><pre> </pre><pre> </pre><pre><span class="cm-comment">// mods by 27   ( tweaks, and added pan/zoom )</span></pre><pre> </pre><pre> </pre><pre> </pre><pre><span class="cm-meta">#extension GL_OES_standard_derivatives : enable</span></pre><pre> </pre><pre><span class="cm-keyword">uniform</span> <span class="cm-keyword">float</span> <span class="cm-word">time</span><span class="cm-bracket">;</span></pre><pre><span class="cm-keyword">uniform</span> <span class="cm-keyword">vec2</span> <span class="cm-word">mouse</span><span class="cm-bracket">;</span></pre><pre><span class="cm-keyword">uniform</span> <span class="cm-keyword">vec2</span> <span class="cm-word">resolution</span><span class="cm-bracket">;</span></pre><pre><span class="cm-keyword">varying</span> <span class="cm-keyword">vec2</span> <span class="cm-word">surfacePosition</span><span class="cm-bracket">;</span></pre><pre> </pre><pre><span class="cm-meta">#define REGION_NUM 2</span></pre><pre> </pre><pre><span class="cm-keyword">vec3</span> <span class="cm-word">hsl2rgb</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span> <span class="cm-word">hsl</span><span class="cm-bracket">);</span></pre><pre><span class="cm-keyword">float</span> <span class="cm-word">snoise</span><span class="cm-bracket">(</span><span class="cm-keyword">vec4</span> <span class="cm-word">v</span><span class="cm-bracket">);</span></pre><pre><span class="cm-keyword">float</span> <span class="cm-word">snoise</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span> <span class="cm-word">v</span><span class="cm-bracket">);</span></pre><pre><span class="cm-keyword">float</span> <span class="cm-word">psnoise</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span> <span class="cm-word">v</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre> <span class="cm-keyword">float</span> <span class="cm-word">o</span> <span class="cm-operator">=</span></pre><pre>    <span class="cm-word">snoise</span><span class="cm-bracket">(</span><span class="cm-word">v</span> <span class="cm-operator">*</span> <span class="cm-number">2.7</span><span class="cm-bracket">)</span> <span class="cm-operator">/</span> <span class="cm-number">2.0</span> <span class="cm-operator">+</span> </pre><pre>    <span class="cm-bracket">(</span><span class="cm-word">snoise</span><span class="cm-bracket">(</span><span class="cm-word">v</span> <span class="cm-operator">*</span> <span class="cm-number">2.7</span><span class="cm-bracket">)</span> <span class="cm-operator">/</span> <span class="cm-number">2.0</span><span class="cm-bracket">)</span></pre><pre>  <span class="cm-bracket">;</span></pre><pre>  <span class="cm-keyword">return</span> <span class="cm-word">o</span> <span class="cm-operator">/</span> <span class="cm-number">1.027</span><span class="cm-bracket">;</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">void</span> <span class="cm-word">main</span><span class="cm-bracket">(</span> <span class="cm-keyword">void</span> <span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>  <span class="cm-comment">//vec2 pos = gl_FragCoord.xy / resolution.xy * vec2(resolution.x / resolution.y, 1.0);</span></pre><pre> <span class="cm-keyword">vec2</span> <span class="cm-word">pos</span> <span class="cm-operator">=</span> <span class="cm-word">surfacePosition</span><span class="cm-bracket">;</span></pre><pre> <span class="cm-keyword">float</span> <span class="cm-word">mytime</span> <span class="cm-operator">=</span> <span class="cm-word">time</span> <span class="cm-operator">/</span> <span class="cm-number">10.0</span><span class="cm-bracket">;</span></pre><pre> </pre><pre> <span class="cm-keyword">float</span> <span class="cm-word">density</span> <span class="cm-operator">=</span></pre><pre>    <span class="cm-word">psnoise</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span><span class="cm-bracket">(</span><span class="cm-word">pos</span> <span class="cm-operator">*</span> <span class="cm-keyword">vec2</span><span class="cm-bracket">(</span><span class="cm-number">2.0</span><span class="cm-bracket">,</span> <span class="cm-number">2.0</span><span class="cm-bracket">)</span> <span class="cm-operator">+</span> <span class="cm-keyword">vec2</span><span class="cm-bracket">(</span><span class="cm-word">mytime</span><span class="cm-bracket">,</span> <span class="cm-number">0.0</span><span class="cm-bracket">),</span> <span class="cm-word">mytime</span><span class="cm-bracket">))</span> <span class="cm-operator">*</span> <span class="cm-number">0.5</span> <span class="cm-operator">+</span> <span class="cm-number">0.5</span> <span class="cm-operator">+</span> </pre><pre>   <span class="cm-builtin">clamp</span><span class="cm-bracket">(((</span><span class="cm-word">pos</span><span class="cm-bracket">.</span><span class="cm-word">y</span> <span class="cm-operator">-</span> <span class="cm-number">0.0</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-number">0.5</span> <span class="cm-operator">/</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-number">2.0</span> <span class="cm-operator">-</span> <span class="cm-number">1.0</span><span class="cm-bracket">,</span> <span class="cm-operator">-</span><span class="cm-number">1.0</span><span class="cm-bracket">,</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span></pre><pre> <span class="cm-bracket">;</span></pre><pre>  <span class="cm-keyword">gl_FragColor</span> <span class="cm-operator">=</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span><span class="cm-bracket">(</span><span class="cm-word">density</span> <span class="cm-operator">&gt;</span> <span class="cm-number">0.0</span><span class="cm-bracket">)),</span> <span class="cm-number">1.0</span><span class="cm-bracket">);</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre> </pre><pre> </pre><pre><span class="cm-keyword">float</span> <span class="cm-word">hue2rgb</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">f1</span><span class="cm-bracket">,</span> <span class="cm-keyword">float</span> <span class="cm-word">f2</span><span class="cm-bracket">,</span> <span class="cm-keyword">float</span> <span class="cm-word">hue</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>    <span class="cm-keyword">if</span> <span class="cm-bracket">(</span><span class="cm-word">hue</span> <span class="cm-operator">&lt;</span> <span class="cm-number">0.0</span><span class="cm-bracket">)</span></pre><pre>        <span class="cm-word">hue</span> <span class="cm-operator">+=</span> <span class="cm-number">1.0</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> <span class="cm-bracket">(</span><span class="cm-word">hue</span> <span class="cm-operator">&gt;</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span></pre><pre>        <span class="cm-word">hue</span> <span class="cm-operator">-=</span> <span class="cm-number">1.0</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">float</span> <span class="cm-word">res</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">if</span> <span class="cm-bracket">((</span><span class="cm-number">6.0</span> <span class="cm-operator">*</span> <span class="cm-word">hue</span><span class="cm-bracket">)</span> <span class="cm-operator">&lt;</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span></pre><pre>        <span class="cm-word">res</span> <span class="cm-operator">=</span> <span class="cm-word">f1</span> <span class="cm-operator">+</span> <span class="cm-bracket">(</span><span class="cm-word">f2</span> <span class="cm-operator">-</span> <span class="cm-word">f1</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-number">6.0</span> <span class="cm-operator">*</span> <span class="cm-word">hue</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> <span class="cm-bracket">((</span><span class="cm-number">2.0</span> <span class="cm-operator">*</span> <span class="cm-word">hue</span><span class="cm-bracket">)</span> <span class="cm-operator">&lt;</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span></pre><pre>        <span class="cm-word">res</span> <span class="cm-operator">=</span> <span class="cm-word">f2</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">else</span> <span class="cm-keyword">if</span> <span class="cm-bracket">((</span><span class="cm-number">3.0</span> <span class="cm-operator">*</span> <span class="cm-word">hue</span><span class="cm-bracket">)</span> <span class="cm-operator">&lt;</span> <span class="cm-number">2.0</span><span class="cm-bracket">)</span></pre><pre>        <span class="cm-word">res</span> <span class="cm-operator">=</span> <span class="cm-word">f1</span> <span class="cm-operator">+</span> <span class="cm-bracket">(</span><span class="cm-word">f2</span> <span class="cm-operator">-</span> <span class="cm-word">f1</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-bracket">((</span><span class="cm-number">2.0</span> <span class="cm-operator">/</span> <span class="cm-number">3.0</span><span class="cm-bracket">)</span> <span class="cm-operator">-</span> <span class="cm-word">hue</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-number">6.0</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">else</span></pre><pre>        <span class="cm-word">res</span> <span class="cm-operator">=</span> <span class="cm-word">f1</span><span class="cm-bracket">;</span></pre><pre>    <span class="cm-keyword">return</span> <span class="cm-word">res</span><span class="cm-bracket">;</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">vec3</span> <span class="cm-word">hsl2rgb</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span> <span class="cm-word">hsl</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>    <span class="cm-keyword">vec3</span> <span class="cm-word">rgb</span><span class="cm-bracket">;</span></pre><pre>    </pre><pre>    <span class="cm-keyword">if</span> <span class="cm-bracket">(</span><span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">y</span> <span class="cm-operator">==</span> <span class="cm-number">0.0</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>        <span class="cm-word">rgb</span> <span class="cm-operator">=</span> <span class="cm-keyword">vec3</span><span class="cm-bracket">(</span><span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span><span class="cm-bracket">);</span> <span class="cm-comment">// Luminance</span></pre><pre>    <span class="cm-bracket">}</span> <span class="cm-keyword">else</span> <span class="cm-bracket">{</span></pre><pre>        <span class="cm-keyword">float</span> <span class="cm-word">f2</span><span class="cm-bracket">;</span></pre><pre>        </pre><pre>        <span class="cm-keyword">if</span> <span class="cm-bracket">(</span><span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span> <span class="cm-operator">&lt;</span> <span class="cm-number">0.5</span><span class="cm-bracket">)</span></pre><pre>            <span class="cm-word">f2</span> <span class="cm-operator">=</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span> <span class="cm-operator">*</span> <span class="cm-bracket">(</span><span class="cm-number">1.0</span> <span class="cm-operator">+</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">y</span><span class="cm-bracket">);</span></pre><pre>        <span class="cm-keyword">else</span></pre><pre>            <span class="cm-word">f2</span> <span class="cm-operator">=</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span> <span class="cm-operator">+</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">y</span> <span class="cm-operator">-</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">y</span> <span class="cm-operator">*</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span><span class="cm-bracket">;</span></pre><pre>            </pre><pre>        <span class="cm-keyword">float</span> <span class="cm-word">f1</span> <span class="cm-operator">=</span> <span class="cm-number">2.0</span> <span class="cm-operator">*</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">z</span> <span class="cm-operator">-</span> <span class="cm-word">f2</span><span class="cm-bracket">;</span></pre><pre>        </pre><pre>        <span class="cm-word">rgb</span><span class="cm-bracket">.</span><span class="cm-word">r</span> <span class="cm-operator">=</span> <span class="cm-word">hue2rgb</span><span class="cm-bracket">(</span><span class="cm-word">f1</span><span class="cm-bracket">,</span> <span class="cm-word">f2</span><span class="cm-bracket">,</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">x</span> <span class="cm-operator">+</span> <span class="cm-bracket">(</span><span class="cm-number">1.0</span><span class="cm-operator">/</span><span class="cm-number">3.0</span><span class="cm-bracket">));</span></pre><pre>        <span class="cm-word">rgb</span><span class="cm-bracket">.</span><span class="cm-word">g</span> <span class="cm-operator">=</span> <span class="cm-word">hue2rgb</span><span class="cm-bracket">(</span><span class="cm-word">f1</span><span class="cm-bracket">,</span> <span class="cm-word">f2</span><span class="cm-bracket">,</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">x</span><span class="cm-bracket">);</span></pre><pre>        <span class="cm-word">rgb</span><span class="cm-bracket">.</span><span class="cm-word">b</span> <span class="cm-operator">=</span> <span class="cm-word">hue2rgb</span><span class="cm-bracket">(</span><span class="cm-word">f1</span><span class="cm-bracket">,</span> <span class="cm-word">f2</span><span class="cm-bracket">,</span> <span class="cm-word">hsl</span><span class="cm-bracket">.</span><span class="cm-word">x</span> <span class="cm-operator">-</span> <span class="cm-bracket">(</span><span class="cm-number">1.0</span><span class="cm-operator">/</span><span class="cm-number">3.0</span><span class="cm-bracket">));</span></pre><pre>    <span class="cm-bracket">}</span>   </pre><pre>    <span class="cm-keyword">return</span> <span class="cm-word">rgb</span><span class="cm-bracket">;</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">vec3</span> <span class="cm-word">hsl2rgb</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">h</span><span class="cm-bracket">,</span> <span class="cm-keyword">float</span> <span class="cm-word">s</span><span class="cm-bracket">,</span> <span class="cm-keyword">float</span> <span class="cm-word">l</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>    <span class="cm-keyword">return</span> <span class="cm-word">hsl2rgb</span><span class="cm-bracket">(</span><span class="cm-keyword">vec3</span><span class="cm-bracket">(</span><span class="cm-word">h</span><span class="cm-bracket">,</span> <span class="cm-word">s</span><span class="cm-bracket">,</span> <span class="cm-word">l</span><span class="cm-bracket">));</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre> </pre><pre> </pre><pre> </pre><pre><span class="cm-comment">//</span></pre><pre><span class="cm-comment">// Description : Array and textureless GLSL 2D/3D/4D simplex </span></pre><pre><span class="cm-comment">//               noise functions.</span></pre><pre><span class="cm-comment">//      Author : Ian McEwan, Ashima Arts.</span></pre><pre><span class="cm-comment">//  Maintainer : stegu</span></pre><pre><span class="cm-comment">//     Lastmod : 20110822 (ijm)</span></pre><pre><span class="cm-comment">//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.</span></pre><pre><span class="cm-comment">//               Distributed under the MIT License. See LICENSE file.</span></pre><pre><span class="cm-comment">//               https://github.com/ashima/webgl-noise</span></pre><pre><span class="cm-comment">//               https://github.com/stegu/webgl-noise</span></pre><pre><span class="cm-comment">// </span></pre><pre> </pre><pre><span class="cm-keyword">vec4</span> <span class="cm-word">mod289</span><span class="cm-bracket">(</span><span class="cm-keyword">vec4</span> <span class="cm-word">x</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">return</span> <span class="cm-word">x</span> <span class="cm-operator">-</span> <span class="cm-builtin">floor</span><span class="cm-bracket">(</span><span class="cm-word">x</span> <span class="cm-operator">*</span> <span class="cm-bracket">(</span><span class="cm-number">1.0</span> <span class="cm-operator">/</span> <span class="cm-number">289.0</span><span class="cm-bracket">))</span> <span class="cm-operator">*</span> <span class="cm-number">289.0</span><span class="cm-bracket">;</span> <span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">float</span> <span class="cm-word">mod289</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">x</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">return</span> <span class="cm-word">x</span> <span class="cm-operator">-</span> <span class="cm-builtin">floor</span><span class="cm-bracket">(</span><span class="cm-word">x</span> <span class="cm-operator">*</span> <span class="cm-bracket">(</span><span class="cm-number">1.0</span> <span class="cm-operator">/</span> <span class="cm-number">289.0</span><span class="cm-bracket">))</span> <span class="cm-operator">*</span> <span class="cm-number">289.0</span><span class="cm-bracket">;</span> <span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">vec4</span> <span class="cm-word">permute</span><span class="cm-bracket">(</span><span class="cm-keyword">vec4</span> <span class="cm-word">x</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>     <span class="cm-keyword">return</span> <span class="cm-word">mod289</span><span class="cm-bracket">(((</span><span class="cm-word">x</span><span class="cm-operator">*</span><span class="cm-number">34.0</span><span class="cm-bracket">)</span><span class="cm-operator">+</span><span class="cm-number">1.0</span><span class="cm-bracket">)</span><span class="cm-operator">*</span><span class="cm-word">x</span><span class="cm-bracket">);</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">float</span> <span class="cm-word">permute</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">x</span><span class="cm-bracket">)</span> <span class="cm-bracket">{</span></pre><pre>     <span class="cm-keyword">return</span> <span class="cm-word">mod289</span><span class="cm-bracket">(((</span><span class="cm-word">x</span><span class="cm-operator">*</span><span class="cm-number">34.0</span><span class="cm-bracket">)</span><span class="cm-operator">+</span><span class="cm-number">1.0</span><span class="cm-bracket">)</span><span class="cm-operator">*</span><span class="cm-word">x</span><span class="cm-bracket">);</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">vec4</span> <span class="cm-word">taylorInvSqrt</span><span class="cm-bracket">(</span><span class="cm-keyword">vec4</span> <span class="cm-word">r</span><span class="cm-bracket">)</span></pre><pre><span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">return</span> <span class="cm-number">1.79284291400159</span> <span class="cm-operator">-</span> <span class="cm-number">0.85373472095314</span> <span class="cm-operator">*</span> <span class="cm-word">r</span><span class="cm-bracket">;</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">float</span> <span class="cm-word">taylorInvSqrt</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">r</span><span class="cm-bracket">)</span></pre><pre><span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">return</span> <span class="cm-number">1.79284291400159</span> <span class="cm-operator">-</span> <span class="cm-number">0.85373472095314</span> <span class="cm-operator">*</span> <span class="cm-word">r</span><span class="cm-bracket">;</span></pre><pre><span class="cm-bracket">}</span></pre><pre> </pre><pre><span class="cm-keyword">vec4</span> <span class="cm-word">grad4</span><span class="cm-bracket">(</span><span class="cm-keyword">float</span> <span class="cm-word">j</span><span class="cm-bracket">,</span> <span class="cm-keyword">vec4</span> <span class="cm-word">ip</span><span class="cm-bracket">)</span></pre><pre>  <span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">const</span> <span class="cm-keyword">vec4</span> <span class="cm-word">ones</span> <span class="cm-operator">=</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span><span class="cm-number">1.0</span><span class="cm-bracket">,</span> <span class="cm-number">1.0</span><span class="cm-bracket">,</span> <span class="cm-number">1.0</span><span class="cm-bracket">,</span> <span class="cm-operator">-</span><span class="cm-number">1.0</span><span class="cm-bracket">);</span></pre><pre>  <span class="cm-keyword">vec4</span> <span class="cm-word">p</span><span class="cm-bracket">,</span><span class="cm-word">s</span><span class="cm-bracket">;</span></pre><pre> </pre><pre>  <span class="cm-word">p</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span> <span class="cm-operator">=</span> <span class="cm-builtin">floor</span><span class="cm-bracket">(</span> <span class="cm-builtin">fract</span> <span class="cm-bracket">(</span><span class="cm-keyword">vec3</span><span class="cm-bracket">(</span><span class="cm-word">j</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-word">ip</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-number">7.0</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-word">ip</span><span class="cm-bracket">.</span><span class="cm-word">z</span> <span class="cm-operator">-</span> <span class="cm-number">1.0</span><span class="cm-bracket">;</span></pre><pre>  <span class="cm-word">p</span><span class="cm-bracket">.</span><span class="cm-word">w</span> <span class="cm-operator">=</span> <span class="cm-number">1.5</span> <span class="cm-operator">-</span> <span class="cm-builtin">dot</span><span class="cm-bracket">(</span><span class="cm-builtin">abs</span><span class="cm-bracket">(</span><span class="cm-word">p</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span><span class="cm-bracket">),</span> <span class="cm-word">ones</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span><span class="cm-bracket">);</span></pre><pre>  <span class="cm-word">s</span> <span class="cm-operator">=</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span><span class="cm-builtin">lessThan</span><span class="cm-bracket">(</span><span class="cm-word">p</span><span class="cm-bracket">,</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span><span class="cm-number">0.0</span><span class="cm-bracket">)));</span></pre><pre>  <span class="cm-word">p</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span> <span class="cm-operator">=</span> <span class="cm-word">p</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span> <span class="cm-operator">+</span> <span class="cm-bracket">(</span><span class="cm-word">s</span><span class="cm-bracket">.</span><span class="cm-word">xyz</span><span class="cm-operator">*</span><span class="cm-number">2.0</span> <span class="cm-operator">-</span> <span class="cm-number">1.0</span><span class="cm-bracket">)</span> <span class="cm-operator">*</span> <span class="cm-word">s</span><span class="cm-bracket">.</span><span class="cm-word">www</span><span class="cm-bracket">;</span> </pre><pre> </pre><pre>  <span class="cm-keyword">return</span> <span class="cm-word">p</span><span class="cm-bracket">;</span></pre><pre>  <span class="cm-bracket">}</span></pre><pre>            </pre><pre><span class="cm-comment">// (sqrt(5) - 1)/4 = F4, used once below</span></pre><pre><span class="cm-meta">#define F4 0.309016994374947451</span></pre><pre> </pre><pre><span class="cm-keyword">float</span> <span class="cm-word">snoise</span><span class="cm-bracket">(</span><span class="cm-keyword">vec4</span> <span class="cm-word">v</span><span class="cm-bracket">)</span></pre><pre>  <span class="cm-bracket">{</span></pre><pre>  <span class="cm-keyword">const</span> <span class="cm-keyword">vec4</span>  <span class="cm-word">C</span> <span class="cm-operator">=</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span> <span class="cm-number">0.138196601125011</span><span class="cm-bracket">,</span>  <span class="cm-comment">// (5 - sqrt(5))/20  G4</span></pre><pre>                        <span class="cm-number">0.276393202250021</span><span class="cm-bracket">,</span>  <span class="cm-comment">// 2 * G4</span></pre><pre>                        <span class="cm-number">0.414589803375032</span><span class="cm-bracket">,</span>  <span class="cm-comment">// 3 * G4</span></pre><pre>                       <span class="cm-operator">-</span><span class="cm-number">0.447213595499958</span><span class="cm-bracket">);</span> <span class="cm-comment">// -1 + 4 * G4</span></pre><pre> </pre><pre><span class="cm-comment">// First corner</span></pre><pre>  <span class="cm-keyword">vec4</span> <span class="cm-word">i</span>  <span class="cm-operator">=</span> <span class="cm-builtin">floor</span><span class="cm-bracket">(</span><span class="cm-word">v</span> <span class="cm-operator">+</span> <span class="cm-builtin">dot</span><span class="cm-bracket">(</span><span class="cm-word">v</span><span class="cm-bracket">,</span> <span class="cm-keyword">vec4</span><span class="cm-bracket">(</span><span class="cm-word">F4</span><span class="cm-bracket">))</span> <span class="cm-bracket">);</span></pre><pre>  <span class="cm-keyword">vec4</span> <span class="cm-word">x0</span> <span class="cm-operator">=</span> <span class="cm-word">v</span> <span class="cm-operator">-</span>   <span class="cm-word">i</span> <span class="cm-operator">+</span> <span class="cm-builtin">dot</span><span class="cm-bracket">(</span><span class="cm-word">i</span><span class="cm-bracket">,</span> <span class="cm-word">C</span><span class="cm-bracket">.</span><span class="cm-word">xxxx</span><span class="cm-bracket">);</span></pre></div></div></div></div></div></div><div class="resizer"></div></div>
+
+  
+
 </body>
 </html>
