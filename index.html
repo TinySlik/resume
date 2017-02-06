@@ -268,7 +268,7 @@
 
 
 
-                  
+
                     // 眩晕
                     // #ifdef GL_ES
                     // precision mediump float;
@@ -1261,119 +1261,458 @@
                     // }
 
 
-                    //旧旧的墙面
-                    // 00f404afdd835ac3af3602c8943738ea - please mark changes (and/or add docs), and retain this line.
+                    // //旧旧的墙面
+                    // // 00f404afdd835ac3af3602c8943738ea - please mark changes (and/or add docs), and retain this line.
 
+                    // #ifdef GL_ES
+                    // precision mediump float;
+                    // #endif
+                     
+
+                    // uniform float time;
+                    // uniform vec2 mouse;
+                    // uniform vec2 resolution;
+
+                    // float _MinStep = 0.125;
+
+                    // //////////////////////////////////////////////////////////////
+                    // // http://www.gamedev.net/topic/502913-fast-computed-noise/
+                    // // replaced costly cos with z^2. fullreset
+                    // vec4 random4 (const vec4 x) {
+                    //     vec4 z = mod(mod(x, vec4(5612.0)), vec4(3.1415927 * 2.0));
+                    //     return fract ((z*z) * vec4(56812.5453));
+                    // }
+                    // const float A = 1.0;
+                    // const float B = 57.0;
+                    // const float C = 113.0;
+                    // const vec3 ABC = vec3(A, B, C);
+                    // const vec4 A3 = vec4(0, B, C, C+B);
+                    // const vec4 A4 = vec4(A, A+B, C+A, C+A+B);
+                    // float cnoise4 (const in vec3 xx) {
+                    //     vec3 x = xx; // mod(xx + 32768.0, 65536.0); // ignore edge issue
+                    //     vec3 fx = fract(x);
+                    //     vec3 ix = x-fx;
+                    //     vec3 wx = fx*fx*(3.0-2.0*fx);
+                    //     float nn = dot(ix, ABC);
+
+                    //     vec4 N1 = nn + A3;
+                    //     vec4 N2 = nn + A4;
+                    //     vec4 R1 = random4(N1);
+                    //     vec4 R2 = random4(N2);
+                    //     vec4 R = mix(R1, R2, wx.x);
+                    //     float re = mix(mix(R.x, R.y, wx.y), mix(R.z, R.w, wx.y), wx.z);
+
+                    //     return 1.0 - 2.0 * re;
+                    // }
+
+                    // //////////////////////////////////////////////////////////////
+                    // // distance functions
+                    // // http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+                    // float sdSphere( vec3 p, float s ) { return length(p)-s; }
+                    // float udBox( vec3 p, vec3 b ) {  return length(max(abs(p)-b,0.0)); }
+                    // float udRoundBox( vec3 p, vec3 b, float r ) { return length(max(abs(p)-b,0.0))-r; }
+                    // float sdTorus( vec3 p, vec2 t ) { vec2 q = vec2(length(p.xz)-t.x,p.y);  return length(q)-t.y; }
+                    // vec3  opRep(vec3 p, vec3 r) { return mod(p,r)-0.5*r; }
+                    // vec3  opTx(vec3 p, mat4 m ) { return (m*vec4(p,1.0)).xyz; }
+
+                    // /////////////////////////////////////////////////////
+                    // // the rest
+
+                    // float fbm(vec3 p) {
+                    //     float f;
+                    //     f = 0.5000*cnoise4( p ); p = p*2.02;
+                    //     f += 0.2500*cnoise4( p ); p = p*2.03;
+                    //     f += 0.1250*cnoise4( p ); p = p*2.01;
+                    //     f += 0.0625*cnoise4( p ); 
+                    //   return f;
+                    // }
+
+                    // float scene(vec3 p) { 
+                    //   vec3 pw = vec3(0.,0.,10.);
+                    //   float pa = udRoundBox(p+pw,vec3(100.,5,5.),0.22);
+                    //   float pb = udRoundBox(p-pw,vec3(100.,5,5.),0.22);
+                    //   float d = min(pa,pb);
+                      
+                    //   pa = udRoundBox(p+pw*2.,vec3(100.,80.,.2),0.22);
+                    //   pb = udRoundBox(p-pw*2.,vec3(100.,80.,.2),0.22);
+                    //   d = min(d,min(pa,pb));
+
+                    //   vec3 c = opRep(p,vec3(20.,4.5,14.))-vec3(0.,0.,7.);
+                    //   d = min(d,udRoundBox(c+pw+vec3(0.,0.0,-3.),vec3(1.75,2.,0.75),0.22));
+
+                    //   float e = udRoundBox(p-vec3(0.,30.,4.),vec3(100.,0.1,0.1),0.2);
+                    //   e = min(e,udRoundBox(p-vec3(0.,31.,4.),vec3(100.,0.06,0.06),0.1));
+                    //   e = min(e,udRoundBox(p-vec3(0.,5.,1.),vec3(100.,0.1,0.1),0.2));
+                    //   e = min(e,udRoundBox(p-vec3(0.,4.,1.),vec3(100.,0.1,0.1),0.2)); 
+                    //   e = min(e,udRoundBox(p-vec3(7.45,0.,-7.5),vec3(0.1,100.,0.1),0.1)); 
+
+                    //   float n = fbm(p);   
+                    //   return min(e,n*0.32+d); // 'texture'
+                    // }
+
+                    // vec4 color(float d) { 
+                    //   return mix(vec4(1.,1.,1.,0.25),vec4(0.2,0.1,0.,0.05),smoothstep(0.,0.1,d)); 
+                    // }
+
+                    // vec4 ray(vec3 pos, vec3 step) {
+                    //     vec4 sum = vec4(0.);
+                    //     vec4 col;
+                    //     float d = 9999.0;
+                    // #define RAY1  { d = scene(pos); col = color(d); col.rgb *= col.a; sum += col*(1.0 - sum.a); pos += step*max(d,_MinStep); }
+                    // #define RAY4  RAY1 RAY1 RAY1 RAY1
+                    //     RAY4 RAY4 RAY4 RAY4
+                    //     return sum;
+                    // }
+
+                    // void main( void ) {
+                    //   vec3 e = vec3(sin(time*0.2)*20.,14.,-20.); 
+                    //   vec3 p = vec3((gl_FragCoord.xy / resolution.xy) * 2. -1., 1.);
+                    //   p.x *= resolution.x/resolution.y;
+                    //   p += e;
+                    //   gl_FragColor = ray(p, normalize(p-e));
+                    // }
+
+                    // 淡彩色线条
+                    // #ifdef GL_ES
+                    // precision mediump float;
+                    // #endif
+
+                    // uniform vec2 resolution;
+                    // uniform float time;
+
+                    // float d2y(float d){ d*= 40.; return 1./(d*d);}
+
+                    // vec3 hsv2rgb(vec3 c)
+                    // {
+                    //     vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+                    //     vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+                    //     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+                    // }
+
+                    // float gauss(float s, float x){
+                    //     return (0.85)*exp(-x*x/(2.*s*s));
+                    // }
+                    // #if 1
+                    // float blur(float dist, float width, float blur, float intens){
+                    //     float w = width;
+                    //     float e = 0.85*blur;
+                    //     dist*=0.75;
+                    //     float b = smoothstep(-w-e, -w+e, dist)-smoothstep(w-e, w+e, dist);
+                    //     return 1.0*pow(b,1.9)*(1.+80.*blur)*intens;
+                    //     //return 0.9*b*intens;
+                    // }
+                    // #else
+                    // float blur(float dist, float width, float blur, float intens){
+                    //     float w = width;
+                    //     dist = max(abs(dist)-width,0.);
+                    //     float b = gauss(0.02+w*10.*blur,dist);
+                    //     return b*intens;
+                    // }
+                    // #endif
+                    // float d2y2(float d, float i){
+                    //     float b = 0.04*i+0.0001;
+                    //     return blur(d , 0.03, b, 0.4);
+                    // }
+
+
+
+                    // float f(float x){
+                    //     return blur(0.5*x, 0.03, 0.04+0.5, 1.);
+                    // }
+
+
+                    // #define N 8
+                    // // hauteur de la vague
+                    // float wave(float x, int i){
+                    //     float i_f=float(i);
+                    //     float fy = (3.3-0.5*i_f)*sin(x*2.+2.8*time+.6*i_f);
+                    //     return fy * (0.4+0.3*cos(x));
+                    // }
+
+                    // void main(void)
+                    // {
+                    //     vec2 uv = (gl_FragCoord.xy / resolution - vec2(0.5)) * vec2(resolution.x / resolution.y, 1.0) * 1.0;
+                    //     uv.y *= 2.2;
+                    //     uv.x *= 2.1;
+
+                      
+                    //     float yf = 0.*d2y(distance(uv.y*2., f(uv.x)));
+                    //     vec3 col = vec3(0.0);
+                    //     for(int i = 0; i<N; ++i){
+                    //         float i_f = float(i)*0.8+1.;
+                    //         float y = d2y2(distance(3.*uv.y, wave(uv.x, i)),i_f);
+                    //         col += 0.8*y *hsv2rgb(vec3(0.00015*time+i_f*0.1-0.05, 0.6,1.0));
+                            
+                    //     }
+                        
+                    //     gl_FragColor = vec4(vec3(yf)+(233./255.)-col, 1.0);
+                    // }
+
+                    // //卡通云
+                    // // ----------------------------------------------------------------------------------------
+                    // //  "Toon Cloud" by Antoine Clappier - March 2015
+                    // //
+                    // //  Licensed under:
+                    // //  A Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+                    // //  http://creativecommons.org/licenses/by-nc-sa/4.0/
+                    // // ----------------------------------------------------------------------------------------
+                    // // original from https://www.shadertoy.com/view/4t23RR
+                    // // ----------------------------------------------------------------------------------------
+
+                    // #ifdef GL_ES
+                    // precision mediump float;
+                    // #endif
+
+                    // uniform vec2 resolution;
+                    // uniform float time;
+
+                    // #define TAU 6.28318530718
+
+
+                    // const vec3 BackColor  = vec3(0.0, 0.4, 0.58);
+                    // const vec3 CloudColor = vec3(0.18,0.70,0.87);
+
+
+                    // float Func(float pX)
+                    // {
+                    //   return 0.6*(0.5*sin(0.1*pX) + 0.5*sin(0.553*pX) + 0.7*sin(1.2*pX));
+                    // }
+
+
+                    // float FuncR(float pX)
+                    // {
+                    //   return 0.5 + 0.25*(1.0 + sin(mod(40.0*pX, TAU)));
+                    // }
+
+
+                    // float Layer(vec2 pQ, float pT)
+                    // {
+                    //   vec2 Qt = 3.5*pQ;
+                    //   pT *= 0.5;
+                    //   Qt.x += pT;
+
+                    //   float Xi = floor(Qt.x);
+                    //   float Xf = Qt.x - Xi -0.5;
+
+                    //   vec2 C;
+                    //   float Yi;
+                    //   float D = 1.0 - step(Qt.y,  Func(Qt.x));
+
+                    //   // Disk:
+                    //   Yi = Func(Xi + 0.5);
+                    //   C = vec2(Xf, Qt.y - Yi ); 
+                    //   D =  min(D, length(C) - FuncR(Xi+ pT/80.0));
+
+                    //   // Previous disk:
+                    //   Yi = Func(Xi+1.0 + 0.5);
+                    //   C = vec2(Xf-1.0, Qt.y - Yi ); 
+                    //   D =  min(D, length(C) - FuncR(Xi+1.0+ pT/80.0));
+
+                    //   // Next Disk:
+                    //   Yi = Func(Xi-1.0 + 0.5);
+                    //   C = vec2(Xf+1.0, Qt.y - Yi ); 
+                    //   D =  min(D, length(C) - FuncR(Xi-1.0+ pT/80.0));
+
+                    //   return min(1.0, D);
+                    // }
+
+                    // void main(void){
+                    //   vec2 uv = 1.2*(2.0*gl_FragCoord.xy - resolution.xy) / resolution.y;
+                      
+                    //   // Render:
+                    //   vec3 Color= BackColor;
+
+                    //   for(float J=0.0; J<=1.0; J+=0.2)
+                    //   {
+                    //     // Cloud Layer: 
+                    //     float Lt =  time*(0.5  + 2.0*J)*(1.0 + 0.1*sin(226.0*J)) + 17.0*J;
+                    //     vec2 Lp = vec2(0.0, 0.3+1.5*( J - 0.5));
+                    //     float L = Layer(uv + Lp, Lt);
+
+                    //     // Blur and color:
+                    //     float Blur = 4.0*(0.5*abs(2.0 - 5.0*J))/(11.0 - 5.0*J);
+
+                    //     float V = mix( 0.0, 1.0, 1.0 - smoothstep( 0.0, 0.01 +0.2*Blur, L ) );
+                    //     vec3 Lc=  mix( CloudColor, vec3(1.0), J);
+
+                    //     Color =mix(Color, Lc,  V);
+                    //   }
+                    //   gl_FragColor = vec4(Color,1.);
+                    // }
+
+
+                    // // Colorful Voronoi
+                    // // By: Brandon Fogerty
+                    // // bfogerty at gmail dot com
+                    // // xdpixel.com
+
+                    // #ifdef GL_ES
+                    // precision mediump float;
+                    // #endif
+
+                    // uniform float time;
+                    // uniform vec2 mouse;
+                    // uniform vec2 resolution;
+
+                    // vec2 hash(vec2 p)
+                    // {
+                    //     mat2 m = mat2(  13.85, 47.77,
+                    //                     99.41, 88.48
+                    //                 );
+
+                    //     return fract(sin(m*p) * 46738.29);
+                    // }
+
+                    // float voronoi(vec2 p)
+                    // {
+                    //     vec2 g = floor(p);
+                    //     vec2 f = fract(p);
+
+                    //     float distanceToClosestFeaturePoint = 1.0;
+                    //     for(int y = -1; y <= 1; y++)
+                    //     {
+                    //         for(int x = -1; x <= 1; x++)
+                    //         {
+                    //             vec2 latticePoint = vec2(x, y);
+                    //             float currentDistance = distance(latticePoint + hash(g+latticePoint), f);
+                    //             distanceToClosestFeaturePoint = min(distanceToClosestFeaturePoint, currentDistance);
+                    //         }
+                    //     }
+
+                    //     return distanceToClosestFeaturePoint;
+                    // }
+
+                    // void main( void )
+                    // {
+                    //     vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;
+                    //     uv.x *= resolution.x / resolution.y;
+
+                    //     float offset = voronoi(uv*10.0 + vec2(time));
+                    //     float t = 1.0/abs(((uv.x + sin(uv.y + time)) + offset) * 30.0);
+
+                    //     float r = voronoi( uv * 1.0 ) * 10.0;
+                    //     vec3 finalColor = vec3(10.0 * uv.y, 2.0, 1.0 * r) * t;
+                        
+                    //     gl_FragColor = vec4(finalColor, 1.0 );
+                    // }
+
+                    //小花
                     #ifdef GL_ES
                     precision mediump float;
                     #endif
-                     
 
                     uniform float time;
                     uniform vec2 mouse;
                     uniform vec2 resolution;
 
-                    float _MinStep = 0.125;
+                    #define pi 3.1415926535897932384626433832795
+                    #define flyCount 30.
 
-                    //////////////////////////////////////////////////////////////
-                    // http://www.gamedev.net/topic/502913-fast-computed-noise/
-                    // replaced costly cos with z^2. fullreset
-                    vec4 random4 (const vec4 x) {
-                        vec4 z = mod(mod(x, vec4(5612.0)), vec4(3.1415927 * 2.0));
-                        return fract ((z*z) * vec4(56812.5453));
-                    }
-                    const float A = 1.0;
-                    const float B = 57.0;
-                    const float C = 113.0;
-                    const vec3 ABC = vec3(A, B, C);
-                    const vec4 A3 = vec4(0, B, C, C+B);
-                    const vec4 A4 = vec4(A, A+B, C+A, C+A+B);
-                    float cnoise4 (const in vec3 xx) {
-                        vec3 x = xx; // mod(xx + 32768.0, 65536.0); // ignore edge issue
-                        vec3 fx = fract(x);
-                        vec3 ix = x-fx;
-                        vec3 wx = fx*fx*(3.0-2.0*fx);
-                        float nn = dot(ix, ABC);
 
-                        vec4 N1 = nn + A3;
-                        vec4 N2 = nn + A4;
-                        vec4 R1 = random4(N1);
-                        vec4 R2 = random4(N2);
-                        vec4 R = mix(R1, R2, wx.x);
-                        float re = mix(mix(R.x, R.y, wx.y), mix(R.z, R.w, wx.y), wx.z);
+                    float testFuncFloor(float v){
 
-                        return 1.0 - 2.0 * re;
+                        const float amplitude=1.;
+                        const float t=pi*2.;
+                        float k=4.*amplitude/t;
+                        float r=mod( v  ,t);
+                        float d=floor(v /(.5* t) );
+                        
+                      return mix(k* r-amplitude ,  amplitude*3.-k* r ,mod(d,2.)  );
                     }
 
-                    //////////////////////////////////////////////////////////////
-                    // distance functions
-                    // http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
-                    float sdSphere( vec3 p, float s ) { return length(p)-s; }
-                    float udBox( vec3 p, vec3 b ) {  return length(max(abs(p)-b,0.0)); }
-                    float udRoundBox( vec3 p, vec3 b, float r ) { return length(max(abs(p)-b,0.0))-r; }
-                    float sdTorus( vec3 p, vec2 t ) { vec2 q = vec2(length(p.xz)-t.x,p.y);  return length(q)-t.y; }
-                    vec3  opRep(vec3 p, vec3 r) { return mod(p,r)-0.5*r; }
-                    vec3  opTx(vec3 p, mat4 m ) { return (m*vec4(p,1.0)).xyz; }
-
-                    /////////////////////////////////////////////////////
-                    // the rest
-
-                    float fbm(vec3 p) {
-                        float f;
-                        f = 0.5000*cnoise4( p ); p = p*2.02;
-                        f += 0.2500*cnoise4( p ); p = p*2.03;
-                        f += 0.1250*cnoise4( p ); p = p*2.01;
-                        f += 0.0625*cnoise4( p ); 
-                      return f;
+                    float getRad(vec2 q){
+                       return atan(q.y,q.x); 
                     }
 
-                    float scene(vec3 p) { 
-                      vec3 pw = vec3(0.,0.,10.);
-                      float pa = udRoundBox(p+pw,vec3(100.,5,5.),0.22);
-                      float pb = udRoundBox(p-pw,vec3(100.,5,5.),0.22);
-                      float d = min(pa,pb);
-                      
-                      pa = udRoundBox(p+pw*2.,vec3(100.,80.,.2),0.22);
-                      pb = udRoundBox(p-pw*2.,vec3(100.,80.,.2),0.22);
-                      d = min(d,min(pa,pb));
-
-                      vec3 c = opRep(p,vec3(20.,4.5,14.))-vec3(0.,0.,7.);
-                      d = min(d,udRoundBox(c+pw+vec3(0.,0.0,-3.),vec3(1.75,2.,0.75),0.22));
-
-                      float e = udRoundBox(p-vec3(0.,30.,4.),vec3(100.,0.1,0.1),0.2);
-                      e = min(e,udRoundBox(p-vec3(0.,31.,4.),vec3(100.,0.06,0.06),0.1));
-                      e = min(e,udRoundBox(p-vec3(0.,5.,1.),vec3(100.,0.1,0.1),0.2));
-                      e = min(e,udRoundBox(p-vec3(0.,4.,1.),vec3(100.,0.1,0.1),0.2)); 
-                      e = min(e,udRoundBox(p-vec3(7.45,0.,-7.5),vec3(0.1,100.,0.1),0.1)); 
-
-                      float n = fbm(p);   
-                      return min(e,n*0.32+d); // 'texture'
+                    vec2 noise(vec2 tc){
+                        //return (2.*texture2D(iChannel0, tc).xy-1.).xy;
+                        return vec2(fract(sin(tc.x) ),fract(sin(tc.y) ) );
                     }
 
-                    vec4 color(float d) { 
-                      return mix(vec4(1.,1.,1.,0.25),vec4(0.2,0.1,0.,0.05),smoothstep(0.,0.1,d)); 
+                    float firefly(vec2 p,float size){
+                        
+                      //return smoothstep(0.,size,dot(p,p)*200. );
+                      return smoothstep(0.,size,length(p) );
+
                     }
 
-                    vec4 ray(vec3 pos, vec3 step) {
-                        vec4 sum = vec4(0.);
-                        vec4 col;
-                        float d = 9999.0;
-                    #define RAY1  { d = scene(pos); col = color(d); col.rgb *= col.a; sum += col*(1.0 - sum.a); pos += step*max(d,_MinStep); }
-                    #define RAY4  RAY1 RAY1 RAY1 RAY1
-                        RAY4 RAY4 RAY4 RAY4
-                        return sum;
-                    }
+                    const float pow=1.;
+                    const float flySpeed=0.1;
+
 
                     void main( void ) {
-                      vec3 e = vec3(sin(time*0.2)*20.,14.,-20.); 
-                      vec3 p = vec3((gl_FragCoord.xy / resolution.xy) * 2. -1., 1.);
-                      p.x *= resolution.x/resolution.y;
-                      p += e;
-                      gl_FragColor = ray(p, normalize(p-e));
+
+                        float pow=1.;
+                        const float duration=1.;
+                        float t=duration*(1.+sin(3.* time ) );
+                      vec2 p= gl_FragCoord.xy / resolution.xy;
+                       
+                      float ratio= resolution.y/resolution.x;
+                        
+                         vec2 uv=p;
+                        uv.y*=ratio;
+                        
+                        
+                        vec2 flowerP=vec2(.618,0.518);
+                        vec2 q=p-flowerP-vec2( pow*.008*cos(3.*time) ,pow*.008*sin(3.*time) ) ;
+                        vec2 rootP=p-+flowerP-vec2( pow*.02*cos(3.*time)*p.y ,-0.48+pow*.008*sin(3.*time) );
+                       
+                      q.y*=ratio;
+                      
+                        //sky
+                        vec3 col=mix( vec3(0.1,0.6,0.5), vec3(0.2,0.1,0.2), sqrt(p.y)*.6 );
+                        
+
+                        //draw stem 
+                        float width=0.01;
+                        float h=.5;
+                        float w=.0005;
+                        col=mix(vec3(.5,.7,.4),col, 1.- (1.- smoothstep(h,h+width, abs(rootP.y ) )  ) * (1.- smoothstep(w,w+width, abs(rootP.x-0.1*sin(4.*rootP.y+pi*.35) ) )  ) );
+                        
+                        //draw flower 
+                        vec3 flowerCol=mix(vec3(.7,.7,.2),vec3(.7,.9,.7), smoothstep( .0,1.,length(q)*10. ) ) ;
+
+                        const float edge=.02;
+                        float r= .1+0.05*( testFuncFloor( getRad( q ) *7.  + 2.*q.x*(t-duration)  )  );
+
+                      col=mix(flowerCol,col, smoothstep(r,r+edge,  length( q )  ) );
+                        
+                      //draw buds
+                        float r1=0.;
+                        r1=.04;
+                        vec3 budCol=mix (vec3(.3,.4,0.),vec3(.9,.8,0.), length(q)*10. );
+                      col=mix(budCol,col, smoothstep(r1,r1+0.01,  length( q )  ) );
+                        
+                        //draw firefly
+                      //vec3 flyCol=mix (vec3(.1,.4,0.1),vec3(.1,1.,1.), length(q)*10. );
+                      
+                        for (float i=0.;i<flyCount;i++){
+                        
+                            float seed=i/flyCount;
+                      float seed2=fract(i/flyCount*5.);
+                            float t1=1.*(1.+sin(noise(vec2(seed) ).x* time ) );
+                          vec2 fireflyP=uv- 
+                            vec2(noise(vec2(seed2) ).x+noise(vec2(seed2) ).x*t1*flySpeed,
+                           noise(vec2(seed) ).y+noise(vec2(seed) ).y*t1*flySpeed);
+                          
+                        float fly= firefly( fireflyP,.002+.008*seed );
+                          vec3 flyCol=mix(vec3(0.1,0.9,0.1)*t1,vec3(0.), fly );
+                          col+=flyCol;
+                        }
+                      
+                        gl_FragColor=vec4(col,0.);
+                      /*
+                      vec2 position = ( gl_FragCoord.xy / resolution.xy ) + mouse / 4.0;
+
+                      float color = 0.0;
+                      color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+                      color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+                      color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+                      color *= sin( time / 10.0 ) * 0.5;
+
+                      gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
+                      */
                     }
-
-
-
 
     </script>
 
