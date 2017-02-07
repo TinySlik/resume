@@ -596,190 +596,190 @@
 
 
 
-                    // //水泥花朵
-                    // #ifdef GL_ES
-                    // precision mediump float;
-                    // #endif
+                    //水泥花朵
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
 
-                    // #extension GL_OES_standard_derivatives : enable
+                    #extension GL_OES_standard_derivatives : enable
 
-                    // uniform float time;
-                    // uniform vec2 mouse;
-                    // uniform vec2 resolution;
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
 
 
-                    // //----------------------------------------------------------------------
-                    // // FlowerTest.glsl
-                    // // original:   https://www.shadertoy.com/view/MltSRf
-                    // // RayMarcher Created by inigo quilez - iq/2013
-                    // // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
-                    // //----------------------------------------------------------------------
+                    //----------------------------------------------------------------------
+                    // FlowerTest.glsl
+                    // original:   https://www.shadertoy.com/view/MltSRf
+                    // RayMarcher Created by inigo quilez - iq/2013
+                    // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+                    //----------------------------------------------------------------------
 
-                    // float ballFlower (vec3 p)
-                    // { 
-                    //   const float radius = 1.0;
-                    //   float q = length(p);
-                    //   p.y -= 0.4;
-                    // //  p.xz *= 5.4;
-                    //   vec3 n = p; // normalize(p);
-                    //   float rho   = atan(length(vec2(n.x,n.z)),n.y)*20.0 + q*15.0;
-                    //   float theta = atan(n.x,n.z)*9.0 + p.y*5.0+rho;
-                    //   float a = 0.1*(1.2-abs(dot(n,vec3(0,1,0)) ));
-                    //   return q -radius + a*cos(theta) + a*sin(rho - time);
-                    // }
-                    // //----------------------------------------------------------------------
+                    float ballFlower (vec3 p)
+                    { 
+                      const float radius = 1.0;
+                      float q = length(p);
+                      p.y -= 0.4;
+                    //  p.xz *= 5.4;
+                      vec3 n = p; // normalize(p);
+                      float rho   = atan(length(vec2(n.x,n.z)),n.y)*20.0 + q*15.0;
+                      float theta = atan(n.x,n.z)*9.0 + p.y*5.0+rho;
+                      float a = 0.1*(1.2-abs(dot(n,vec3(0,1,0)) ));
+                      return q -radius + a*cos(theta) + a*sin(rho - time);
+                    }
+                    //----------------------------------------------------------------------
 
-                    // vec2 map( in vec3 pos )
-                    // {    
-                    //     return vec2( ballFlower(pos),11) ;
-                    // }
+                    vec2 map( in vec3 pos )
+                    {    
+                        return vec2( ballFlower(pos),11) ;
+                    }
 
-                    // vec2 castRay( in vec3 ro, in vec3 rd )
-                    // {
-                    //     float tmin = 1.0;
-                    //     float tmax = 20.0;
+                    vec2 castRay( in vec3 ro, in vec3 rd )
+                    {
+                        float tmin = 1.0;
+                        float tmax = 20.0;
                         
-                    // #if 0
-                    //     float tp1 = (0.0-ro.y)/rd.y; if( tp1>0.0 ) tmax = min( tmax, tp1 );
-                    //     float tp2 = (1.6-ro.y)/rd.y; if( tp2>0.0 ) { if( ro.y>1.6 ) tmin = max( tmin, tp2 );
-                    //                                                  else           tmax = min( tmax, tp2 ); }
-                    // #endif
+                    #if 0
+                        float tp1 = (0.0-ro.y)/rd.y; if( tp1>0.0 ) tmax = min( tmax, tp1 );
+                        float tp2 = (1.6-ro.y)/rd.y; if( tp2>0.0 ) { if( ro.y>1.6 ) tmin = max( tmin, tp2 );
+                                                                     else           tmax = min( tmax, tp2 ); }
+                    #endif
                         
-                    //     float precis = 0.002;
-                    //     float t = tmin*0.1;
-                    //     float m = -1.0;
-                    //     for( int i=0; i<215; i++ )
-                    //     {
-                    //         vec2 res = map( ro+rd*t );
-                    //         if( res.x<precis || t>tmax ) break;
-                    //         t += res.x*0.3;
-                    //         m = res.y;
-                    //     }
-                    //     if( t>tmax ) m=-1.0;
-                    //     return vec2( t, m );
-                    // }
+                        float precis = 0.002;
+                        float t = tmin*0.1;
+                        float m = -1.0;
+                        for( int i=0; i<215; i++ )
+                        {
+                            vec2 res = map( ro+rd*t );
+                            if( res.x<precis || t>tmax ) break;
+                            t += res.x*0.3;
+                            m = res.y;
+                        }
+                        if( t>tmax ) m=-1.0;
+                        return vec2( t, m );
+                    }
 
-                    // float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax )
-                    // {
-                    //     float res = 1.0;
-                    //     float t = mint;
-                    //     for( int i=0; i<16; i++ )
-                    //     {
-                    //         float h = map( ro + rd*t ).x;
-                    //         res = min( res, 8.0*h/t );
-                    //         t += clamp( h, 0.02, 0.10 );
-                    //         if( h<0.001 || t>tmax ) break;
-                    //     }
-                    //     return clamp( res, 0.0, 1.0 );
-                    // }
+                    float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax )
+                    {
+                        float res = 1.0;
+                        float t = mint;
+                        for( int i=0; i<16; i++ )
+                        {
+                            float h = map( ro + rd*t ).x;
+                            res = min( res, 8.0*h/t );
+                            t += clamp( h, 0.02, 0.10 );
+                            if( h<0.001 || t>tmax ) break;
+                        }
+                        return clamp( res, 0.0, 1.0 );
+                    }
 
-                    // vec3 calcNormal( in vec3 pos )
-                    // {
-                    //     vec3 eps = vec3( 0.001, 0.0, 0.0 );
-                    //     vec3 nor = vec3( map(pos+eps.xyy).x - map(pos-eps.xyy).x,
-                    //                      map(pos+eps.yxy).x - map(pos-eps.yxy).x,
-                    //                      map(pos+eps.yyx).x - map(pos-eps.yyx).x );
-                    //     return normalize(nor);
-                    // }
+                    vec3 calcNormal( in vec3 pos )
+                    {
+                        vec3 eps = vec3( 0.001, 0.0, 0.0 );
+                        vec3 nor = vec3( map(pos+eps.xyy).x - map(pos-eps.xyy).x,
+                                         map(pos+eps.yxy).x - map(pos-eps.yxy).x,
+                                         map(pos+eps.yyx).x - map(pos-eps.yyx).x );
+                        return normalize(nor);
+                    }
 
-                    // float calcAO( in vec3 pos, in vec3 nor )
-                    // {
-                    //     float occ = 0.0;
-                    //     float sca = 1.0;
-                    //     for( int i=0; i<5; i++ )
-                    //     {
-                    //         float hr = 0.01 + 0.12*float(i)/4.0;
-                    //         vec3 aopos =  nor * hr + pos;
-                    //         float dd = map( aopos ).x;
-                    //         occ += -(dd-hr)*sca;
-                    //         sca *= 0.95;
-                    //     }
-                    //     return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
-                    // }
+                    float calcAO( in vec3 pos, in vec3 nor )
+                    {
+                        float occ = 0.0;
+                        float sca = 1.0;
+                        for( int i=0; i<5; i++ )
+                        {
+                            float hr = 0.01 + 0.12*float(i)/4.0;
+                            vec3 aopos =  nor * hr + pos;
+                            float dd = map( aopos ).x;
+                            occ += -(dd-hr)*sca;
+                            sca *= 0.95;
+                        }
+                        return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
+                    }
 
-                    // vec3 render( in vec3 ro, in vec3 rd )
-                    // { 
-                    //     vec3 col = vec3(0.7, 0.9, 1.0) +rd.y*0.8;
-                    //     vec2 res = castRay(ro,rd);
-                    //     float t = res.x;
-                    //   float m = res.y;
-                    //     if( m > -0.5 )
-                    //     {
-                    //         vec3 pos = ro + t*rd;
-                    //         vec3 nor = calcNormal( pos );
-                    //         vec3 ref = reflect( rd, nor );
+                    vec3 render( in vec3 ro, in vec3 rd )
+                    { 
+                        vec3 col = vec3(0.7, 0.9, 1.0) +rd.y*0.8;
+                        vec2 res = castRay(ro,rd);
+                        float t = res.x;
+                      float m = res.y;
+                        if( m > -0.5 )
+                        {
+                            vec3 pos = ro + t*rd;
+                            vec3 nor = calcNormal( pos );
+                            vec3 ref = reflect( rd, nor );
                             
-                    //         // material        
-                    //         col = 0.45 + 0.3*sin( vec3(0.05,0.08,0.10)*(m-1.0) );
+                            // material        
+                            col = 0.45 + 0.3*sin( vec3(0.05,0.08,0.10)*(m-1.0) );
                         
-                    //         if( m<1.5 )
-                    //         {
-                    //             float f = mod( floor(5.0*pos.z) + floor(5.0*pos.x), 2.0);
-                    //             col = 0.4 + 0.1*f*vec3(1.0);
-                    //         }
+                            if( m<1.5 )
+                            {
+                                float f = mod( floor(5.0*pos.z) + floor(5.0*pos.x), 2.0);
+                                col = 0.4 + 0.1*f*vec3(1.0);
+                            }
 
-                    //         // lighting        
-                    //         float occ = calcAO( pos, nor );
-                    //         vec3  lig = normalize( vec3(-0.6, 0.7, -0.5) );
-                    //         float amb = clamp( 0.5+0.5*nor.y, 0.0, 1.0 );
-                    //         float dif = clamp( dot( nor, lig ), 0.0, 1.0 );
-                    //         float bac = clamp( dot( nor, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-pos.y,0.0,1.0);
-                    //         float dom = smoothstep( -0.1, 0.1, ref.y );
-                    //         float fre = pow( clamp(1.0+dot(nor,rd),0.0,1.0), 2.0 );
-                    //         float spe = pow(clamp( dot( ref, lig ), 0.0, 1.0 ),16.0);
+                            // lighting        
+                            float occ = calcAO( pos, nor );
+                            vec3  lig = normalize( vec3(-0.6, 0.7, -0.5) );
+                            float amb = clamp( 0.5+0.5*nor.y, 0.0, 1.0 );
+                            float dif = clamp( dot( nor, lig ), 0.0, 1.0 );
+                            float bac = clamp( dot( nor, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-pos.y,0.0,1.0);
+                            float dom = smoothstep( -0.1, 0.1, ref.y );
+                            float fre = pow( clamp(1.0+dot(nor,rd),0.0,1.0), 2.0 );
+                            float spe = pow(clamp( dot( ref, lig ), 0.0, 1.0 ),16.0);
                             
-                    //         dif *= softshadow( pos, lig, 0.02, 2.5 );
-                    //         dom *= softshadow( pos, ref, 0.02, 2.5 );
+                            dif *= softshadow( pos, lig, 0.02, 2.5 );
+                            dom *= softshadow( pos, ref, 0.02, 2.5 );
 
-                    //         vec3 lin = vec3(0.0);
-                    //         lin += 1.20*dif*vec3(1.00,0.85,0.55);
-                    //         lin += 1.20*spe*vec3(1.00,0.85,0.55)*dif;
-                    //         lin += 0.20*amb*vec3(0.50,0.70,1.00)*occ;
-                    //         lin += 0.30*dom*vec3(0.50,0.70,1.00)*occ;
-                    //         lin += 0.30*bac*vec3(0.25,0.25,0.25)*occ;
-                    //         lin += 0.40*fre*vec3(1.00,1.00,1.00)*occ;
-                    //         col = col*lin;
+                            vec3 lin = vec3(0.0);
+                            lin += 1.20*dif*vec3(1.00,0.85,0.55);
+                            lin += 1.20*spe*vec3(1.00,0.85,0.55)*dif;
+                            lin += 0.20*amb*vec3(0.50,0.70,1.00)*occ;
+                            lin += 0.30*dom*vec3(0.50,0.70,1.00)*occ;
+                            lin += 0.30*bac*vec3(0.25,0.25,0.25)*occ;
+                            lin += 0.40*fre*vec3(1.00,1.00,1.00)*occ;
+                            col = col*lin;
 
-                    //       col = mix( col, vec3(0.8,0.9,1.0), 1.0-exp( -0.002*t*t ) );
-                    //     }
-                    //     return vec3( clamp(col,0.0,1.0) );
-                    // }
+                          col = mix( col, vec3(0.8,0.9,1.0), 1.0-exp( -0.002*t*t ) );
+                        }
+                        return vec3( clamp(col,0.0,1.0) );
+                    }
 
-                    // mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
-                    // {
-                    //     vec3 cw = normalize(ta-ro);
-                    //     vec3 cp = vec3(sin(cr), cos(cr),0.0);
-                    //     vec3 cu = normalize( cross(cw,cp) );
-                    //     vec3 cv = normalize( cross(cu,cw) );
-                    //     return mat3( cu, cv, cw );
-                    // }
+                    mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
+                    {
+                        vec3 cw = normalize(ta-ro);
+                        vec3 cp = vec3(sin(cr), cos(cr),0.0);
+                        vec3 cu = normalize( cross(cw,cp) );
+                        vec3 cv = normalize( cross(cu,cw) );
+                        return mat3( cu, cv, cw );
+                    }
 
-                    // void main()
-                    // {
-                    //     vec2 q = gl_FragCoord.xy / resolution.xy;
-                    //     vec2 p = 2.0*q - 1.0;
-                    //     p.x *= resolution.x / resolution.y;
-                    //     vec2 mo =  mouse.xy;
+                    void main()
+                    {
+                        vec2 q = gl_FragCoord.xy / resolution.xy;
+                        vec2 p = 2.0*q - 1.0;
+                        p.x *= resolution.x / resolution.y;
+                        vec2 mo =  mouse.xy;
                          
-                    //     float time = 15.0 + time;
+                        float time = 15.0 + time;
 
-                    //     // camera 
-                    //     vec3 ro = vec3( -0.5+3.5*cos(0.1*time + 6.0*mo.x), -0.0 + 4.0*mo.y, 0.5 + 3.5*sin(0.1*time + 6.0*mo.x) );
-                    //     vec3 ta = vec3( -0.5, -0.4, 0.5 );
+                        // camera 
+                        vec3 ro = vec3( -0.5+3.5*cos(0.1*time + 6.0*mo.x), -0.0 + 4.0*mo.y, 0.5 + 3.5*sin(0.1*time + 6.0*mo.x) );
+                        vec3 ta = vec3( -0.5, -0.4, 0.5 );
                       
-                    //     // camera-to-world transformation
-                    //     mat3 ca = setCamera( ro, ta, 0.0 );
+                        // camera-to-world transformation
+                        mat3 ca = setCamera( ro, ta, 0.0 );
                         
-                    //     // ray direction
-                    //     vec3 rd = ca * normalize( vec3(p.xy,2.0) );
+                        // ray direction
+                        vec3 rd = ca * normalize( vec3(p.xy,2.0) );
 
-                    //     // render 
-                    //     vec3 col = render( ro+vec3(1,0,0), rd );
+                        // render 
+                        vec3 col = render( ro+vec3(1,0,0), rd );
 
-                    //     col = pow( col, vec3(0.7) );
+                        col = pow( col, vec3(0.7) );
 
-                    //     gl_FragColor=vec4( col, 1.0 );
-                    // }
+                        gl_FragColor=vec4( col, 1.0 );
+                    }
 
 
 
@@ -1116,184 +1116,184 @@
 
 
 
-                    //高级等待
-                    #ifdef GL_ES
+                    // //高级等待 *****
+                    // #ifdef GL_ES
 
-                    precision mediump float;
+                    // precision mediump float;
 
 
-                    #endif
+                    // #endif
 
 
-                    #extension GL_OES_standard_derivatives : enable
+                    // #extension GL_OES_standard_derivatives : enable
 
 
-                    uniform float time;
+                    // uniform float time;
 
-                    uniform vec2 resolution;
+                    // uniform vec2 resolution;
 
 
-                    const float INTERVAL = 2.;
+                    // const float INTERVAL = 2.;
 
 
-                    const float PI = 3.14159265358979323844;
+                    // const float PI = 3.14159265358979323844;
 
 
 
-                    //
+                    // //
 
-                    //  r*cos(a) = R + t*(R*cos(b) - R)
+                    // //  r*cos(a) = R + t*(R*cos(b) - R)
 
-                    //  r*sin(a) = t*R*sin(b)
+                    // //  r*sin(a) = t*R*sin(b)
 
-                    //
+                    // //
 
-                    //  t = (r*sin(a))/(R*sin(b))
+                    // //  t = (r*sin(a))/(R*sin(b))
 
-                    //
+                    // //
 
-                    //  r*cos(a) = R + (r*sin(a))/(R*sin(b))*(R*cos(b) - R)
+                    // //  r*cos(a) = R + (r*sin(a))/(R*sin(b))*(R*cos(b) - R)
 
-                    //  r*cos(a) = R + (r*sin(a)/sin(b))*(cos(b) - 1)
+                    // //  r*cos(a) = R + (r*sin(a)/sin(b))*(cos(b) - 1)
 
-                    //  r*(cos(a) - (sin(a)/sin(b))*(cos(b) - 1)) = R
+                    // //  r*(cos(a) - (sin(a)/sin(b))*(cos(b) - 1)) = R
 
 
-                    float inside_polygon(vec2 pos, vec2 center, float r, float n, float s)
+                    // float inside_polygon(vec2 pos, vec2 center, float r, float n, float s)
 
-                    {
+                    // {
 
-                            float theta = 2.*PI/n;
+                    //         float theta = 2.*PI/n;
 
 
-                            vec2 d = pos - center;
+                    //         vec2 d = pos - center;
 
-                            float a = mod(mod(atan(d.y, d.x) + s, 2.*PI), theta);
+                    //         float a = mod(mod(atan(d.y, d.x) + s, 2.*PI), theta);
 
-                            float l = length(d);
+                    //         float l = length(d);
 
 
-                           float m = r*cos(.5*theta)/cos(a - .5*theta); // r/(cos(a) - (sin(a)/sin(theta))*(cos(theta) - 1.));
+                    //        float m = r*cos(.5*theta)/cos(a - .5*theta); // r/(cos(a) - (sin(a)/sin(theta))*(cos(theta) - 1.));
 
 
-                           const float border = .001;
+                    //        const float border = .001;
 
 
-                           return smoothstep(m + border, m - border, l);
+                    //        return smoothstep(m + border, m - border, l);
 
-                    }
+                    // }
 
 
-                    float wobble(vec2 pos)
+                    // float wobble(vec2 pos)
 
-                    {
+                    // {
 
-                            vec2 d = pos;
+                    //         vec2 d = pos;
 
-                            float a = (atan(d.y, d.x) + PI/2.)/(2.*PI);
+                    //         float a = (atan(d.y, d.x) + PI/2.)/(2.*PI);
 
 
-                            float l = .75;
+                    //         float l = .75;
 
 
-                            float t = mod(time, INTERVAL)/INTERVAL;
+                    //         float t = mod(time, INTERVAL)/INTERVAL;
 
-                            float o = t*(1. + l);
+                    //         float o = t*(1. + l);
 
 
-                            return smoothstep(o, o - l, a);
+                    //         return smoothstep(o, o - l, a);
 
-                    }
+                    // }
 
 
-                    float inside_triangle(vec2 pos, vec2 center, float r, float s)
+                    // float inside_triangle(vec2 pos, vec2 center, float r, float s)
 
-                    {
+                    // {
 
-                           return inside_polygon(pos, center, wobble(center)*r, 3., s);
+                    //        return inside_polygon(pos, center, wobble(center)*r, 3., s);
 
-                    }
+                    // }
 
 
-                    float inside_triangles(vec2 pos, float r)
+                    // float inside_triangles(vec2 pos, float r)
 
-                    {
+                    // {
 
-                            const float da = 2.*PI/6.;
+                    //         const float da = 2.*PI/6.;
 
-                            float a = 0.;
+                    //         float a = 0.;
 
 
-                            float v = 0.;
+                    //         float v = 0.;
 
 
-                            for (int i = 0; i < 6; i++) {
+                    //         for (int i = 0; i < 6; i++) {
 
-                                    float c = cos(a);
+                    //                 float c = cos(a);
 
-                                    float s = sin(a);
+                    //                 float s = sin(a);
 
 
-                                    vec2 d = vec2(c, s);
+                    //                 vec2 d = vec2(c, s);
 
-                                    vec2 n = vec2(-s, c);
+                    //                 vec2 n = vec2(-s, c);
 
 
-                                    vec2 o0 = (2./3.)*sqrt(3.)*d*r;
+                    //                 vec2 o0 = (2./3.)*sqrt(3.)*d*r;
 
-                                    vec2 o1 = (5./6.)*sqrt(3.)*d*r;
+                    //                 vec2 o1 = (5./6.)*sqrt(3.)*d*r;
 
 
-                                    float r_triangle = 1.*r/sqrt(3.);
+                    //                 float r_triangle = 1.*r/sqrt(3.);
 
 
-                                    v += inside_triangle(pos, o0, r_triangle, a) +
+                    //                 v += inside_triangle(pos, o0, r_triangle, a) +
 
-                                          inside_triangle(pos, o1 - n*.5*r, r_triangle, a + PI) +
+                    //                       inside_triangle(pos, o1 - n*.5*r, r_triangle, a + PI) +
 
-                                            inside_triangle(pos, o1 + n*.5*r, r_triangle, a + PI);
+                    //                         inside_triangle(pos, o1 + n*.5*r, r_triangle, a + PI);
 
 
-                                    a += da;
+                    //                 a += da;
 
-                            }
+                    //         }
 
 
-                            return v;
+                    //         return v;
 
-                    }
+                    // }
 
 
-                    void main()
+                    // void main()
 
-                    {
+                    // {
 
-                            const float radius = 20.;
+                    //         const float radius = 20.;
 
 
-                            vec2 pos = (gl_FragCoord.xy*2. - resolution)/min(resolution.x, resolution.y);
+                    //         vec2 pos = (gl_FragCoord.xy*2. - resolution)/min(resolution.x, resolution.y);
 
 
-                            float r0 = .25;
+                    //         float r0 = .25;
 
-                            float r1 = 2.*r0;
+                    //         float r1 = 2.*r0;
 
 
-                            float r = mix(r1, r0, mod(time, INTERVAL)/INTERVAL);
+                    //         float r = mix(r1, r0, mod(time, INTERVAL)/INTERVAL);
 
 
-                            float v = (inside_triangles(pos, r) + inside_polygon(pos, vec2(0., 0.), r, 6., PI/6.));
+                    //         float v = (inside_triangles(pos, r) + inside_polygon(pos, vec2(0., 0.), r, 6., PI/6.));
 
-                            vec4 bg = mix(vec4(1.,.0,1.,1.),vec4(.0,.8,1.,1.),gl_FragCoord.y/resolution.y);
+                    //         vec4 bg = mix(vec4(1.,.0,1.,1.),vec4(.0,.8,1.,1.),gl_FragCoord.y/resolution.y);
 
-                            vec4 tri = mix(vec4(1.3,.0,1.,1.),vec4(.0,1.3,1.3,1.),gl_FragCoord.y/resolution.y);
+                    //         vec4 tri = mix(vec4(1.3,.0,1.,1.),vec4(.0,1.3,1.3,1.),gl_FragCoord.y/resolution.y);
 
-                            gl_FragColor = mix(bg, tri, v);
-                            //mix(vec4(.5,.1.,1.,1.),vec4(.0,.25,.25,1.),gl_FragCoord.y/resolution.y)
-                    }
+                    //         gl_FragColor = mix(bg, tri, v);
+                    //         //mix(vec4(.5,.1.,1.,1.),vec4(.0,.25,.25,1.),gl_FragCoord.y/resolution.y)
+                    // }
 
 
-                    // //旧旧的墙面
+                    // //旧旧的墙面 *****
                     // // 00f404afdd835ac3af3602c8943738ea - please mark changes (and/or add docs), and retain this line.
 
                     // #ifdef GL_ES
@@ -1480,7 +1480,7 @@
                     //     gl_FragColor = vec4(vec3(yf)+(233./255.)-col, 1.0);
                     // }
 
-                    // //卡通云
+                    // //卡通云 *****
                     // // ----------------------------------------------------------------------------------------
                     // //  "Toon Cloud" by Antoine Clappier - March 2015
                     // //
@@ -1573,6 +1573,12 @@
                     // }
 
 
+                    
+
+
+
+
+
                     // // Colorful Voronoi
                     // // By: Brandon Fogerty
                     // // bfogerty at gmail dot com
@@ -1628,7 +1634,7 @@
                     //     gl_FragColor = vec4(finalColor, 1.0 );
                     // }
 
-                    // //小花
+                    // //小花 *****
                     // #ifdef GL_ES
                     // precision mediump float;
                     // #endif
