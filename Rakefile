@@ -24,9 +24,7 @@ namespace :html do
     system("sed -n '1,/^<!--changeTag-->/p' index.html >tmp ")
     system("cat <<EOF >>tmp")
     
-    system("cat ./resume.html >> tmp")
-    system("cat <<EOF >>tmp")
-    system("sed -n '/^<!--/changeTag-->/,$p' index.html >>tmp")
+    system("sed -n '/^<body>/,$p' resume.html >>tmp")
     system("mv tmp index.html")
     #       cat <<EOF >>tmp \
     #       sed -n '/^<!--/changeTag/,$p' index.html >>tmp \
