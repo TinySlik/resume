@@ -20,7 +20,17 @@ namespace :html do
   task :generate => [:styles] do
     puts "Generating standalone HTML file from Markdown"
     system("pandoc -s -S resume.markdown -o resume.html -t html5 --self-contained --section-divs --template=resume-template.html -T \"Tiny's Resume\" -c css/main.css")
-    # system("cp resume.html index.html")
+    #system("sed -i '/^changeTag-->/ , /<!--/changeTag$/r resume.html' index.html")
+    system("sed -n '1,/^<!--changeTag-->/p' index.html >tmp ")
+    system("cat <<EOF >>tmp")
+    
+    system("cat ./resume.html >> tmp")
+    system("cat <<EOF >>tmp")
+    system("sed -n '/^<!--/changeTag-->/,$p' index.html >>tmp")
+    system("mv tmp index.html")
+    #       cat <<EOF >>tmp \
+    #       sed -n '/^<!--/changeTag/,$p' index.html >>tmp \
+    #       mv tmp test.html 
     puts "Done"
   end
 end

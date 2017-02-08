@@ -2,9 +2,9 @@
 Tiny Wu
 -------
 
-[[graphics-developer]]
-Graphics Developer
-~~~~~~~~~~~~~~~~~~
+[[graphics-develope]]
+Graphics Develope
+~~~~~~~~~~~~~~~~~
 
 * Phone: tel://86-15861657693[86-15861657693]
 * Email: tinysilk@hotmail.com
