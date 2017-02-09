@@ -49,6 +49,7 @@ denoted with a ^†^ symbol.
 - [jason]()^†^
 - [xml]()^†^
 - [C#]()
+- [shader]()^†^
 
 ### Markup/Templating Languages & Preprocessors
 
@@ -58,11 +59,10 @@ denoted with a ^†^ symbol.
 
 ### Frameworks & APIs
 
-- [openGL]()^†^
-- [boost]()
-- [cocos2d-x]()^†^
-- [uinity]()
-- [shader]()^†^
+- [OpenGL]()^†^
+- [Boost]()
+- [Cocos2d-x]()^†^
+- [Uinity3d]()
 - [hexo]()^†^
 
 ### Software & Tools
