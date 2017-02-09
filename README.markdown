@@ -41,12 +41,14 @@ denoted with a ^†^ symbol.
 
 ### Programming Languages
 
-- [C/C++](http://developer.mozilla.org/en/JavaScript)^†^
-- [Lua](http://php.net)
-- [javaScript](http://ruby-lang.org)^†^
-- [java](http://ruby-lang.org)
-- [object-C](http://developer.mozilla.org/en/JavaScript)^†^
-
+- [C/C++]()^†^
+- [Lua]()^†^
+- [javaScript]()^†^
+- [java]()
+- [object-C]()
+- [jason]()^†^
+- [xml]()^†^
+- [C#]()
 
 ### Markup/Templating Languages & Preprocessors
 
@@ -56,11 +58,12 @@ denoted with a ^†^ symbol.
 
 ### Frameworks & APIs
 
-- [openGL]()
+- [openGL]()^†^
 - [boost]()
-- [cocos2d-x]()
+- [cocos2d-x]()^†^
 - [uinity]()
-- [shader]()
+- [shader]()^†^
+- [hexo]()^†^
 
 ### Software & Tools
 
@@ -77,6 +80,9 @@ denoted with a ^†^ symbol.
 - [Vim](http://www.vim.org)^†^
 - [WebStorm](http://jetbrains.com/webstorm)
 - [zsh](http://www.zsh.org)^†^
+- [source tree]()
+- [VisualStudio]()^†^
+- [AndroidStudio]()
 
 Education
 ---------

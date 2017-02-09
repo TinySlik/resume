@@ -40,11 +40,14 @@ my daily work are denoted with a :sup:`†` symbol.
 Programming Languages
 ~~~~~~~~~~~~~~~~~~~~~
 
--  `C/C++ <http://developer.mozilla.org/en/JavaScript>`__\ :sup:`†`
--  `Lua <http://php.net>`__
--  `javaScript <http://ruby-lang.org>`__\ :sup:`†`
--  `java <http://ruby-lang.org>`__
--  `object-C <http://developer.mozilla.org/en/JavaScript>`__\ :sup:`†`
+-  `C/C++ <>`__\ :sup:`†`
+-  `Lua <>`__\ :sup:`†`
+-  `javaScript <>`__\ :sup:`†`
+-  `java <>`__
+-  `object-C <>`__
+-  `jason <>`__\ :sup:`†`
+-  `xml <>`__\ :sup:`†`
+-  `C# <>`__
 
 Markup/Templating Languages & Preprocessors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -56,11 +59,12 @@ Markup/Templating Languages & Preprocessors
 Frameworks & APIs
 ~~~~~~~~~~~~~~~~~
 
--  `openGL <>`__
+-  `openGL <>`__\ :sup:`†`
 -  `boost <>`__
--  `cocos2d-x <>`__
+-  `cocos2d-x <>`__\ :sup:`†`
 -  `uinity <>`__
--  `shader <>`__
+-  `shader <>`__\ :sup:`†`
+-  `hexo <>`__\ :sup:`†`
 
 Software & Tools
 ~~~~~~~~~~~~~~~~
@@ -78,6 +82,9 @@ Software & Tools
 -  `Vim <http://www.vim.org>`__\ :sup:`†`
 -  `WebStorm <http://jetbrains.com/webstorm>`__
 -  `zsh <http://www.zsh.org>`__\ :sup:`†`
+-  `source tree <>`__
+-  `VisualStudio <>`__\ :sup:`†`
+-  `AndroidStudio <>`__
 
 Education
 ---------

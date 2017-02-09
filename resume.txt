@@ -47,11 +47,14 @@ my daily work are denoted with a ^†^ symbol.
 Programming Languages
 ^^^^^^^^^^^^^^^^^^^^^
 
-* http://developer.mozilla.org/en/JavaScript[C/C++]^†^
-* http://php.net[Lua]
-* http://ruby-lang.org[javaScript]^†^
-* http://ruby-lang.org[java]
-* http://developer.mozilla.org/en/JavaScript[object-C]^†^
+* link:[C/C++]^†^
+* link:[Lua]^†^
+* link:[javaScript]^†^
+* link:[java]
+* link:[object-C]
+* link:[jason]^†^
+* link:[xml]^†^
+* link:[C#]
 
 [[markuptemplating-languages-preprocessors]]
 Markup/Templating Languages & Preprocessors
@@ -65,11 +68,12 @@ Markup/Templating Languages & Preprocessors
 Frameworks & APIs
 ^^^^^^^^^^^^^^^^^
 
-* link:[openGL]
+* link:[openGL]^†^
 * link:[boost]
-* link:[cocos2d-x]
+* link:[cocos2d-x]^†^
 * link:[uinity]
-* link:[shader]
+* link:[shader]^†^
+* link:[hexo]^†^
 
 [[software-tools]]
 Software & Tools
@@ -88,6 +92,9 @@ Software & Tools
 * http://www.vim.org[Vim]^†^
 * http://jetbrains.com/webstorm[WebStorm]
 * http://www.zsh.org[zsh]^†^
+* link:[source tree]
+* link:[VisualStudio]^†^
+* link:[AndroidStudio]
 
 [[education]]
 Education
