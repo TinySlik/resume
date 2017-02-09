@@ -77,7 +77,7 @@
     </sect3>
     <sect3 id="programming-languages">
       <title>Programming Languages</title>
-      <itemizedlist>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://developer.mozilla.org/en/JavaScript">C/C++</ulink><superscript>†</superscript>
@@ -101,37 +101,16 @@
         <listitem>
           <para>
             <ulink url="http://developer.mozilla.org/en/JavaScript">object-C</ulink><superscript>†</superscript>
-            ### Markup/Templating Languages &amp; Preprocessors
           </para>
         </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://coffeescript.org">CoffeeScript</ulink>
-          </para>
-        </listitem>
+      </itemizedlist>
+    </sect3>
+    <sect3 id="markuptemplating-languages-preprocessors">
+      <title>Markup/Templating Languages &amp; Preprocessors</title>
+      <itemizedlist spacing="compact">
         <listitem>
           <para>
             <ulink url="http://www.w3.org/Style/CSS/Overview.en.html">CSS</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://linkedin.github.io/dustjs">Dust.js</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://en.wikipedia.org/wiki/ERuby">ERB/eRuby</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://haml.info">Haml</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://handlebarsjs.com">Handlebars.js</ulink>
           </para>
         </listitem>
         <listitem>
@@ -141,57 +120,7 @@
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://jade-lang.com">Jade</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://www.oracle.com/technetwork/java/javaee/jsp">JSP</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://docs.oracle.com/javaee/5/tutorial/doc/bnakc.html">JSTL</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://lesscss.org">LESS</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://liquidmarkup.org">Liquid</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://daringfireball.net/projects/markdown">Markdown</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://mustache.github.io">Mustache</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://sass-lang.com">Sass</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://smarty.net">Smarty</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://paularmstrong.github.io/swig">Swig</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://learnboost.github.io/stylus">Stylus</ulink>
           </para>
         </listitem>
       </itemizedlist>
@@ -201,112 +130,27 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <ulink url="http://backbonejs.org">Backbone.js</ulink><superscript>†</superscript>
+            <ulink url="">openGL</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://bower.io">Bower</ulink>
+            <ulink url="">boost</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://browserify.org">Browserify</ulink><superscript>†</superscript>
+            <ulink url="">cocos2d-x</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://compass-style.org">Compass</ulink><superscript>†</superscript>
+            <ulink url="">uinity</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://www.djangoproject.com">Django</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://expressjs.com">Express</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://jasmine.github.io">Jasmine</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://jquery.com">jQuery</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://krakenjs.com">krakenjs</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://lodash.com">Lodash</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://meteor.com">Meteor</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://middlemanapp.com">Middleman</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://nodejs.org">Node.js</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://prototypejs.org">Prototype.js</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://facebook.github.io/react">React</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://requirejs.org">Require.js</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://rubyonrails.org">Ruby on Rails</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://sinatrarb.com">Sinatra</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://dev.twitter.com">Twitter API</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://underscorejs.org">Underscore.js</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://wordpress.org">Wordpress</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://developer.yahoo.com/yui">YUI</ulink>
+            <ulink url="">shader</ulink>
           </para>
         </listitem>
       </itemizedlist>
@@ -316,49 +160,12 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <ulink url="http://www.adobe.com/products/creativesuite.html">Adobe
-            Creative Suite</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://aws.amazon.com">Amazon Web
-            Services</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://apache.org">Apache</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://developer.apple.com">Apple XCode</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://demandware.com">Demandware</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://git-scm.com">Git</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://gruntjs.com">Grunt</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://gulpjs.com">Gulp</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://jboss.org">JBoss</ulink>
           </para>
         </listitem>
         <listitem>
@@ -374,16 +181,6 @@
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://magento.com">Magento</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://mongodb.org">MongoDB</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://mysql.com">MySQL</ulink>
           </para>
         </listitem>
@@ -394,23 +191,7 @@
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://www.oracle.com/us/products/applications/web-commerce/atg">Oracle
-            ATG</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://johnmacfarlane.net/pandoc">Pandoc</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://postgresql.org">PostgreSQL</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://rvm.beginrescueend.com">rvm</ulink><superscript>†</superscript>
           </para>
         </listitem>
         <listitem>
@@ -425,22 +206,7 @@
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://tmux.sourceforge.net">tmux</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://tomcat.apache.com">Tomcat</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://ubuntu.com">Ubuntu Linux</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://vagrantup.com">Vagrant</ulink>
           </para>
         </listitem>
         <listitem>
@@ -450,17 +216,7 @@
         </listitem>
         <listitem>
           <para>
-            <ulink url="http://virtualbox.org">VirtualBox</ulink><superscript>†</superscript>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
             <ulink url="http://jetbrains.com/webstorm">WebStorm</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="http://yeoman.io">Yeoman</ulink>
           </para>
         </listitem>
         <listitem>
@@ -473,13 +229,9 @@
   </sect2>
   <sect2 id="education">
     <title>Education</title>
-<literallayout><ulink url="http://sju.edu">Saint Joseph’s University</ulink>, Erivan K. Haub School of Business
-BS, Information Systems, 1996 - 2000</literallayout>
-  </sect2>
-  <sect2 id="honors-and-awards">
-    <title>Honors and Awards</title>
-<literallayout><emphasis>Unsung Hero</emphasis>, Empathy Lab, May 2011
-A peer-awarded honor which I’ll always be terribly proud to have won.</literallayout>
+    <para>
+      [YangZhou University], 2008 - 2012
+    </para>
   </sect2>
   <sect2 id="interests">
     <title>Interests</title>

@@ -51,105 +51,49 @@ Programming Languages
 * http://php.net[Lua]
 * http://ruby-lang.org[javaScript]^†^
 * http://ruby-lang.org[java]
-* http://developer.mozilla.org/en/JavaScript[object-C]^†^ ###
+* http://developer.mozilla.org/en/JavaScript[object-C]^†^
+
+[[markuptemplating-languages-preprocessors]]
 Markup/Templating Languages & Preprocessors
-* http://coffeescript.org[CoffeeScript]
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 * http://www.w3.org/Style/CSS/Overview.en.html[CSS]^†^
-* http://linkedin.github.io/dustjs[Dust.js]
-* http://en.wikipedia.org/wiki/ERuby[ERB/eRuby]
-* http://haml.info[Haml]
-* http://handlebarsjs.com[Handlebars.js]
 * http://developers.whatwg.org[HTML]^†^
-* http://jade-lang.com[Jade]
-* http://www.oracle.com/technetwork/java/javaee/jsp[JSP]
-* http://docs.oracle.com/javaee/5/tutorial/doc/bnakc.html[JSTL]
-* http://lesscss.org[LESS]^†^
-* http://liquidmarkup.org[Liquid]
 * http://daringfireball.net/projects/markdown[Markdown]^†^
-* http://mustache.github.io[Mustache]
-* http://sass-lang.com[Sass]^†^
-* http://smarty.net[Smarty]
-* http://paularmstrong.github.io/swig[Swig]
-* http://learnboost.github.io/stylus[Stylus]
 
 [[frameworks-apis]]
 Frameworks & APIs
 ^^^^^^^^^^^^^^^^^
 
-* http://backbonejs.org[Backbone.js]^†^
-* http://bower.io[Bower]
-* http://browserify.org[Browserify]^†^
-* http://compass-style.org[Compass]^†^
-* http://www.djangoproject.com[Django]
-* http://expressjs.com[Express]^†^
-* http://jasmine.github.io[Jasmine]
-* http://jquery.com[jQuery]^†^
-* http://krakenjs.com[krakenjs]
-* http://lodash.com[Lodash]^†^
-* http://meteor.com[Meteor]
-* http://middlemanapp.com[Middleman]
-* http://nodejs.org[Node.js]^†^
-* http://prototypejs.org[Prototype.js]
-* http://facebook.github.io/react[React]
-* http://requirejs.org[Require.js]^†^
-* http://rubyonrails.org[Ruby on Rails]
-* http://sinatrarb.com[Sinatra]
-* http://dev.twitter.com[Twitter API]
-* http://underscorejs.org[Underscore.js]^†^
-* http://wordpress.org[Wordpress]
-* http://developer.yahoo.com/yui[YUI]
+* link:[openGL]
+* link:[boost]
+* link:[cocos2d-x]
+* link:[uinity]
+* link:[shader]
 
 [[software-tools]]
 Software & Tools
 ^^^^^^^^^^^^^^^^
 
-* http://www.adobe.com/products/creativesuite.html[Adobe Creative
-Suite]^†^
-* http://aws.amazon.com[Amazon Web Services]
-* http://apache.org[Apache]^†^
 * http://developer.apple.com[Apple XCode]
-* http://demandware.com[Demandware]
 * http://git-scm.com[Git]^†^
-* http://gruntjs.com[Grunt]^†^
-* http://gulpjs.com[Gulp]^†^
-* http://jboss.org[JBoss]
 * http://atlassian.com/software/jira[JIRA]^†^
 * http://apple.com/macosx[Mac OS X]^†^
-* http://magento.com[Magento]^†^
-* http://mongodb.org[MongoDB]^†^
 * http://mysql.com[MySQL]
 * http://wiki.nginx.org[Nginx]
-* http://www.oracle.com/us/products/applications/web-commerce/atg[Oracle
-ATG]
 * http://johnmacfarlane.net/pandoc[Pandoc]
-* http://postgresql.org[PostgreSQL]
-* http://rvm.beginrescueend.com[rvm]^†^
 * http://www.sublimetext.com[Sublime Text]
 * http://svn.apache.org[Subversion]
-* http://tmux.sourceforge.net[tmux]^†^
-* http://tomcat.apache.com[Tomcat]
 * http://ubuntu.com[Ubuntu Linux]
-* http://vagrantup.com[Vagrant]
 * http://www.vim.org[Vim]^†^
-* http://virtualbox.org[VirtualBox]^†^
 * http://jetbrains.com/webstorm[WebStorm]
-* http://yeoman.io[Yeoman]
 * http://www.zsh.org[zsh]^†^
 
 [[education]]
 Education
 ~~~~~~~~~
 
-http://sju.edu[Saint Joseph’s University], Erivan K. Haub School of
-Business +
-BS, Information Systems, 1996 - 2000
-
-[[honors-and-awards]]
-Honors and Awards
-~~~~~~~~~~~~~~~~~
-
-_Unsung Hero_, Empathy Lab, May 2011 +
-A peer-awarded honor which I’ll always be terribly proud to have won.
+[YangZhou University], 2008 - 2012
 
 [[interests]]
 Interests
