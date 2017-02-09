@@ -74,6 +74,7 @@ Frameworks & APIs
 * link:[Cocos2d-x]^†^
 * link:[Uinity3d]
 * link:[hexo]^†^
+* link:[latex]
 
 [[software-tools]]
 Software & Tools

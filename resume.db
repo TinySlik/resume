@@ -173,6 +173,11 @@
             <ulink url="">hexo</ulink><superscript>†</superscript>
           </para>
         </listitem>
+        <listitem>
+          <para>
+            <ulink url="">latex</ulink>
+          </para>
+        </listitem>
       </itemizedlist>
     </sect3>
     <sect3 id="software-tools">

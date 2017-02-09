@@ -64,6 +64,7 @@ denoted with a ^†^ symbol.
 - [Cocos2d-x]()^†^
 - [Uinity3d]()
 - [hexo]()^†^
+- [latex]()
 
 ### Software & Tools
 

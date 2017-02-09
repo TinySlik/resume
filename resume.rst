@@ -65,6 +65,7 @@ Frameworks & APIs
 -  `Cocos2d-x <>`__\ :sup:`†`
 -  `Uinity3d <>`__
 -  `hexo <>`__\ :sup:`†`
+-  `latex <>`__
 
 Software & Tools
 ~~~~~~~~~~~~~~~~
