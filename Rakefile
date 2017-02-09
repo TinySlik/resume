@@ -112,6 +112,15 @@ task :readme do
   puts "Done"
 end
 
+desc "update all"
+task :update do
+  system("git add . -A")
+  system("git commit -m'auto commit push'")
+  system("git push origin")
+  system("git push second")
+  puts "Done"
+end
+
 desc "Generate all formats"
 task :all => [
   "rst:generate",
@@ -123,7 +132,8 @@ task :all => [
   "epub:generate",
   "asciidoc:generate",
   "docbook:generate",
-  "readme"
+  "readme",
+  "update"
 ]
 
 desc "Transfer resume files to web"
