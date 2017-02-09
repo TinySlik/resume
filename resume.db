@@ -118,6 +118,11 @@
             <ulink url="">C#</ulink>
           </para>
         </listitem>
+        <listitem>
+          <para>
+            <ulink url="">shader</ulink><superscript>†</superscript>
+          </para>
+        </listitem>
       </itemizedlist>
     </sect3>
     <sect3 id="markuptemplating-languages-preprocessors">
@@ -145,27 +150,22 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <ulink url="">openGL</ulink><superscript>†</superscript>
+            <ulink url="">OpenGL</ulink><superscript>†</superscript>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="">boost</ulink>
+            <ulink url="">Boost</ulink>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="">cocos2d-x</ulink><superscript>†</superscript>
+            <ulink url="">Cocos2d-x</ulink><superscript>†</superscript>
           </para>
         </listitem>
         <listitem>
           <para>
-            <ulink url="">uinity</ulink>
-          </para>
-        </listitem>
-        <listitem>
-          <para>
-            <ulink url="">shader</ulink><superscript>†</superscript>
+            <ulink url="">Uinity3d</ulink>
           </para>
         </listitem>
         <listitem>

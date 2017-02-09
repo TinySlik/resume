@@ -55,6 +55,7 @@ Programming Languages
 * link:[jason]^†^
 * link:[xml]^†^
 * link:[C#]
+* link:[shader]^†^
 
 [[markuptemplating-languages-preprocessors]]
 Markup/Templating Languages & Preprocessors
@@ -68,11 +69,10 @@ Markup/Templating Languages & Preprocessors
 Frameworks & APIs
 ^^^^^^^^^^^^^^^^^
 
-* link:[openGL]^†^
-* link:[boost]
-* link:[cocos2d-x]^†^
-* link:[uinity]
-* link:[shader]^†^
+* link:[OpenGL]^†^
+* link:[Boost]
+* link:[Cocos2d-x]^†^
+* link:[Uinity3d]
 * link:[hexo]^†^
 
 [[software-tools]]

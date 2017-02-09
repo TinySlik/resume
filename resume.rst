@@ -48,6 +48,7 @@ Programming Languages
 -  `jason <>`__\ :sup:`†`
 -  `xml <>`__\ :sup:`†`
 -  `C# <>`__
+-  `shader <>`__\ :sup:`†`
 
 Markup/Templating Languages & Preprocessors
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -59,11 +60,10 @@ Markup/Templating Languages & Preprocessors
 Frameworks & APIs
 ~~~~~~~~~~~~~~~~~
 
--  `openGL <>`__\ :sup:`†`
--  `boost <>`__
--  `cocos2d-x <>`__\ :sup:`†`
--  `uinity <>`__
--  `shader <>`__\ :sup:`†`
+-  `OpenGL <>`__\ :sup:`†`
+-  `Boost <>`__
+-  `Cocos2d-x <>`__\ :sup:`†`
+-  `Uinity3d <>`__
 -  `hexo <>`__\ :sup:`†`
 
 Software & Tools
