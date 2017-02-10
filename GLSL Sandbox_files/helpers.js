@@ -61,8 +61,10 @@ function load_url_code() {
 			'rubiks cube',
 			'shui long tou'
 			);
-		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
-		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
+		
+		// list[Math.floor(Math.random()*(list.length ))]
+		code.setValue(document.getElementById( 'rubiks cube' ).text);
+		original_code = document.getElementById( 'rubiks cube' ).text;
 
 	}
 }
