@@ -1588,8 +1588,56 @@
                       }
                       gl_FragColor = vec4(Color,1.);
                     }
+</script>
 
+    <script id="thinkering" type="x-shader/x-fragment">
+// bpt.2017 thinkering
 
+#ifdef GL_ES
+precision highp float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+varying vec2 surfacePosition;
+
+// using as a starting point thx https://www.shadertoy.com/view/MtKSWt
+
+vec4 BezierPoint(vec4 p0, vec4 p1, vec4 p2, float t){
+    vec4 v1 = p1-p0;
+    vec4 v2 = p2-p1;
+    vec4 o0 = p0+v1*t;
+    vec4 o1 = p1+v2*t;
+    vec4 v3 = o1-o0;
+    return v3*t+o0;
+}
+
+float dot2(vec4 v) {return dot(v,v);}
+
+float BezierLine(vec4 p, vec4 a, vec4 b, vec4 c,float minDist)
+{
+    for( float i = 0.0; i <= 1.0; i+=0.001)
+    {
+        minDist = min( dot2(p-BezierPoint(a,b,c,i)), minDist);
+    }
+    return pow(minDist,0.125);
+}
+
+void main( void )
+{
+    vec2 uv = (surfacePosition*vec2(2.0,2.0));
+    vec4 p3 = vec2(1.,0.).xyxy;
+//    vec4 p2 = vec4(0.0,sin(time)*uv.x,0.0,sin(time)*uv.x)*cos(time*2.0);//
+    vec4 p2 = mouse.xyxy*8.0-4.0;
+    vec4 p1 = -p3;
+    
+    gl_FragColor = vec4( vec3(
+         BezierLine(vec4(uv,uv),p1,p2,p3,1.0)
+    ),1.0);
+}
                   
 </script>
 

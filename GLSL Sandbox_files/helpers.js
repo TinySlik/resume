@@ -54,7 +54,8 @@ function load_url_code() {
 			'color lines',
 			'toon cloud',
 			'small flower',
-			'colorful voronoi'
+			'colorful voronoi',
+			'thinkering'
 			);
 		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
 		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
