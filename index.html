@@ -1591,6 +1591,7 @@
 </script>
 
     <script id="thinkering" type="x-shader/x-fragment">
+
 // bpt.2017 thinkering
 
 #ifdef GL_ES
@@ -1638,7 +1639,396 @@ void main( void )
          BezierLine(vec4(uv,uv),p1,p2,p3,1.0)
     ),1.0);
 }
-                  
+</script>
+
+    <script id="Majestic Wireframe Cube" type="x-shader/x-fragment">
+ // Majestic Wireframe Cube
+// By: Brandon Fogerty
+// bfogerty at gmail dot com
+// xdpixel.com
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+float line( vec2 a, vec2 b, vec2 p )
+{
+    vec2 aTob = b - a;
+    vec2 aTop = p - a;
+
+    float t = dot( aTop, aTob ) / dot( aTob, aTob);
+
+    t = clamp( t, 0.0, 1.0);
+
+    float d = length( p - (a + aTob * t) );
+    d = 0.05 / d;
+
+    d = pow(d, 7.0);
+    return clamp( d, 0.0, 1.0 );
+}
+
+mat4 perspectiveMatrix(float fovYInRad, float aspectRatio)
+{    
+    float yScale = 1.0/tan(fovYInRad / 2.0);
+    float xScale = yScale / aspectRatio;  
+    float zf = 100.0;
+    float zn = 0.3;
+    
+    float z1 = zf/(zf-zn);
+    float z2 = -zn*zf/(zf-zn);
+
+    mat4 result = mat4(xScale, 0.0, 0.0, 0.0,
+              0.0, yScale, 0.0, 0.0,
+              0.0, 0.0, z1, z2,
+              0.0, 0.0, -1.0, 0.0);
+    
+    return result;
+}
+
+mat4 translationMatrix(vec3 pos)
+{
+    mat4 result = 
+    mat4(1.0, 0.0, 0.0, 0.0, 
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         pos.x, pos.y, pos.z, 1.0 );
+    
+    return result;
+}
+
+mat4 rotXMatrix(float theta)
+{
+    float cs = cos(theta);
+    float ss = sin(theta);
+
+    mat4 result = 
+    mat4(1.0, 0.0, 0.0, 0.0, 
+         0.0, cs, -ss, 0.0,
+         0.0, ss, cs, 0.0,
+         0.0, 0.0, 0.0, 1.0 );
+
+    return result;
+}
+
+mat4 rotYMatrix(float theta)
+{
+    float cs = cos(theta);
+    float ss = sin(theta);
+
+    mat4 result = 
+    mat4(cs, 0.0, -ss, 0.0, 
+         0.0, 1.0, 0.0, 0.0,
+         ss, 0.0, cs, 0.0,
+         0.0, 0.0, 0.0, 1.0 );
+
+    return result;
+}
+
+float particle(vec2 uv, vec4 vert, mat4 mvp, vec2 sizeRange, float sizeOffset, vec2 moveSpeed)
+{
+    vec4 v = mvp * vert;
+    vec2 vp = (v.xy / v.w);
+
+    float size = mix(sizeRange.x, sizeRange.y, sin(time + sizeOffset) * 0.5 + 0.5);
+    float t = 1.0 / abs(length(uv.xy - (vp.xy + vec2(cos(time * moveSpeed.x), sin(time * moveSpeed.y)))) * size);
+
+    t = pow( t, 1.5);
+    
+    return t;
+}
+
+void main( void )
+{
+    vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;
+
+    uv *= 10.0;
+
+    const float fovYInRad = (45.0/180.0) * 3.14159;
+    float aspectRatio = resolution.x / resolution.y;
+
+    const float vs = 10.0;
+    #define maxVerts 16
+    vec4 verts [maxVerts];
+    verts[0] = vec4( -vs, -vs, vs, 1.0 );
+    verts[1] = vec4( -vs,  vs, vs, 1.0 );
+    verts[2] = vec4(  vs,  vs, vs, 1.0 );
+    verts[3] = vec4(  vs, -vs, vs, 1.0 );
+
+    verts[4] = vec4( -vs, -vs, vs, 1.0 );
+    verts[5] = vec4( -vs,  vs, vs, 1.0 );
+    verts[6] = vec4( -vs,  vs, -vs, 1.0 );
+    verts[7] = vec4( -vs, -vs, -vs, 1.0 );
+
+    verts[8] = vec4( -vs, -vs, -vs, 1.0 );
+    verts[9] = vec4( -vs,  vs, -vs, 1.0 );
+    verts[10] = vec4( vs,  vs, -vs, 1.0 );
+    verts[11] = vec4( vs, -vs, -vs, 1.0 );
+
+    verts[12] = vec4( vs, -vs, vs, 1.0 );
+    verts[13] = vec4( vs,  vs, vs, 1.0 );
+    verts[14] = vec4( vs,  vs, -vs, 1.0 );
+    verts[15] = vec4( vs, -vs, -vs, 1.0 );
+
+    float moveX = mix(10.0, -10.0, sin(time * 0.4) * 0.5 + 0.5);
+    float moveY = mix(10.0, -10.0, sin(time * 0.2) * 0.5 + 0.5);
+    float moveZ = mix(40.0, 60.0, sin(time * 0.2) * 0.5 + 0.5);
+
+    vec3 pos = vec3( moveX, moveY, moveZ);
+    mat4 rotY = rotYMatrix(time) * rotXMatrix(time * 0.5);
+
+    mat4 worldMat = translationMatrix(pos) * rotY;
+    mat4 perspective = perspectiveMatrix(fovYInRad, aspectRatio);
+
+    mat4 mvp = perspective * worldMat;
+
+  
+  
+  
+    float t = 0.0;
+    for(int i = 0; i < maxVerts; ++i)
+    {
+        vec4 startWorldVert = mvp * verts[i];
+        vec4 endWorldVert;
+        if( i+1 < maxVerts)
+        {
+            endWorldVert = mvp * verts[i + 1];
+        }
+        else
+        {
+            endWorldVert = mvp * verts[i - 3];
+        }
+
+        if(i != 0 && mod(float(i+1), 4.0) == 0.0)
+        {
+            endWorldVert = mvp * verts[i - 3];
+        }
+
+        vec2 sp = startWorldVert.xy / startWorldVert.w;
+        vec2 ep = endWorldVert.xy / endWorldVert.w;
+
+        t += line( sp, ep, uv);
+    }
+
+    vec3 fc = vec3( 0.00 );
+    fc += vec3(pow(abs(uv.y / 10.0), 2.5));
+
+    fc += vec3( 2.0, 4.0, 8.0 ) * pow(t, 0.2);
+
+  
+    t = particle(uv, verts[0], mvp, vec2(20.0, 40.0), 1.0, vec2( 3.0, 1.0));
+    fc += vec3(8.0, 4.0, 2.0) * t;
+
+    t = particle(uv, verts[1], mvp, vec2(20.0, 40.0), 14.0, vec2( 1.0, 3.0));
+    fc += vec3(4.0, 8.0, 2.0) * t;
+
+    t = particle(uv, verts[10], mvp, vec2(10.0, 40.0), 25.0, vec2( 2.0, 1.0));
+    fc += vec3(3.0, 2.0, 7.0) * t;
+
+    t = particle(uv, verts[12], mvp, vec2(10.0, 40.0), 78.0, vec2( 5.0, 3.0));
+    fc += vec3(4.0, 3.0, 8.0) * t;
+
+    t = particle(uv, verts[6], mvp, vec2(10.0, 40.0), 100.0, vec2( 5.0, 3.0));
+    fc += vec3(8.0, 1.0, 1.0) * t;
+
+    gl_FragColor = vec4( fc, 1.0 );
+
+}      
+
+
+
+</script>
+
+    <script id="cloud" type="x-shader/x-fragment">
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+//uniform vec2 mouse;
+uniform vec2 resolution;
+
+const float cloudscale = 1.1;
+const float speed = 0.01;
+const float clouddark = 0.5;
+const float cloudlight = 0.3;
+const float cloudcover = 0.2;
+const float cloudalpha = 8.0;
+const float skytint = 0.5;
+const vec3 skycolour1 = vec3(0.2, 0.4, 0.6);
+const vec3 skycolour2 = vec3(0.4, 0.7, 1.0);
+
+const mat2 m = mat2( 1.6,  1.2, -1.2,  1.6 );
+
+
+vec2 hash( vec2 p ) {
+  p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)));
+  return -1.0 + 2.0*fract(sin(p)*43758.5453123);
+}
+
+float noise( in vec2 p ) {
+    const float K1 = 0.366025404; // (sqrt(3)-1)/2;
+    const float K2 = 0.211324865; // (3-sqrt(3))/6;
+    
+    vec2 i = floor(p + (p.x+p.y)*K1);
+    vec2 a = p - i + (i.x+i.y)*K2;
+    vec2 o = (a.x>a.y) ? vec2(1.0,0.0) : vec2(0.0,1.0); //vec2 of = 0.5 + 0.5*vec2(sign(a.x-a.y), sign(a.y-a.x));
+    vec2 b = a - o + K2;
+    vec2 c = a - 1.0 + 2.0*K2;
+    vec3 h = max(0.5-vec3(dot(a,a), dot(b,b), dot(c,c) ), 0.0 );
+    vec3 n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));
+    
+    return dot(n, vec3(70.0));
+}
+
+float fbm(vec2 n) {
+  float total = 0.0, amplitude = 0.1;
+  for (int i = 0; i < 7; i++) {
+    total += noise(n) * amplitude;
+    n = m * n;
+    amplitude *= 0.4;
+  }
+  return total;
+}
+
+// -----------------------------------------------
+
+void main() {
+
+    vec2 p = gl_FragCoord.xy / (resolution.xy);
+    vec2 uv = p*vec2(resolution.x / resolution.y, 0.9);
+    float localTime = time * speed;
+    float q = fbm(uv * cloudscale * 0.1);
+
+    //ridged noise shape
+  float r = 0.0;
+  uv *= cloudscale;
+    uv -= q - localTime;
+    float weight = 0.8;
+    for (int i=0; i<8; i++){
+    r += abs(weight*noise( uv ));
+        uv = m*uv + localTime;
+    weight *= 0.7;
+    }
+
+    //noise shape
+  float f = 0.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale;
+    uv -= q - localTime;
+    weight = 0.7;
+    for (int i=0; i<8; i++){
+    f += weight*noise( uv );
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    f *= r + f;
+
+    //noise colour
+    float c = 0.0;
+   localTime = time * speed * 2.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale*2.0;
+    uv -= q - localTime;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+    c += weight*noise( uv );
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    //noise ridge colour
+    float c1 = 0.0;
+   localTime = time * speed * 3.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale*3.0;
+    uv -= q - localTime;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+    c1 += abs(weight*noise( uv ));
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    c += c1;
+
+    vec3 skycolour = mix(skycolour2, skycolour1, p.y);
+    vec3 cloudcolour = vec3(1.1, 1.1, 0.9) * clamp((clouddark + cloudlight*c), 0.0, 1.0);
+
+    f = cloudcover + cloudalpha*f*r;
+
+    vec3 result = mix(skycolour, clamp(skytint * skycolour + cloudcolour, 0.0, 1.0), clamp(f + c, 0.0, 1.0));
+
+  gl_FragColor = vec4( result, 1.0 );
+}
+</script>
+
+    <script id="big tree" type="x-shader/x-fragment">
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+varying vec2 surfacePosition;
+
+const float tri_a = tan(3.14/3.);
+bool tri(vec2 p, float k){
+  return p.y < p.x * tri_a + k && p.y < p.x * -tri_a + k && p.y > -k;
+}
+
+void main( void ) {
+  vec2 p = surfacePosition;
+  float z = 1.0;
+  vec3 color = vec3(.4+.2*float(mod(floor(p.x*32.), 2.)==mod(floor(p.y*32.), 2.)));
+  
+  #define R2(T) mat2(cos(T), -sin(T), sin(T), cos(T))
+  
+  p = surfacePosition+vec2(0,.5);
+  for(int i = 0; i <= 15; i += 1){
+    if(tri(p, 0.04)){
+      color = vec3(0.4,0.3,0.0);
+      z += 0.125;
+    }
+    p.y -= 0.03;
+    p *= R2((mouse.x-.5)*0.1*cos(time+float(i))*cos(time+float(i)));
+  }
+  p.y += 0.1;
+  for(int i = 0; i <= 4; i += 1){
+    p *= R2(-.93*2.*3.14159*sign(p.x));
+    p.y += -0.09;
+    if(tri(p*vec2(1.5,1), 0.06)){
+      color = vec3(0.4,0.3,0.0);
+      z += 0.25;
+    }
+    p *= 1.1*R2((mouse.x-.5)*0.4*cos(time+float(i))*cos(time+float(i)));
+  }
+  //p *= R2(atan(p.x, p.y)*12.);
+  for(int i = 0; i <= 7; i += 1){
+    if(tri(p, 0.125*abs(length(p*5.)-.5))){
+      color = vec3(0.1+z*0.1,0.3,0.1);
+      z += 0.1;
+      z *= 1.2;
+    }
+    p.y -= 0.033;
+    p *= 0.9*R2(-.95*2.*3.14159*sign(p.x));
+    p *= R2((mouse.x-.5)*0.3*cos(time+float(i))*cos(time+float(i)));
+  }
+  
+  gl_FragColor = vec4( color*z, 1.0 );
+}           
 </script>
 
     <script id="colorful voronoi" type="x-shader/x-fragment">

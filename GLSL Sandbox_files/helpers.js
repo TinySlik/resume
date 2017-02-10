@@ -55,7 +55,9 @@ function load_url_code() {
 			'toon cloud',
 			'small flower',
 			'colorful voronoi',
-			'thinkering'
+			'Majestic Wireframe Cube',
+			'big tree',
+			'cloud'
 			);
 		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
 		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
