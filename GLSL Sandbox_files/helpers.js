@@ -40,8 +40,8 @@ function load_url_code() {
 
 	} else {
 
-		code.setValue(document.getElementById( 'example' ).text);
-		original_code = document.getElementById( 'example' ).text;
+		code.setValue(document.getElementById( 'sea' ).text);
+		original_code = document.getElementById( 'sea' ).text;
 
 	}
 }
