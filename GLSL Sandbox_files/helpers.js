@@ -57,7 +57,9 @@ function load_url_code() {
 			'colorful voronoi',
 			'Majestic Wireframe Cube',
 			'big tree',
-			'cloud'
+			'cloud',
+			'rubiks cube',
+			'shui long tou'
 			);
 		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
 		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
