@@ -39,9 +39,26 @@ function load_url_code() {
 		load_code(window.location.hash.substr(1));
 
 	} else {
-
-		code.setValue(document.getElementById( 'sea' ).text);
-		original_code = document.getElementById( 'sea' ).text;
+		var list=new Array(
+			'sea',
+			'vertigo',
+			'bunge bedstraw herb',
+			'ripple',
+			'tree',
+			'pillar',
+			'cement flower',
+			'electricty country',
+			'red stars',
+			'beautiful wait',
+			'old wall',
+			'color lines',
+			'toon cloud',
+			'small flower',
+			'colorful voronoi'
+			);
+		list.length;
+		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length - 1))] ).text);
+		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length - 1))] ).text;
 
 	}
 }
