@@ -56,8 +56,8 @@ function load_url_code() {
 			'small flower',
 			'colorful voronoi'
 			);
-		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length - 2))] ).text);
-		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length - 2))] ).text;
+		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
+		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
 
 	}
 }
