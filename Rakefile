@@ -20,15 +20,10 @@ namespace :html do
   task :generate => [:styles] do
     puts "Generating standalone HTML file from Markdown"
     system("pandoc -s -S resume.markdown -o resume.html -t html5 --self-contained --section-divs --template=resume-template.html -T \"Tiny's Resume\" -c css/main.css")
-    #system("sed -i '/^changeTag-->/ , /<!--/changeTag$/r resume.html' index.html")
     system("sed -n '1,/^<!--changeTag-->/p' index.html >tmp ")
     system("cat <<EOF >>tmp")
-    
     system("sed -n '/^<body>/,$p' resume.html >>tmp")
     system("mv tmp index.html")
-    #       cat <<EOF >>tmp \
-    #       sed -n '/^<!--/changeTag/,$p' index.html >>tmp \
-    #       mv tmp test.html 
     puts "Done"
   end
 end
@@ -143,25 +138,6 @@ task :web do
   system("scp resume.* index.html #{path}/resume")
   system("scp index.html #{path}")
   puts "Done"
-end
-
-desc "Commit change"
-task :ci do
-  puts "Done"
-  system("git checkout master")
-  system("git add resume.db resume.docx resume.epub resume.html resume.markdown resume.odt resume.pdf resume.rst resume.rtf resume.tex resume.txt README.markdown index.html")
-  system("git commit -m 'Update resume files'")
-  puts "Done"
-end
-
-desc "Push to GitHub"
-task :push => [:ci] do
-  system("git checkout gh-pages")
-  system("git checkout -f master index.html")
-  system("git add index.html")
-  system("git commit -m 'Update resume on GitHub Pages'")
-  system("git push -f")
-  system("git checkout master")
 end
 
 task :default => ["html:generate"]
