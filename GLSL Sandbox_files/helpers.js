@@ -63,8 +63,8 @@ function load_url_code() {
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
-		code.setValue(document.getElementById( 'rubiks cube' ).text);
-		original_code = document.getElementById( 'rubiks cube' ).text;
+		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
+		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
 
 	}
 }
