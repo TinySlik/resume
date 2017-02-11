@@ -125,7 +125,7 @@ desc "Generate all formats"
 task :all => [
   "rst:generate",
   "html:generate",
-  "pdf:generate",
+  #"pdf:generate",
   "rtf:generate",
   "word:generate",
   "odt:generate",
