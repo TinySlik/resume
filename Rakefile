@@ -46,7 +46,7 @@ namespace :pdf do
   desc "Generate PDF file"
   task :generate => ["tex:generate"] do
     puts "Generating PDF file from LaTeX"
-    system("texexec --pdf resume.tex")
+    system("context --pdf resume.tex")
     puts "Done"
   end
 end
@@ -125,7 +125,7 @@ desc "Generate all formats"
 task :all => [
   "rst:generate",
   "html:generate",
-  #"pdf:generate",
+  "pdf:generate",
   "rtf:generate",
   "word:generate",
   "odt:generate",
