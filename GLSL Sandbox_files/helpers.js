@@ -61,7 +61,9 @@ function load_url_code() {
 			'shui long tou',
 			'big lines',
 			'sunset',
-			'building'
+			'building',
+			'paint',
+			'balls'
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
