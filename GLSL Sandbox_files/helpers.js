@@ -48,7 +48,6 @@ function load_url_code() {
 			'pillar',
 			'cement flower',
 			'electricty country',
-			'red stars',
 			'beautiful wait',
 			'old wall',
 			'color lines',
