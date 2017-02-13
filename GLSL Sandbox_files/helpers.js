@@ -54,7 +54,6 @@ function load_url_code() {
 			'toon cloud',
 			'small flower',
 			'colorful voronoi',
-			'Majestic Wireframe Cube',
 			'big tree',
 			'cloud',
 			'rubiks cube',
