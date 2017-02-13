@@ -49,6 +49,7 @@ function load_url_code() {
 			'cement flower',
 			'electricty country',
 			'beautiful wait',
+			'big white lines',
 			'old wall',
 			'color lines',
 			'toon cloud',
@@ -57,7 +58,10 @@ function load_url_code() {
 			'big tree',
 			'cloud',
 			'rubiks cube',
-			'shui long tou'
+			'shui long tou',
+			'big lines',
+			'sunset',
+			'building'
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
