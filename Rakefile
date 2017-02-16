@@ -46,10 +46,10 @@ namespace :html_cn do
   task :generate => [:styles] do
     puts "Generating standalone HTML cn file from Markdown"
     system("pandoc -s -S resume_cn.markdown -o resume_cn.html -t html5 --self-contained --section-divs --template=resume-template-cn.html -T \"吴晓的简历\" -c css/main.css")
-    system("sed -n '1,/^<!--changeTag-->/p' index_cn.html >tmp ")
+    system("sed -n '1,/^<!--changeTag-->/p' index.html >tmp ")
     system("cat <<EOF >>tmp")
     system("sed -n '/^<body>/,$p' resume_cn.html >>tmp")
-    system("mv tmp index_cn.html")
+    system("mv tmp index.html")
     puts "Done"
   end
 end
@@ -191,26 +191,40 @@ task :update do
   puts "Done"
 end
 
+desc "check to origin"
+task :check do
+  system("git branch origin")
+end
+
+desc "check to ch"
+task :check_ch do
+  system("git branch ch")
+end
+
 desc "Generate all formats"
 task :all => [
   "rst:generate",
-  "rst_cn:generate",
   "html:generate",
-  "html_cn:generate",
   "pdf:generate",
   "rtf:generate",
-  "rtf_cn:generate",
   "word:generate",
-  "word_cn:generate",
   "odt:generate",
-  "odt_cn:generate",
   "epub:generate",
-  "epub_cn:generate",
   "asciidoc:generate",
   "docbook:generate",
+  "rst_cn:generate",
+  "rtf_cn:generate",
+  "word_cn:generate",
+  "odt_cn:generate",
+  "epub_cn:generate",
   "readme",
   "update"
+  "check_ch:generate",
+  "html_cn:generate",
+  "update"
+  "check:generate",
 ]
+
 
 desc "Transfer resume files to web"
 task :web do
