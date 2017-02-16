@@ -1,0 +1,5121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Tiny Wu</title>
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <style>
+
+      body {
+        -webkit-font-smoothing: antialiased;
+        font: 16px helvetica, arial, freesans, clean, sans-serif;
+        line-height: 1.4em;
+        border: none;
+        line-height: 1.5;
+        margin: 0 ;
+        padding: 0;
+        text-align: left;
+        overflow: hidden;
+        text-shadow:0 0px, 1px 1px #000000;
+      }
+
+      @media screen {
+        #wrapper {
+          padding: 9px;
+          background: #f8f8f8;
+          border: 1px solid #e9e9e9;
+        }
+      }
+      h1 {
+        font-size: 280%;
+        margin: 0;
+        padding: 0.25em 0 0.92em;
+        border-top: none;
+        -webkit-transform-origin: 100% 100% 50%;
+        -moz-transform-origin: 100% 100% 50%;
+        -ms-transform-origin: 100% 100% 50%;
+        -o-transform-origin: 100% 100% 50%;
+        transform-origin: 100% 100% 50%;
+        -webkit-transition: all 400ms ease-in-out;
+        -moz-transition: all 400ms ease-in-out;
+        -o-transition: all 400ms ease-in-out;
+        transition: all 400ms ease-in-out;
+      }
+      h1.active {
+        -webkit-transform: rotate(-5deg);
+        -moz-transform: rotate(-5deg);
+        -ms-transform: rotate(-5deg);
+        -o-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+        text-shadow: 1px 1px 0px white, 2px 2px 0px #bada55, 3px 3px 0px #bada55, 4px 4px 0px #bada55, 5px 5px 0px #97ba28;
+      }
+      @media only screen and (min-width: 640px) {
+        h1 {
+          padding-bottom: 0;
+          font-size: 425%;
+        }
+        h1.active {
+          text-shadow: 1px 1px 0px white, 2px 2px 0px #bada55, 3px 3px 0px #bada55, 4px 4px 0px #bada55, 5px 5px 0px #bada55, 6px 6px 0px #bada55, 7px 7px 0px #97ba28;
+        }
+      }
+      @media only screen and (min-width: 900px) {
+        h1 {
+          float: left;
+          width: 57%;
+        }
+      }
+
+      h2 {
+        font-size: 200%;
+        margin-top: 1.5em;
+      }
+
+      h3 {
+        font-size: 150%;
+        margin-top: 1.5em;
+        border-top: 4px solid rgba(0, 0, 0, 0.07);
+        padding-top: 0.5em;
+      }
+
+      p {
+        margin: 1em 0;
+        line-height: 1.5em;
+      }
+
+      pre, code {
+        font: 12px "Bitstream Vera Sans Mono", "Courier", monospace;
+      }
+
+      pre {
+        -webkit-box-shadow: rgba(0, 0, 0, 0.066) 0px 1px 2px 0px inset;
+        background-color: #eeeeee;
+        border: #dddddd 1px solid;
+        color: #444444;
+        display: block;
+        margin: 12px 0;
+        overflow: auto;
+        padding: 5px;
+        white-space: pre;
+        max-width: 100%;
+        overflow: auto;
+      }
+
+
+      a {
+        border-bottom: 1px solid transparent;
+        color: #EE113D;
+        text-decoration: none;
+        -webkit-transition: background-color 500ms, border-bottom-color 500ms, color 500ms;
+        -moz-transition: background-color 500ms, border-bottom-color 500ms, color 500ms;
+        -o-transition: background-color 500ms, border-bottom-color 500ms, color 500ms;
+        transition: background-color 500ms, border-bottom-color 500ms, color 500ms;
+      }
+      a:hover {
+        background-color: #dceca9;
+        border-bottom-color: #bada55;
+        color: #647b1b;
+      }
+      a code {
+        color: #bada55;
+        text-decoration: none;
+      }
+
+      table td {
+        border-bottom: 1px solid #dddddd;
+        padding: 0.2em 1em;
+      }
+
+
+    </style>
+
+  </head>
+  <body style="cursor: default;">
+
+    <link rel="stylesheet" href="./GLSL Sandbox_files/codemirror.css">
+    <link rel="stylesheet" href="./GLSL Sandbox_files/default.css">
+
+    <script src="./GLSL Sandbox_files/lzma.js"></script>
+    <script src="./GLSL Sandbox_files/jquery.js"></script>
+    <script src="./GLSL Sandbox_files/helpers.js"></script>
+    <script src="./GLSL Sandbox_files/codemirror.js"></script>
+    <script src="./GLSL Sandbox_files/glsl.js"></script>
+
+    <script id="sea" type="x-shader/x-fragment">
+                  //大海
+                  #ifdef GL_ES
+                  precision mediump float;
+                  #endif
+
+                  uniform float time;
+                  vec2 mouse = vec2(20, 0);
+                  uniform vec2 resolution;
+
+                  // "Seascape" by Alexander Alekseev aka TDM - 2014
+                  // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+
+                  const int NUM_STEPS = 16;
+                  const float PI    = 3.1415;
+                  const float EPSILON = 1e-3;
+                  float EPSILON_NRM = 0.;
+
+                  // sea
+                  const int ITER_GEOMETRY = 3;
+                  const int ITER_FRAGMENT = 5;
+                  const float SEA_HEIGHT = 0.6;
+                  const float SEA_CHOPPY = 5.0;
+                  const float SEA_SPEED = 1.0;
+                  const float SEA_FREQ = 0.16;
+                  const vec3 SEA_BASE = vec3(0.1,0.19,0.22);
+                  const vec3 SEA_WATER_COLOR = vec3(0.8,0.9,0.6);
+                  float SEA_TIME = 0.;
+                  mat2 octave_m = mat2(1.6,1.2,-1.2,1.6);
+
+                  // math
+                  mat3 fromEuler(vec3 ang) {
+                    vec2 a1 = vec2(sin(ang.x),cos(ang.x));
+                      vec2 a2 = vec2(sin(ang.y),cos(ang.y));
+                      vec2 a3 = vec2(sin(ang.z),cos(ang.z));
+                      mat3 m;
+                      m[0] = vec3(a1.y*a3.y+a1.x*a2.x*a3.x,a1.y*a2.x*a3.x+a3.y*a1.x,-a2.y*a3.x);
+                    m[1] = vec3(-a2.y*a1.x,a1.y*a2.y,a2.x);
+                    m[2] = vec3(a3.y*a1.x*a2.x+a1.y*a3.x,a1.x*a3.x-a1.y*a3.y*a2.x,a2.y*a3.y);
+                    return m;
+                  }
+                  float hash( vec2 p ) {
+                    float h = dot(p,vec2(127.1,311.7)); 
+                      return fract(sin(h)*43758.5453123);
+                  }
+                  float noise( in vec2 p ) {
+                      vec2 i = floor( p );
+                      vec2 f = fract( p );  
+                    vec2 u = f*f*(3.0-2.0*f);
+                      return -1.0+2.0*mix( mix( hash( i + vec2(0.0,0.0) ), 
+                                       hash( i + vec2(1.0,0.0) ), u.x),
+                                  mix( hash( i + vec2(0.0,1.0) ), 
+                                       hash( i + vec2(1.0,1.0) ), u.x), u.y);
+                  }
+
+                  // lighting
+                  float diffuse(vec3 n,vec3 l,float p) {
+                      return pow(dot(n,l) * 0.4 + 0.6,p);
+                  }
+                  float specular(vec3 n,vec3 l,vec3 e,float s) {    
+                      float nrm = (s + 8.0) / (3.1415 * 8.0);
+                      return pow(max(dot(reflect(e,n),l),0.0),s) * nrm;
+                  }
+
+                  // sky
+                  vec3 getSkyColor(vec3 e) {
+                      e.y = max(e.y,0.0);
+                      vec3 ret;
+                      ret.x = pow(1.0-e.y,2.0);
+                      ret.y = 1.0-e.y;
+                      ret.z = 0.6+(1.0-e.y)*0.4;
+                      return ret;
+                  }
+
+                  // sea
+                  float sea_octave(vec2 uv, float choppy) {
+                      uv += noise(uv);        
+                      vec2 wv = 1.0-abs(sin(uv));
+                      vec2 swv = abs(cos(uv));    
+                      wv = mix(wv,swv,wv);
+                      return pow(1.0-pow(wv.x * wv.y,0.65),choppy);
+                  }
+
+                  float map(vec3 p) {
+                      float freq = SEA_FREQ;
+                      float amp = SEA_HEIGHT;
+                      float choppy = SEA_CHOPPY;
+                      vec2 uv = p.xz; uv.x *= 0.75;
+                      
+                      float d, h = 0.0;    
+                      for(int i = 0; i < ITER_GEOMETRY; i++) {        
+                        d = sea_octave((uv+SEA_TIME)*freq,choppy);
+                        d += sea_octave((uv-SEA_TIME)*freq,choppy);
+                          h += d * amp;        
+                        uv *= octave_m; freq *= 1.9; amp *= 0.22;
+                          choppy = mix(choppy,1.0,0.2);
+                      }
+                      return p.y - h;
+                  }
+
+                  float map_detailed(vec3 p) {
+                      float freq = SEA_FREQ;
+                      float amp = SEA_HEIGHT;
+                      float choppy = SEA_CHOPPY;
+                      vec2 uv = p.xz; uv.x *= 0.75;
+                      
+                      float d, h = 0.0;    
+                      for(int i = 0; i < ITER_FRAGMENT; i++) {        
+                        d = sea_octave((uv+SEA_TIME)*freq,choppy);
+                        d += sea_octave((uv-SEA_TIME)*freq,choppy);
+                          h += d * amp;        
+                        uv *= octave_m; freq *= 1.9; amp *= 0.22;
+                          choppy = mix(choppy,1.0,0.2);
+                      }
+                      return p.y - h;
+                  }
+
+                  vec3 getSeaColor(vec3 p, vec3 n, vec3 l, vec3 eye, vec3 dist) {  
+                      float fresnel = 1.0 - max(dot(n,-eye),0.0);
+                      fresnel = pow(fresnel,3.0) * 0.65;
+                          
+                      vec3 reflected = getSkyColor(reflect(eye,n));    
+                      vec3 refracted = SEA_BASE + diffuse(n,l,80.0) * SEA_WATER_COLOR * 0.12; 
+                      
+                      vec3 color = mix(refracted,reflected,fresnel);
+                      
+                      float atten = max(1.0 - dot(dist,dist) * 0.001, 0.0);
+                      color += SEA_WATER_COLOR * (p.y - SEA_HEIGHT) * 0.18 * atten;
+                      
+                      color += vec3(specular(n,l,eye,60.0));
+                      
+                      return color;
+                  }
+
+                  // tracing
+                  vec3 getNormal(vec3 p, float eps) {
+                      vec3 n;
+                      n.y = map_detailed(p);    
+                      n.x = map_detailed(vec3(p.x+eps,p.y,p.z)) - n.y;
+                      n.z = map_detailed(vec3(p.x,p.y,p.z+eps)) - n.y;
+                      n.y = eps;
+                      return normalize(n);
+                  }
+
+                  float heightMapTracing(vec3 ori, vec3 dir, out vec3 p) {  
+                      float tm = 0.0;
+                      float tx = 1000.0;    
+                      float hx = map(ori + dir * tx);
+                      if(hx > 0.0) return tx;   
+                      float hm = map(ori + dir * tm);    
+                      float tmid = 0.0;
+                      for(int i = 0; i < NUM_STEPS; i++) {
+                          tmid = mix(tm,tx, hm/(hm-hx));                   
+                          p = ori + dir * tmid;                   
+                        float hmid = map(p);
+                      if(hmid < 0.0) {
+                            tx = tmid;
+                              hx = hmid;
+                          } else {
+                              tm = tmid;
+                              hm = hmid;
+                          }
+                      }
+                      return tmid;
+                  }
+
+                  // main
+                  void main( void ) {
+                    EPSILON_NRM = 0.1 / resolution.x;
+                    SEA_TIME = time * SEA_SPEED;
+                    
+                    vec2 uv = gl_FragCoord.xy / resolution.xy;
+                      uv = uv * 2.0 - 1.0;
+                      uv.x *= resolution.x / resolution.y;    
+                      float time = time * 0.3 + mouse.x*0.01;
+                    
+                    mouse = vec2(time * 0.1, 0);
+                          
+                      // ray
+                      vec3 ang = vec3(3);    
+                      vec3 ori = vec3(mouse.x*100.0,3.5,5.0);
+                      vec3 dir = normalize(vec3(uv.xy,-2.0));
+                    dir.z += length(uv) * 0.15;
+                      dir = normalize(dir) * fromEuler(ang);
+                      
+                      // tracing
+                      vec3 p;
+                      heightMapTracing(ori,dir,p);
+                      vec3 dist = p - ori;
+                      vec3 n = getNormal(p, dot(dist,dist) * EPSILON_NRM);
+                      vec3 light = normalize(vec3(0.0,1.0,0.8)); 
+                               
+                      // color
+                      vec3 color = mix(
+                          getSkyColor(dir),
+                          getSeaColor(p,n,light,dir,dist),
+                        pow(smoothstep(0.0,-0.05,dir.y),0.3));
+                          
+                      // post
+                    gl_FragColor = vec4(pow(color,vec3(0.75)), 1.0);
+                  }
+
+    </script>
+
+    <script id="vertigo" type="x-shader/x-fragment">
+                  // 眩晕
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+                    //nuclear throne tunnel
+                    //2017.01.29 tigrou dot ind at gmail dot com
+                    #extension GL_OES_standard_derivatives : enable
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+                    vec4 pattern(vec2 pos, float ang) 
+                    {
+                            pos = vec2(pos.x * cos(ang) - pos.y * sin(ang), pos.y * cos(ang) + pos.x * sin(ang)); 
+                      
+                      //if(length(pos) < 0.2)
+                      if(abs(pos.x) < 0.2 && abs(pos.y) < 0.2)
+                         return vec4(0.0, 0.0, 0.0, 0.0);
+                      else if((abs(pos.x) - abs(pos.y)) > 0.0)
+                         return vec4(0.59, 0.45, 0.05, 1.0);
+                      else
+                         return vec4(0.27, 0.07, 0.39, 1.0);      
+                    }
+
+                    void main( void ) 
+                    {
+                      vec2 pos = ( gl_FragCoord.xy / resolution.xy ) - vec2(0.5, 0.5);
+                      vec4 color = vec4(0.0);
+                      
+                      for(float i = 0.01 ; i < 1.0 ; i += 0.005)
+                      {
+                        float o = 1.0 - i;
+                        vec2 offset = vec2(o*cos(o*2.0+time)*0.5, o*sin(o*2.0+time)*0.5);
+                        vec4 res = pattern(pos/vec2(i*i*2.7)+offset, i*10.0+time);
+                        if(res.a > 0.5)
+                             color = res*i*2.7;
+                      }
+
+                      gl_FragColor = color;
+                    }
+                    </script>
+
+    <script id="bunge bedstraw herb" type="x-shader/x-fragment">     
+    
+                  //四叶草
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    #extension GL_OES_standard_derivatives : enable
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+                    float leafs = 4.0;
+                    //from tutorial created by iq
+                    vec3 computeColor(vec2 p) {
+                        float ratio = resolution.x / resolution.y;
+                        p.y = p.y / ratio;
+                        p /= 0.4;
+                        p -= vec2(0.5*ratio, 1.1 / ratio);
+                        float r = sqrt(dot(p, p));
+                        float a = atan(p.y, p.x) + time * 0.2;
+                        float s = 0.5 + 0.5 * sin(leafs * a);
+                        float t = 0.15 + 0.35*pow(s, 0.3);
+                        t += 0.1 * pow(0.5 + 0.5 * cos(leafs * 2.0 * a), 0.5);
+                        float h = r / t;
+                        float f = 0.0;
+                        if (h < 1.0) {
+                            f = 1.0;
+                        } else {
+                            f = 0.3;
+                            h = 2.0;
+                        }
+                        
+                        return mix(vec3(1.0), vec3(0.5 * h, 0.5 + 0.5 * h, 0.0), f);
+                    }
+
+                    void main( void )
+                    {
+                        vec2 uv = vec2(gl_FragCoord.x / resolution.x, gl_FragCoord.y  / resolution.y);
+                        vec3 res = computeColor(uv);
+                        gl_FragColor = vec4(res.rgb,2.0);
+                    }
+
+
+
+</script>
+<script id="balls" type="x-shader/x-fragment">
+// created by Eric 
+// stolen straight from https://www.shadertoy.com/view/lsX3DH
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+#define MOTIONBLUR
+#define DEPTHOFFIELD
+
+#define CUBEMAPSIZE 256
+
+#define SAMPLES 8
+#define PATHDEPTH 4
+#define TARGETFPS 60.
+
+#define FOCUSDISTANCE 17.
+#define FOCUSBLUR 0.25
+
+#define RAYCASTSTEPS 20
+#define RAYCASTSTEPSRECURSIVE 2
+
+#define EPSILON 0.001
+#define MAXDISTANCE 180.
+#define GRIDSIZE 8.
+#define GRIDSIZESMALL 5.9
+#define MAXHEIGHT 10.
+#define SPEED 0.5
+
+
+float ttime;
+
+//
+// math functions
+//
+
+float hash( const float n ) {
+  return fract(sin(n)*43758.54554213);
+}
+vec2 hash2( const float n ) {
+  return fract(sin(vec2(n,n+1.))*vec2(43758.5453123));
+}
+vec2 hash2( const vec2 n ) {
+  return fract(sin(vec2( n.x*n.y, n.x+n.y))*vec2(25.1459123,312.3490423));
+}
+vec3 hash3( const vec2 n ) {
+  return fract(sin(vec3(n.x, n.y, n+2.0))*vec3(36.5453123,43.1459123,11234.3490423));
+}
+//
+// intersection functions
+//
+
+float intersectPlane( const vec3 ro, const vec3 rd, const float height) { 
+  if (rd.y==0.0) return 500.; 
+  float d = -(ro.y - height)/rd.y;
+  if( d > 0. ) {
+    return d;
+  }
+  return 500.;
+}
+
+float intersectUnitSphere ( const vec3 ro, const vec3 rd, const vec3 sph ) {
+  vec3  ds = ro - sph;
+  float bs = dot( rd, ds );
+  float cs = dot( ds, ds ) - 1.0;
+  float ts = bs*bs - cs;
+
+  if( ts > 0.0 ) {
+    ts = -bs - sqrt( ts );
+    if( ts > 0. ) {
+      return ts;
+    }
+  }
+  return 500.;
+}
+
+//
+// Scene
+//
+
+void getSphereOffset( const vec2 grid, out vec2 center ) {
+  center = (hash2( grid+vec2(43.12,1.23) ) - vec2(0.5) )*(GRIDSIZESMALL);
+}
+void getMovingSpherePosition( const vec2 grid, const vec2 sphereOffset, out vec3 center ) {
+  // falling?
+  float s = 0.1+hash( grid.x*1.23114+5.342+74.324231*grid.y );
+  float t = 14.*s + time/s;
+  
+  float y =  s * MAXHEIGHT * abs( cos( t ) );
+  vec2 offset = grid + sphereOffset;
+  
+  center = vec3( offset.x, y, offset.y ) + 0.5*vec3( GRIDSIZE, 2., GRIDSIZE );
+}
+void getSpherePosition( const vec2 grid, const vec2 sphereOffset, out vec3 center ) {
+  vec2 offset = grid + sphereOffset;
+  center = vec3( offset.x, 0., offset.y ) + 0.5*vec3( GRIDSIZE, 2., GRIDSIZE );
+}
+vec3 getSphereColor( const vec2 grid ) {
+  return 0.8*normalize( hash3( grid+vec2(43.12*grid.y,12.23*grid.x) ) );
+}
+
+vec3 sundir = normalize( vec3(-1.0,0.8,0.2) );
+
+vec3 getBackgroundColor( const vec3 ro, const vec3 rd ) { 
+  return vec3( 0.8, 0.9, 1.0 ) * (1.8 * (rd.y+0.5) );
+}
+
+// code duplication because the for-loop requires a const
+vec3 traceRec( const vec3 ro, const vec3 rd, out vec3 intersection, out vec3 normal, out float dist, out int material) {
+  dist = MAXDISTANCE;
+  float distcheck;
+  
+  vec3 sphereCenter, col;
+
+  material = 0; 
+  col = getBackgroundColor(ro, rd);
+  
+  if( (distcheck = intersectPlane( ro,  rd, 0.)) < MAXDISTANCE ) {
+    dist = distcheck;
+    material = 1;
+    normal = vec3( 0., 1., 0. );
+    col = vec3( 0.5 );
+  }
+  
+  // trace grid
+  vec3 pos = floor(ro/GRIDSIZE)*GRIDSIZE;
+  vec3 ri = 1.0/rd;
+  vec3 rs = sign(rd) * GRIDSIZE;
+  vec3 dis = (pos-ro + 0.5  * GRIDSIZE + rs*0.5) * ri;
+  vec3 mm = vec3(0.0);
+  vec2 offset;
+  
+  for( int i=0; i<RAYCASTSTEPSRECURSIVE; i++ ) {
+    if( material != 2 ) {   
+      getSphereOffset( pos.xz, offset );      
+      
+      getMovingSpherePosition( pos.xz, -offset, sphereCenter );     
+      if( (distcheck = intersectUnitSphere( ro, rd, sphereCenter )) < dist ) {
+        dist = distcheck;
+        normal = normalize((ro+rd*dist)-sphereCenter);
+        col = getSphereColor(pos.xz);
+        material = 2;
+      }
+      
+      getSpherePosition( pos.xz, offset, sphereCenter );
+      if( (distcheck = intersectUnitSphere( ro, rd, sphereCenter )) < dist ) {
+        dist = distcheck;
+        normal = normalize((ro+rd*dist)-sphereCenter);
+        col = getSphereColor(pos.xz+vec2(1.,2.));
+        material = 2;
+      }
+      
+      mm = step(dis.xyz, dis.zyx);
+      dis += mm * rs * ri;
+      pos += mm * rs; 
+    }
+  }
+  
+  intersection = ro+rd*dist;
+  
+  return col;
+}
+
+
+vec3 trace(const vec3 ro, const vec3 rd, out vec3 intersection, out vec3 normal, out float dist, out int material) {
+  dist = MAXDISTANCE;
+  float distcheck;
+  
+  vec3 sphereCenter, col, normalcheck;
+  
+  material = 0;
+  col = getBackgroundColor(ro, rd);
+  
+  if( (distcheck = intersectPlane( ro,  rd, 0.)) < MAXDISTANCE ) {
+    dist = distcheck;
+    material = 1;
+    normal = vec3( 0., 1., 0. );
+    col = vec3( 0.5 );
+  } 
+  
+  // trace grid
+  vec3 pos = floor(ro/GRIDSIZE)*GRIDSIZE;
+  vec3 ri = 1.0/rd;
+  vec3 rs = sign(rd) * GRIDSIZE;
+  vec3 dis = (pos-ro + 0.5  * GRIDSIZE + rs*0.5) * ri;
+  vec3 mm = vec3(0.0);
+  vec2 offset;
+    
+  for( int i=0; i<RAYCASTSTEPS; i++ ) {
+    if( material != 2 &&  distance( ro.xz, pos.xz ) < dist+GRIDSIZE ) {
+      getSphereOffset( pos.xz, offset );
+      
+      getMovingSpherePosition( pos.xz, -offset, sphereCenter );     
+      if( (distcheck = intersectUnitSphere( ro, rd, sphereCenter )) < dist ) {
+        dist = distcheck;
+        normal = normalize((ro+rd*dist)-sphereCenter);
+        col = getSphereColor(pos.xz);
+        material = 2;
+      }
+      
+      getSpherePosition( pos.xz, offset, sphereCenter );
+      if( (distcheck = intersectUnitSphere( ro, rd, sphereCenter )) < dist ) {
+        dist = distcheck;
+        normal = normalize((ro+rd*dist)-sphereCenter);
+        col = getSphereColor(pos.xz+vec2(1.,2.));
+        material = 2;
+      }   
+      mm = step(dis.xyz, dis.zyx);
+      dis += mm * rs * ri;
+      pos += mm * rs;   
+    }
+  }
+  
+  intersection = ro+rd*dist;
+  
+  return col;
+}
+
+vec2 rv2;
+
+vec3 cosWeightedRandomHemisphereDirection2( const vec3 n ) {
+  vec3  uu = normalize( cross( n, vec3(0.0,1.0,1.0) ) );
+  vec3  vv = normalize( cross( uu, n ) );
+  
+  float ra = sqrt(rv2.y);
+  float rx = ra*cos(6.2831*rv2.x); 
+  float ry = ra*sin(6.2831*rv2.x);
+  float rz = sqrt( 1.0-rv2.y );
+  vec3  rr = vec3( rx*uu + ry*vv + rz*n );
+
+    return normalize( rr );
+}
+
+
+void main(void) {
+  //vec2 q = gl_FragCoord.xy/iResolution.xy;
+  vec2 q = ( gl_FragCoord.xy / resolution.xy );
+  vec2 p = -1.0+2.0*q;
+  p.x *= resolution.x/resolution.y;
+  
+  vec3 col = vec3( 0. );
+  
+  // raytrace
+  int material;
+  vec3 normal, intersection;
+  float dist;
+  float seed = time+(p.x+resolution.x*p.y)*1.51269341231;
+  
+  for( int j=0; j<SAMPLES; j++ ) {
+    float fj = float(j);
+    
+#ifdef MOTIONBLUR
+    ttime = time + fj/(float(SAMPLES)*TARGETFPS);
+#endif
+    
+    rv2 = hash2( 24.4316544311*fj+ttime+seed );
+    
+    vec2 pt = p+rv2/(0.5*resolution.xy);
+        
+    // camera 
+    vec3 ro = vec3( cos( 0.232*time) * 10., 6.+3.*cos(0.3*time), GRIDSIZE*(time/SPEED) );
+    vec3 ta = ro + vec3( -sin( 0.232*ttime) * 10., -2.0+cos(0.23*ttime), 10.0 );
+    
+    float roll = -0.15*sin(0.5*time);
+    
+    // camera tx
+    vec3 cw = normalize( ta-ro );
+    vec3 cp = vec3( sin(roll), cos(roll),0.0 );
+    vec3 cu = normalize( cross(cw,cp) );
+    vec3 cv = normalize( cross(cu,cw) );
+  
+#ifdef DEPTHOFFIELD
+    // create ray with depth of field
+    const float fov = 3.0;
+    
+        vec3 er = normalize( vec3( pt.xy, fov ) );
+        vec3 rd = er.x*cu + er.y*cv + er.z*cw;
+
+        vec3 go = FOCUSBLUR*vec3( (rv2-vec2(0.5))*2., 0.0 );
+        vec3 gd = normalize( er*FOCUSDISTANCE - go );
+    
+        ro += go.x*cu + go.y*cv;
+        rd += gd.x*cu + gd.y*cv;
+    rd = normalize(rd);
+#else
+    vec3 rd = normalize( pt.x*cu + pt.y*cv + 1.5*cw );    
+#endif      
+    vec3 colsample = vec3( 1. );
+    
+    // first hit
+    rv2 = hash2( (rv2.x*2.4543263+rv2.y)*(time+1.) );
+    colsample *= trace(ro, rd, intersection, normal, dist, material);
+
+    // bounces
+    for( int i=0; i<(PATHDEPTH-1); i++ ) {
+      if( material != 0 ) {
+        rd = cosWeightedRandomHemisphereDirection2( normal );
+        ro = intersection + EPSILON*rd;
+            
+        rv2 = hash2( (rv2.x*2.4543263+rv2.y)*(time+1.)+(float(i+1)*.23) );
+            
+        colsample *= traceRec(ro, rd, intersection, normal, dist, material);
+      }
+    } 
+    if( material == 0 ) {     
+      col += colsample; 
+    }
+  }
+  col  /= float(SAMPLES);
+  
+  col = pow( col, vec3(0.7) );  
+  col = clamp(col, 0.0, 1.0);
+  // contrast 
+ //   col = clamp( col*0.7 + 0.3*col*col*(3.0-2.0*col), 0., 1.); 
+     
+  // vigneting
+  col *= 0.25+0.75*pow( 16.0*q.x*q.y*(1.0-q.x)*(1.0-q.y), 0.15 );
+  
+  gl_FragColor = vec4( col,1.0);
+}
+</script>
+<script id="paint" type="x-shader/x-fragment">
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform vec2 resolution;
+uniform float time;
+uniform vec2 mouse;
+
+const int   complexity      = 48;    // More points of color.
+const float mouse_factor    = 32.0;  // Makes it more/less jumpy.
+const float mouse_offset    = 15.0;   // Drives complexity in the amount of curls/cuves.  Zero is a single whirlpool.
+const float fluid_speed     = 64.0;  // Drives speed, higher number will make it slower.
+const float color_intensity = 0.45;
+
+const float Pi = 3.14159;
+
+void main()
+{
+  vec2 p=(2.0*gl_FragCoord.xy-resolution)/max(resolution.x,resolution.y);
+  for(int i=1;i<complexity;i++)
+  {
+    vec2 newp=p;
+    newp.x+=0.6/float(i)*sin(float(i)*p.y+time/fluid_speed+0.3*float(i))+mouse.y/mouse_factor+mouse_offset;
+    newp.y+=0.6/float(i)*sin(float(i)*p.x+time/fluid_speed+0.3*float(i+10))-mouse.x/mouse_factor+mouse_offset;
+    p=newp;
+  }
+  vec3 col=vec3(color_intensity*sin(3.0*p.x)+color_intensity,color_intensity*sin(3.0*p.y)+color_intensity,color_intensity*sin(p.x+p.y)+color_intensity);
+  gl_FragColor=vec4(col, 1.0);
+}
+</script>
+<script id="building" type="x-shader/x-fragment">
+//building off paulo falcao's raymarch framework -alice
+//--added random building size -h3r3 ;)
+#ifdef GL_ES
+precision highp float;
+#endif
+
+uniform vec2 resolution;
+uniform float time;
+uniform vec2 mouse;
+//Simple raymarching sandbox with camera
+
+//Raymarching Distance Fields
+//About http://www.iquilezles.org/www/articles/raymarchingdf/raymarchingdf.htm
+//Also known as Sphere Tracing
+//Original seen here: http://twitter.com/#!/paulofalcao/statuses/134807547860353024
+
+//Declare functions
+vec2 ObjUnion(in vec2 d1,in vec2 d2);
+vec2 obj_floor(in vec3 p);
+vec3 color_checkers(in vec3 p);
+vec2 obj_roundBox(in vec3 p);
+vec2 obj_sdBox( vec3 p, vec3 b );
+vec3 color_white(in vec3 p);
+vec2 distanceField(in vec3 p);
+vec2 obj_infiniteBuildingsShort(in vec3 p);
+vec2 obj_simpleBuilding (vec3 p, vec3 b );
+vec4 applyFog (in vec4 currColor, in vec3 ray);
+float maxcomp(in vec3 p );
+vec2 obj_infiniteBuildingsTall(in vec3 p);
+vec2 obj_infiniteBuildings(in vec3 p);
+float sdCross( in vec3 p );
+
+
+#define EPS 0.01
+#define INF 100000.0
+
+#define PHONG_SHADING 0
+#define RAYMARCH_SHADING 1
+#define TEST_SHADING 2
+
+#define SPINNING_CAMERA 0
+#define MOUSE_CAMERA 1
+#define PAN_CAMERA 2
+#define STILL_CAMERA 3
+#define AUTOPAN_CAMERA 4
+
+// mode selection
+const int SHADING_MODE = PHONG_SHADING; 
+const int CAMERA_MODE = MOUSE_CAMERA; 
+vec3 E;
+
+// some simple colors
+const vec3 COLOR_GREY = vec3(0.5,0.5,0.5);
+const vec3 COLOR_DARKGREY = vec3(0.74, 0.72, 0.71);
+const vec3 COLOR_WHITE = vec3(1.0,1.0,1.0);
+
+//============================== UTILS ====================================//
+vec2 distanceField(in vec3 p){
+  return ObjUnion(obj_floor(p),obj_infiniteBuildings(p)); // infinite boxes
+  
+  //vec2 test = ObjUnion(obj_infiniteBuildingsShort(p),obj_infiniteBuildingsTall(p)); //multiple mod patterns
+  //return ObjUnion(obj_floor(p),test);
+}
+
+vec2 ObjUnion(in vec2 d1,in vec2 d2){
+  if (d1.x<d2.x)
+  return d1;
+  else
+  return d2;
+}
+
+// http://www.ozone3d.net/blogs/lab/20110427/glsl-random-generator/
+float rand(vec2 n)
+{
+  return 0.5 + 0.5 *
+  fract(sin(dot(n.xy, vec2(12.9898, 78.233)))* 43758.5453);
+}
+
+// from IQ
+float maxcomp(in vec3 p ) { return max(p.x,max(p.y,p.z));}
+
+
+
+// =============================== OBJECTS =======================================//
+// CREDIT: http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm //
+
+//FLOOR (color is determined by y-component, ie 0.0)
+vec2 obj_floor(in vec3 p){
+  return vec2(p.y+2.0,0);
+}
+
+// ROUNDBOX (try other objects )
+//(color is determined by y-component, ie 1.0)
+vec2 obj_roundBox(in vec3 p){
+  return vec2(length(max(abs(p)-vec3(1,1,1),0.0))-0.25,1);
+}
+
+// SIGNED BOX
+vec2 obj_sdBox( vec3 p, vec3 b ){
+  vec3  di = abs(p) - b;
+  float mc = maxcomp(di);
+  return vec2(min(mc,length(max(di,0.0))), 1);
+}
+
+// INFINITE BUILDINGS SHORT
+vec2 obj_infiniteBuildingsShort(in vec3 p){
+  vec3 c = vec3(10,10,10); // how close cubes are to each other
+  vec3 f = vec3(7,10,7);
+  
+  vec3 q = p;
+  //repetition in x and z direction
+  q.x = mod(p.x,c.x)-0.5*c.x;
+  q.x = mod(q.x,f.x)-0.5*f.x;
+  
+  q.z = mod(p.z,c.z)-0.5*c.z;
+  q.z = mod(q.z,f.z)-0.5*f.z;
+  
+  //building height
+  vec3 b = vec3(1.0, 3.0, 1.0);
+  return obj_sdBox(q,b);  
+}
+
+// INFINITE BUILDINGS TALL
+vec2 obj_infiniteBuildingsTall(in vec3 p){
+  vec3 c = vec3(11,10,11); // how close cubes are to each other
+  
+  vec3 q = p;
+  //repetition in x and z direction
+  q.x = mod(p.x,c.x)-0.8*c.x; 
+  q.z = mod(p.z,c.z)-0.5*c.z;
+  
+  //building height
+  vec3 b = vec3(1.0, 8.0, 1.0);
+  return obj_sdBox(q,b);
+}
+
+// INFINITE BUILDINGS RANDOM (CREDIT: H3R3)
+vec2 obj_infiniteBuildings(in vec3 p){
+  
+  vec3 c = vec3(5,5,5); // how close cubes are to each other
+  
+  vec3 q = p;
+  //repetition in x and z direction
+  q.x = mod(p.x,c.x)-0.5*c.x;
+  q.z = mod(p.z,c.z)-0.5*c.z;
+  
+  vec2 pos = vec2(ceil(p.x/c.x), ceil(p.z/c.z));
+  
+  float height = rand(pos)*5.0;//* 10.0 - 4.0;
+  float width1 = rand(pos + 100.0) + 0.5;
+  float width2 = rand(pos + 1500.0) + 0.5;
+  
+  //building height
+  //vec3 k = vec3(1,height,1);
+  vec3 k = vec3(max(0.0, width1), max(0.0, height), max(0.0, width2));
+  return obj_simpleBuilding(q,k); 
+}
+
+
+// SIMPLE BUILDING (white)
+vec2 obj_simpleBuilding (vec3 p, vec3 b ){
+  float body = obj_sdBox(p,b).x;
+  
+  vec3 q = p;
+  vec3 c = vec3(0.5); //0.5
+
+  q = mod(p,c)-0.5*c;
+  
+  float cr = sdCross(q*3.0)/3.0;
+  body = max( body, -cr );
+  
+  float top = obj_sdBox(p-vec3(0,b.y,0),vec3(1.0, b.y/25.0, 1.0)).x;
+  float inside = obj_sdBox(p,vec3(b.x*0.9, b.y, b.z*0.9)).x;
+  body = min(inside,min(body,top));
+  
+  return vec2(body,1);
+}
+
+// SD_CROSS (modified from IQ's original)
+float sdCross( in vec3 p ){
+  const float w = 0.4;
+  float da = obj_sdBox(p.xyz,vec3(INF,w,w)).x;
+  float db = obj_sdBox(p.yzx,vec3(w,INF,w)).x;
+  float dc = obj_sdBox(p.zxy,vec3(w,w,INF)).x;
+  return min(da,db);
+}
+
+
+// ============COLORS============= //
+// Checkerboard Color
+vec3 color_checkers(in vec3 p){
+  if (fract(p.x*.5)>.5)
+  if (fract(p.z*.5)>.5)
+  return COLOR_GREY;
+  else
+  return vec3(1,1,1);
+  else
+  if (fract(p.z*.5)>.5)
+  return vec3(1,1,1);
+  else
+  return COLOR_GREY;
+}
+
+// ==================== RAY MARCH =============================//
+void main(void){
+  //Camera animation
+  vec3 U=vec3(0,1,0);//Camera Up Vector
+  vec3 viewDest=vec3(0,0,0); //Change camere view vector here
+  //vec3 E; //moved to global space
+  if (CAMERA_MODE == SPINNING_CAMERA)
+  E=vec3(-sin(time/10.0)*10.0,5,cos(time/10.0)*10.0); //spinning scene
+  else if(CAMERA_MODE == MOUSE_CAMERA){
+    float spin = mouse.x * 8.0; //time * 0.1 + mouse.x * 8.0;
+    E=vec3(-sin(spin)*10.0, 10.0 * mouse.y, cos(spin)*10.0);//Change camera path position here
+  }
+  else if(CAMERA_MODE == PAN_CAMERA){
+    E=vec3(-sin(1.0)*10.0,7,cos(1.0)*10.0);
+    vec3 moveCamDir = normalize(vec3(E.x,0.0,E.y));
+    float mouse_val = mouse.y-0.5;
+    E+=moveCamDir*time*(mouse_val>0.0?mouse_val:0.0);
+  }
+  else if(CAMERA_MODE == STILL_CAMERA){
+    E=vec3(-sin(1.0)*10.0,7,cos(1.0)*10.0);//Change camera path position here
+  }
+  else if (CAMERA_MODE == AUTOPAN_CAMERA){
+    E=vec3(-sin(1.0)*10.0,7,cos(1.0)*10.0);
+    vec3 moveCamDir = normalize(vec3(E.x,0.0,E.y));
+    E+=moveCamDir*time;
+  }
+  
+  
+  //Camera setup
+  vec3 C=normalize(viewDest-E);
+  vec3 A=cross(C, U);
+  vec3 B=cross(A, C);
+  vec3 M=(E+C);
+
+  vec2 vPos=2.0*gl_FragCoord.xy/resolution.xy - 1.0; // = (2*Sx-1) where Sx = x in screen space (between 0 and 1)
+  vec3 P=M + vPos.x*A*resolution.x/resolution.y + vPos.y*B; //normalize resolution in either x or y direction (ie resolution.x/resolution.y)
+  vec3 rayDir=normalize(P-E); //normalized direction vector from Eye to point on screen
+  
+  //Colors
+  const vec4 skyColor = vec4(0.7, 0.8, 1.0, 1.0);
+  const vec4 sunColor = vec4 (1.0, 0.9, 0.7, 1.0);
+  
+  //Raymarching
+  const vec3 e=vec3(0.1,0,0);
+  const float MAX_DEPTH=170.0; //Max depth use 500
+  const int MAX_STEPS = 100; // max number of steps use 150
+  const float MIN_DIST = 0.01;
+
+  vec2 dist=vec2(0.0,0.0);
+  float totalDist=0.0;
+  vec3 c,p,n; //c=color (used in PHONG and RAYMARCH modes), p=ray position, n=normal at any point on the surface
+
+  int steps = 0;
+  for(int i=0;i<MAX_STEPS;i++){
+    steps++;
+    totalDist+=dist.x;
+    p=E+rayDir*totalDist; // p = eye + total_t*rayDir
+    dist=distanceField(p);
+    if (abs(dist.x)<MIN_DIST) break; // break when p gets sufficiently close to object or exceeds max dist
+  }
+
+  vec4 finalColor = skyColor;
+  
+  if (totalDist<MAX_DEPTH){
+    // check which color to use via the y-component
+    if (dist.y==0.0) // floor color
+    c=color_checkers(p);
+    else if(dist.y==1.0) // building color
+    c=COLOR_WHITE;
+    
+    if(SHADING_MODE==PHONG_SHADING){
+      // compute normal at this point on the surface using a gradient vector
+      n=normalize(
+      vec3(
+      dist.x-distanceField(p-e.xyy).x,
+      dist.x-distanceField(p-e.yxy).x,
+      dist.x-distanceField(p-e.yyx).x));
+      
+      //e.xyy is equal to (0.001,0.0,0.0) 
+      //e.yxy is equal to (0.0,0.001,0.0)
+      //e.xxy is equal to (0.0,0.0,0.001)
+
+      //simple phong LightPosition=CameraPosition    
+      float b=dot(n,normalize(E-p));
+      finalColor=vec4((b*c+pow(b,8.0))*(1.0-totalDist*.01),1.0);
+    }
+    else if (SHADING_MODE==RAYMARCH_SHADING){
+      //Shading based on raymarched distance
+      float v = 1.0-float(steps)/float(MAX_STEPS);
+      float R=v*c.r, G=v*c.g, B=v*c.b;
+      finalColor=vec4(R,G,B,1.0);
+    }
+    else if (SHADING_MODE==TEST_SHADING){
+      vec3 sunDir = vec3(normalize(viewDest-E)); //sun comes from the camera
+      
+      vec3 N = normalize(vec3(
+      distanceField(p).x-distanceField(p-e.xyy).x,
+      distanceField(p).x-distanceField(p-e.yxy).x,
+      distanceField(p).x-distanceField(p-e.yyx).x)); //normal at point
+      
+      vec3 L = sunDir;
+      vec3 V = normalize(E-p);
+      
+      // color info is stored in y component
+      if (dist.y==0.0) // floor color
+        finalColor=vec4(color_checkers(p),1.0);
+      if(dist.y==1.0) // building color
+        finalColor=vec4(COLOR_GREY,1.0);
+      
+      //calculate lighting: diffuse + sunlight
+      float diffuseTerm = clamp(dot(V,N), 0.0, 1.0);
+      finalColor = mix(finalColor, sunColor, diffuseTerm);      
+      
+    }
+  }
+  //apply fog
+  vec3 r = p-E;
+  finalColor = applyFog(finalColor, r);
+  gl_FragColor = finalColor;
+}
+
+
+// Fog (credit: http://www.mazapan.se/news/2010/07/15/gpu-ray-marching-with-distance-fields/)
+vec4 applyFog (in vec4 currColor, in vec3 ray){
+  float rayLength = length(ray);
+  vec3 nRay = ray/rayLength;
+  
+  float fogAmount = 1.0-exp(-rayLength * 0.02); //0.008
+  float sunAmount = 0.0;//pow( max( dot (nRay, sunDir), 0.0), 8.0);
+  
+  vec4 fogColor = mix(vec4(0.5,0.6,0.7,1.0), vec4(1.0,0.9,0.7,1.0), sunAmount);
+  return mix(currColor, fogColor, fogAmount);
+}
+
+    </script>
+<script id="sunset" type="x-shader/x-fragment">
+precision highp float;
+
+const bool USE_MOUSE = true; // Set this to true for God Mode :)
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+const float PI = 3.14159265;
+const float MAX_RAYMARCH_DIST = 150.0;
+const float MIN_RAYMARCH_DELTA = 0.00015; 
+const float GRADIENT_DELTA = 0.015;
+float waveHeight1 = 0.005;
+float waveHeight2 = 0.004;
+float waveHeight3 = 0.001;
+
+// --------------------- START of SIMPLEX NOISE
+//
+// Description : Array and textureless GLSL 2D simplex noise function.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : ijm
+//     Lastmod : 20110822 (ijm)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+// 
+
+vec3 mod289(vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec2 mod289(vec2 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec3 permute(vec3 x) {
+  return mod289(((x*34.0)+1.0)*x);
+}
+
+float snoise(vec2 v)
+  {
+  const vec4 C = vec4(0.211324865405187,  // (3.0-sqrt(3.0))/6.0
+                      0.366025403784439,  // 0.5*(sqrt(3.0)-1.0)
+                     -0.577350269189626,  // -1.0 + 2.0 * C.x
+                      0.024390243902439); // 1.0 / 41.0
+// First corner
+  vec2 i  = floor(v + dot(v, C.yy) );
+  vec2 x0 = v -   i + dot(i, C.xx);
+
+// Other corners
+  vec2 i1;
+  //i1.x = step( x0.y, x0.x ); // x0.x > x0.y ? 1.0 : 0.0
+  //i1.y = 1.0 - i1.x;
+  i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+  // x0 = x0 - 0.0 + 0.0 * C.xx ;
+  // x1 = x0 - i1 + 1.0 * C.xx ;
+  // x2 = x0 - 1.0 + 2.0 * C.xx ;
+  vec4 x12 = x0.xyxy + C.xxzz;
+  x12.xy -= i1;
+
+// Permutations
+  i = mod289(i); // Avoid truncation effects in permutation
+  vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 ))
+    + i.x + vec3(0.0, i1.x, 1.0 ));
+
+  vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
+  m = m*m ;
+  m = m*m ;
+
+// Gradients: 41 points uniformly over a line, mapped onto a diamond.
+// The ring size 17*17 = 289 is close to a multiple of 41 (41*7 = 287)
+
+  vec3 x = 2.0 * fract(p * C.www) - 1.0;
+  vec3 h = abs(x) - 0.5;
+  vec3 ox = floor(x + 0.5);
+  vec3 a0 = x - ox;
+
+// Normalise gradients implicitly by scaling m
+// Approximation of: m *= inversesqrt( a0*a0 + h*h );
+  m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
+
+// Compute final noise value at P
+  vec3 g;
+  g.x  = a0.x  * x0.x  + h.x  * x0.y;
+  g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+  return 130.0 * dot(m, g);
+}
+
+// --------------------- END of SIMPLEX NOISE
+
+
+float map(vec3 p) {
+  return p.y + (0.5 + waveHeight1 + waveHeight2 + waveHeight3) 
+    + snoise(vec2(p.x + time * 0.4, p.z + time * 0.6)) * waveHeight1
+    + snoise(vec2(p.x * 1.6 - time * 0.4, p.z * 1.7 - time * 0.6)) * waveHeight2
+      + snoise(vec2(p.x * 6.6 - time * 1.0, p.z * 2.7 + time * 1.176)) * waveHeight3;
+}
+
+vec3 gradientNormalFast(vec3 p, float map_p) {
+    return normalize(vec3(
+        map_p - map(p - vec3(GRADIENT_DELTA, 0, 0)),
+        map_p - map(p - vec3(0, GRADIENT_DELTA, 0)),
+        map_p - map(p - vec3(0, 0, GRADIENT_DELTA))));
+}
+
+float intersect(vec3 p, vec3 ray_dir, out float map_p, out int iterations) {
+  iterations = 0;
+  if (ray_dir.y >= 0.0) { return -1.0; } // to see the sea you have to look down
+  
+  float distMin = (- 0.5 - p.y) / ray_dir.y;
+  float distMid = distMin;
+  for (int i = 0; i < 50; i++) {
+    //iterations++;
+    distMid += max(0.05 + float(i) * 0.002, map_p);
+    map_p = map(p + ray_dir * distMid);
+    if (map_p > 0.0) { 
+      distMin = distMid + map_p;
+    } else { 
+      float distMax = distMid + map_p;
+      // interval found, now bisect inside it
+      for (int i = 0; i < 10; i++) {
+        //iterations++;
+        distMid = distMin + (distMax - distMin) / 2.0;
+        map_p = map(p + ray_dir * distMid);
+        if (abs(map_p) < MIN_RAYMARCH_DELTA) return distMid;
+        if (map_p > 0.0) {
+          distMin = distMid + map_p;
+        } else {
+          distMax = distMid + map_p;
+        }
+      }
+      return distMid;
+    }
+  }
+  return distMin;
+}
+
+void main( void ) {
+  float waveHeight = USE_MOUSE ? mouse.x * 5.0 : cos(time * 0.03) * 1.2 + 1.6;
+  waveHeight1 *= waveHeight;
+  waveHeight2 *= waveHeight;
+  waveHeight3 *= waveHeight;
+  
+  vec2 position = vec2((gl_FragCoord.x - resolution.x / 2.0) / resolution.y, (gl_FragCoord.y - resolution.y / 2.0) / resolution.y);
+  vec3 ray_start = vec3(0, 0.2, -2);
+  vec3 ray_dir = normalize(vec3(position,0) - ray_start);
+  ray_start.y = cos(time * 0.5) * 0.2 - 0.25 + sin(time * 2.0) * 0.05;
+  
+  const float dayspeed = 0.04;
+  float subtime = max(-0.16, sin(time * dayspeed) * 0.2);
+  float middayperc = USE_MOUSE ? mouse.y * 0.3 - 0.15 : max(0.0, sin(subtime));
+  vec3 light1_pos = vec3(0.0, middayperc * 200.0, USE_MOUSE ? 200.0 : cos(subtime * dayspeed) * 200.0);
+  float sunperc = pow(max(0.0, min(dot(ray_dir, normalize(light1_pos)), 1.0)), 190.0 + max(0.0,light1_pos.y * 4.3));
+  vec3 suncolor = (1.0 - max(0.0, middayperc)) * vec3(1.5, 1.2, middayperc + 0.5) + max(0.0, middayperc) * vec3(1.0, 1.0, 1.0) * 4.0;
+  vec3 skycolor = vec3(middayperc + 0.8, middayperc + 0.7, middayperc + 0.5);
+  vec3 skycolor_now = suncolor * sunperc + (skycolor * (middayperc * 1.6 + 0.5)) * (1.0 - sunperc);
+  vec4 color = vec4(0.0, 0.0, 0.0, 1.0);
+  float map_p;
+  int iterations;
+  float dist = intersect(ray_start, ray_dir, map_p, iterations);
+  if (dist > 0.0) {
+    vec3 p = ray_start + ray_dir * dist;
+    vec3 light1_dir = normalize(light1_pos - p);
+          vec3 n = gradientNormalFast(p, map_p);
+    vec3 ambient = skycolor_now * 0.1;
+          vec3 diffuse1 = vec3(1.1, 1.1, 0.6) * max(0.0, dot(light1_dir, n)  * 2.8);
+    vec3 r = reflect(light1_dir, n);
+    vec3 specular1 = vec3(1.5, 1.2, 0.6) * (0.8 * pow(max(0.0, dot(r, ray_dir)), 200.0));     
+    float fog = min(max(p.z * 0.07, 0.0), 1.0);
+          color.rgb = (vec3(0.6,0.6,1.0) * diffuse1 + specular1 + ambient)  * (1.0 - fog) + skycolor_now * fog;
+      } else {
+          color.rgb = skycolor_now.rgb;
+      }
+  gl_FragColor = color;
+}
+    </script>
+<script id="big white lines" type="x-shader/x-fragment">
+                    #ifdef GL_ES
+precision mediump float;
+#endif
+
+// quadratic bezier curve evaluation
+// posted by Trisomie21
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+int solveCubic(in float a, in float b, in float c, out float r[3])
+{
+  float  p = b - a*a / 3.0;
+  float  q = a * (2.0*a*a - 9.0*b) / 27.0 + c;
+  float p3 = p*p*p;
+  float  d = q*q + 4.0*p3 / 27.0;
+  float offset = -a / 3.0;
+  if(d >= 0.0) { // Single solution
+    float z = sqrt(d);
+    float u = (-q + z) / 2.0;
+    float v = (-q - z) / 2.0;
+    u = sign(u)*pow(abs(u), 1.0/3.0);
+    v = sign(v)*pow(abs(v), 1.0/3.0);
+    if(abs(p) < abs(q)*0.005) {
+      if(q <0.0) v = p / (3.0 * -pow(-q, 1.0/3.0));
+      else u = p / (3.0 * pow(q, 1.0/3.0)); 
+    }     
+    r[0] = offset + u + v;
+    return 1;
+  }
+  float u = sqrt(-p / 3.0);
+  float v = acos(-sqrt( -27.0 / p3) * q / 2.0) / 3.0;
+  float m = cos(v), n = sin(v)*1.732050808;
+  r[0] = offset + u * (m + m);
+  r[1] = offset - u * (n + m);
+  r[2] = offset + u * (n - m);
+  return 3;
+}
+
+
+float DistanceToQBSpline(in vec2 P0, in vec2 P1, in vec2 P2, in vec2 p)
+{
+  float dis = 1e20;
+  
+  vec2  sb = (P1 - P0) * 2.0;
+  vec2  sc = P0 - P1 * 2.0 + P2;
+  vec2  sd = P1 - P0;
+  float sA = 1.0 / dot(sc, sc);
+  float sB = 3.0 * dot(sd, sc);
+  float sC = 2.0 * dot(sd, sd);
+  
+  vec2  D = P0 - p;
+
+  float a = sA;
+  float b = sB;
+  float c = sC + dot(D, sc);
+  float d = dot(D, sd);
+
+      float res[3];
+  int n = solveCubic(b*a, c*a, d*a, res);
+
+  float t = clamp(res[0],0.0, 1.0);
+  vec2 pos = P0 + (sb + sc*t)*t;
+  dis = min(dis, length(pos - p));
+  
+      if(n>1) {
+  t = clamp(res[1],0.0, 1.0);
+  pos = P0 + (sb + sc*t)*t;
+  dis = min(dis, length(pos - p));
+      
+  t = clamp(res[2],0.0, 1.0);
+  pos = P0 + (sb + sc*t)*t;
+  dis = min(dis, length(pos - p));      
+      }
+
+      return dis;
+}
+
+void main(void)
+{
+  vec2 position = gl_FragCoord.xy;
+  const int pointCount = 4;
+  vec2 p[2 * pointCount + 1];
+  
+  p[0] = vec2(resolution.x*0.5,resolution.y*.2);
+  p[1] = mouse*resolution;
+  p[2] = vec2(resolution.x*0.4,resolution.y*.8);
+  p[4] = vec2(resolution.x*0.6,resolution.y*.8);
+  p[6] = vec2(resolution.x*0.6,resolution.y*.6);
+  p[8] = vec2(resolution.x*0.7,resolution.y*.2);
+  
+  float d = 9999.0;
+  for (int i = 0; i < pointCount; ++i)
+  {
+    if (i > 0)
+      p[2*i+1] = 2.0 * p[2*i] - p[2*i - 1];
+    d = min(d, DistanceToQBSpline(p[2*i], p[2*i + 1], p[2*i + 2], position));
+  }
+  
+  float lineThickness = 12.0;
+  float lineSoftness = 1.0;
+  float outline = 1.0;
+  d = (d - (lineThickness-1.0)) / lineSoftness;
+  if(outline>0.0) d = abs(d)-outline;
+  
+  // Curve Control point
+  
+  d = clamp(d, 0.0, 1.0);
+  d = mix(0.8, 0.5, d);
+  gl_FragColor = vec4(d,d,d, 1.0);
+}
+    </script>
+<script id="big lines" type="x-shader/x-fragment">
+    #ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+const float pi   = 3.1415926535897932384626433832795; //pi
+const float cupi = 1.4645918875615232630201425272638; //curt of pi
+const float twpi = 6.283185307179586476925286766559 ; //2 x pi 
+
+const float rez = cupi*twpi;
+
+vec3 rotate(vec3 v,vec2 r) 
+{
+  mat3 rxmat = mat3(1,   0    ,    0    ,
+        0,cos(r.y),-sin(r.y),
+        0,sin(r.y), cos(r.y));
+  mat3 rymat = mat3(cos(r.x), 0,-sin(r.x),
+           0    , 1,    0    ,
+        sin(r.x), 0,cos(r.x));
+
+  return v*rxmat*rymat;
+}
+
+float snoise(vec3 v);
+
+void main()
+{
+  vec2 res = vec2(resolution.x/resolution.y,1.0);
+  vec2 p = ( gl_FragCoord.xy / resolution.y ) -(res/2.0);
+  vec2 m = (0.3)*pi*vec2(2.,1.);
+  vec3 color = vec3(0.0);
+  vec3 pos = normalize(rotate(vec3(p,0.9),vec2(m)));
+  float dist = 0.000001;
+  float shell = abs(snoise(pos*0.3+vec3(time/2.0,0,0)*0.3));
+  dist = max(dist,shell*(1.3));
+  color = mix(vec3(1,1,1),vec3(.1,0.5 + ( ( 0.5 + cos(time) * 0.5 ) / 2.0 )  ,0.95),1.-dist); 
+  gl_FragColor = vec4(color.xyz, 1.0 );
+}
+
+//
+// Description : Array and textureless GLSL 2D/3D/4D simplex 
+//               noise functions.
+//      Author : Ian McEwan, Ashima Arts.
+//  Maintainer : ijm
+//     Lastmod : 20110822 (ijm)
+//     License : Copyright (C) 2011 Ashima Arts. All rights reserved.
+//               Distributed under the MIT License. See LICENSE file.
+//               https://github.com/ashima/webgl-noise
+// 
+
+vec3 mod289(vec3 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 mod289(vec4 x) {
+  return x - floor(x * (1.0 / 289.0)) * 289.0;
+}
+
+vec4 permute(vec4 x) {
+     return mod289(((x*34.0)+1.0)*x);
+}
+
+vec4 taylorInvSqrt(vec4 r)
+{
+  return 1.79284291400159 - 0.85373472095314 * r;
+}
+
+float snoise(vec3 v)
+  { 
+  const vec2  C = vec2(1.0/6.0, 1.0/3.0) ;
+  const vec4  D = vec4(0.0, 0.5, 1.0, 2.0);
+
+// First corner
+  vec3 i  = floor(v + dot(v, C.yyy) );
+  vec3 x0 =   v - i + dot(i, C.xxx) ;
+
+// Other corners
+  vec3 g = step(x0.yzx, x0.xyz);
+  vec3 l = 1.0 - g;
+  vec3 i1 = min( g.xyz, l.zxy );
+  vec3 i2 = max( g.xyz, l.zxy );
+
+  //   x0 = x0 - 0.0 + 0.0 * C.xxx;
+  //   x1 = x0 - i1  + 1.0 * C.xxx;
+  //   x2 = x0 - i2  + 2.0 * C.xxx;
+  //   x3 = x0 - 1.0 + 3.0 * C.xxx;
+  vec3 x1 = x0 - i1 + C.xxx;
+  vec3 x2 = x0 - i2 + C.yyy; // 2.0*C.x = 1/3 = C.y
+  vec3 x3 = x0 - D.yyy;      // -1.0+3.0*C.x = -0.5 = -D.y
+
+// Permutations
+  i = mod289(i); 
+  vec4 p = permute( permute( permute( 
+             i.z + vec4(0.0, i1.z, i2.z, 1.0 ))
+           + i.y + vec4(0.0, i1.y, i2.y, 1.0 )) 
+           + i.x + vec4(0.0, i1.x, i2.x, 1.0 ));
+    
+// Gradients: 7x7 points over a square, mapped onto an octahedron.
+// The ring size 17*17 = 289 is close to a multiple of 49 (49*6 = 294)
+  float n_ = 0.142857142857; // 1.0/7.0
+  vec3  ns = n_ * D.wyz - D.xzx;
+
+  vec4 j = p - 49.0 * floor(p * ns.z * ns.z);  //  mod(p,7*7)
+
+  vec4 x_ = floor(j * ns.z);
+  vec4 y_ = floor(j - 7.0 * x_ );    // mod(j,N)
+
+  vec4 x = x_ *ns.x + ns.yyyy;
+  vec4 y = y_ *ns.x + ns.yyyy;
+  vec4 h = 1.0 - abs(x) - abs(y);
+
+  vec4 b0 = vec4( x.xy, y.xy );
+  vec4 b1 = vec4( x.zw, y.zw );
+
+  //vec4 s0 = vec4(lessThan(b0,0.0))*2.0 - 1.0;
+  //vec4 s1 = vec4(lessThan(b1,0.0))*2.0 - 1.0;
+  vec4 s0 = floor(b0)*2.0 + 1.0;
+  vec4 s1 = floor(b1)*2.0 + 1.0;
+  vec4 sh = -step(h, vec4(0.0));
+
+  vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy ;
+  vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww ;
+
+  vec3 p0 = vec3(a0.xy,h.x);
+  vec3 p1 = vec3(a0.zw,h.y);
+  vec3 p2 = vec3(a1.xy,h.z);
+  vec3 p3 = vec3(a1.zw,h.w);
+
+//Normalise gradients
+  vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2, p2), dot(p3,p3)));
+  p0 *= norm.x;
+  p1 *= norm.y;
+  p2 *= norm.z;
+  p3 *= norm.w;
+
+// Mix final noise value
+  vec4 m = max(0.7 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
+  m = m * m;
+  return 42.0 * dot( m*m, vec4( dot(p0,x0), dot(p1,x1), 
+                                dot(p2,x2), dot(p3,x3) ) );
+  }
+</script>
+    <script id="ripple" type="x-shader/x-fragment">
+                  
+
+                    //水波
+                    precision mediump float;
+
+                          uniform float     time;
+                          uniform vec2      resolution;
+                          uniform vec2      mouse;
+                    varying vec2 surfacePosition;
+
+                          #define MAX_ITER 5
+
+                          void main( void )
+                          {
+                              vec2 v_texCoord = gl_FragCoord.xy / resolution;
+
+                              vec2 p =  v_texCoord * 8.0 - vec2(20.0);
+                      p = (surfacePosition - vec2(1.5))* 8.0;
+                              vec2 i = p;
+                              float c = 1.0;
+                              float inten = .03;
+
+                              for (int n = 0; n < MAX_ITER; n++)
+                              {
+                                  float t = time * (1.0 - (3.0 / float(n+1)));
+
+                                  i = p + vec2(cos(t - i.x) + sin(t + i.y),
+                                  sin(t - i.y) + cos(t + i.x));
+                          
+                                  c += 1.0/length(vec2(p.x / (sin(i.x+t)/inten),
+                                  p.y / (cos(i.y+t)/inten)));
+                              }
+
+                              c /= float(MAX_ITER);
+                              c = 1.5 - sqrt(c);
+
+                              vec4 texColor = vec4(0.02, 0.15, 0.02, 1.);
+
+                              texColor.rgb *= (1.0 / (1.0 - (c + 0.05)));
+
+                              gl_FragColor = texColor;
+                          }
+
+
+
+</script>
+
+    <script id="tree" type="x-shader/x-fragment">
+
+
+
+                    //变化的树
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    #extension GL_OES_standard_derivatives : enable
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+                    varying vec2 surfacePosition;
+
+                    void main( void ) {
+
+                      gl_FragColor = vec4( 1.0 );
+                      
+                      vec2 Z = 10.*(surfacePosition-vec2(0.,.09));
+                      float width = 1.5;
+                      for(float i = 0.; i <= 1.; i += 1./64.){
+                        //if(i > mouse.x) return;
+                        if(-Z.y - abs(Z.x) > 0. && Z.y > -width) gl_FragColor *= vec4(i*3.,.4+i/1.,0,1);
+                        float ph = -sign(Z.x)*3.14159/(4.+8.*(mouse.y-.5));
+                        Z += vec2(-sign(Z.x)*width*1.0,0.);
+                        Z *= mat2(cos(ph), sin(ph), -sin(ph), cos(ph));
+                        width /= sqrt(2.+4.*(mouse.x-.5));
+                      }
+                    }
+
+
+</script>
+
+    <script id="pillar" type="x-shader/x-fragment">
+
+
+                    //立体的柱子
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    #extension GL_OES_standard_derivatives : enable
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+                    float sdBox( vec3 p, vec3 b ) {
+                      vec3 d = abs(p) - b;
+                      return min(max(d.x,max(d.y,d.z)),0.0) + length(max(d,0.0));
+                    }
+
+                    float sdCapsule(vec3 p, vec3 a, vec3 b, float r) {
+                      vec3 pa = p - a;
+                      vec3 ba = b - a;
+                      float h = clamp(dot(pa, ba) / dot(ba, ba), 0.0, 1.0);
+                      return length(pa - h * ba) - r;
+                    }
+
+                    float sdCappedCylinder( vec3 p, vec2 h ) {
+                      vec2 d = abs(vec2(length(p.xz),p.y)) - h;
+                      return min(max(d.x,d.y),0.0) + length(max(d,0.0));
+                    }
+
+                    vec3 tri(in vec3 x){return abs(fract(x)-.5);}
+                    float surfFunc(in vec3 p){
+                      return dot(tri(p*0.5 + tri(p*0.25).yzx), vec3(0.666));
+                    }
+
+                    float smin(float a, float b, float k) {
+                      float h = clamp((b - a)/k *0.5 + 0.5, 0.0, 1.0);
+                      return mix(b, a, h) - k * h * (1.0 - h);
+                    }
+
+                    float hash(vec2 p) {
+                      return fract(sin(p.x * 15.57 + p.y * 37.89) * 43758.26);
+                    }
+
+                    float map(vec3 p) {
+
+                      vec3 q = p;
+                      q.x *= 1.0 + 0.5 * cos(q.y / 0.8 * 3.141592);
+                      float d = sdCappedCylinder(q, vec2(0.4, 0.4));
+                      d = max(d, -sdBox(q, vec3(5.0, 0.15, 0.15)));
+                      d = min(d, sdBox(p - vec3(0.0, 0.0, -1.0), vec3(1.0, 1.0, 0.01)));
+                      d = min(d, sdBox(p - vec3(0.0, -1.0, 0.0), vec3(1.0, 0.01, 1.0)));
+                      d = min(d, sdBox(p - vec3(1.0, 0.0, 0.0), vec3(0.01, 1.0, 1.0)));
+                      return d;
+                    }
+
+                    vec3 calcNormal(vec3 p) {
+                      vec2 e = vec2(-1.0, 1.0) * 0.001;
+                      return normalize(
+                        e.xyy * map(p + e.xyy) +
+                        e.yxy * map(p + e.yxy) +
+                        e.yyx * map(p + e.yyx) +
+                        e.xxx * map(p + e.xxx)
+                      );
+                    }
+
+                    float calcAO(in vec3 ro, in vec3 rd) {
+                      float t = 0.0;
+                      float h = 0.0;
+                      float occ = 0.0;
+                      for(int i = 0; i < 5; i++) {
+                        t = 0.01 + 0.12*float(i)/4.0;
+                        h = map(ro + rd * t);
+                        occ += (t-h)*(4.0-float(i));
+                      }
+                      return clamp(1.0 - 2.0*occ, 0.0, 1.0);
+                    }
+
+                    float softshadow(in vec3 ro, in vec3 rd, in float tmin, in float tmax) {
+                      float t = tmin;
+                      float h = 0.0;
+                      float sh = 1.0;
+                      for(int i = 0; i < 20; i++) {
+                      if(t > tmax) continue;
+                        h = map(ro + rd * t);
+                        sh = min(sh, h/t*50.0);
+                        t += h * 0.5;
+                      }
+                      return clamp(sh, 0.0, 1.0);
+                    }
+
+                    float trace(in vec3 ro, in vec3 rd){
+                      float FAR = 50.0;
+                      float t = 0.0, h;
+                      for(int i = 0; i < 72; i++){
+                      h = map(ro+rd*t);
+                      if(abs(h)<0.002*(t*.125 + 1.) || t>FAR) break;       
+                        t += step(h, 1.)*h*.2 + h*.35;
+                      }
+                      
+                      return min(t, FAR);
+                    }
+
+                    void main() {
+                      vec2 uv = (gl_FragCoord.xy - 0.5*resolution.xy) / resolution.y;
+                      
+                      vec3 ro = vec3(-6.0, 3.0, 6.0) + vec3(mouse.x * 2.0 - 1.0, 0.0, 0.0) * 3.0;
+                      vec3 ta = vec3(0.0, 0.0, 0.0);
+                      
+                      vec3 cw = normalize(ta - ro);
+                      vec3 cup = vec3(0.0, 1.0, 0.0);
+                      vec3 cu = normalize(cross(cw, cup));
+                      vec3 cv = normalize(cross(cu, cw));
+                      
+                      float pi = 3.141592;
+                      float fovy = pi / 4.0;
+                      float f = tan(fovy * 0.5);
+                      vec3 rd = normalize(cu * uv.x + cv * uv.y + (1.0/f) * cw);
+                      
+                        //-----
+
+                      float e = 0.001;
+                      float h = 2.0 * e;
+                      float t = trace(ro, rd);
+                      
+                      float ff = clamp((t - 1.0) / 30.0, 0.0, 1.0);
+                      ff = exp(-3. * ff);
+                      vec3 sky = vec3(0., .9, 2.8);
+                      vec3 col = sky;
+                      
+                      vec3 lig_pos0 = vec3(0.0, 1.0, 0.0) * 10.0;
+                      vec3 lig_pos1 = vec3(-1.0, 0.0, 0.0) * 10.0;
+                      vec3 lig_pos2 = vec3(0.0, 0.0, 1.0) * 10.0;
+                      
+                      float dur = 10.0;
+                      float tt = mod(time, dur) / dur;
+                      
+                      vec3 lig_pos = mix(lig_pos0, lig_pos1, smoothstep(0.0, 0.333, tt));
+                      lig_pos = mix(lig_pos, lig_pos2, smoothstep(0.333, 0.666, tt));
+                      lig_pos = mix(lig_pos, lig_pos0, smoothstep(0.666, 1.0, tt));
+                      if(t < 50.0) {
+                        vec3 pos = ro + rd * t;
+                        vec3 nor = calcNormal(pos);
+                        vec3 lig = normalize(lig_pos);
+                        float dif = clamp(dot(nor, lig), 0.0, 1.0);
+                        vec3 ref = reflect(rd, nor);
+                        float spe = pow(clamp(dot(ref, lig), 0.0, 1.0), 64.0);
+                        float sh = softshadow(pos, lig, 0.01, 10.0);
+                        float fre = 1.0 - dot(nor, -rd);
+                        
+                        col = vec3(1.0) * (dif + spe + fre * 0.5) * sh;
+                        col = mix(sky, col, ff);
+                      }
+                      
+                      gl_FragColor = vec4(col, 1.0);
+                    }
+
+
+</script>
+
+    <script id="cement flower" type="x-shader/x-fragment">
+
+
+
+                    //水泥花朵
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    #extension GL_OES_standard_derivatives : enable
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+
+                    //----------------------------------------------------------------------
+                    // FlowerTest.glsl
+                    // original:   https://www.shadertoy.com/view/MltSRf
+                    // RayMarcher Created by inigo quilez - iq/2013
+                    // License Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported License.
+                    //----------------------------------------------------------------------
+
+                    float ballFlower (vec3 p)
+                    { 
+                      const float radius = 1.0;
+                      float q = length(p);
+                      p.y -= 0.4;
+                    //  p.xz *= 5.4;
+                      vec3 n = p; // normalize(p);
+                      float rho   = atan(length(vec2(n.x,n.z)),n.y)*20.0 + q*15.0;
+                      float theta = atan(n.x,n.z)*9.0 + p.y*5.0+rho;
+                      float a = 0.1*(1.2-abs(dot(n,vec3(0,1,0)) ));
+                      return q -radius + a*cos(theta) + a*sin(rho - time);
+                    }
+                    //----------------------------------------------------------------------
+
+                    vec2 map( in vec3 pos )
+                    {    
+                        return vec2( ballFlower(pos),11) ;
+                    }
+
+                    vec2 castRay( in vec3 ro, in vec3 rd )
+                    {
+                        float tmin = 1.0;
+                        float tmax = 20.0;
+                        
+                    #if 0
+                        float tp1 = (0.0-ro.y)/rd.y; if( tp1>0.0 ) tmax = min( tmax, tp1 );
+                        float tp2 = (1.6-ro.y)/rd.y; if( tp2>0.0 ) { if( ro.y>1.6 ) tmin = max( tmin, tp2 );
+                                                                     else           tmax = min( tmax, tp2 ); }
+                    #endif
+                        
+                        float precis = 0.002;
+                        float t = tmin*0.1;
+                        float m = -1.0;
+                        for( int i=0; i<215; i++ )
+                        {
+                            vec2 res = map( ro+rd*t );
+                            if( res.x<precis || t>tmax ) break;
+                            t += res.x*0.3;
+                            m = res.y;
+                        }
+                        if( t>tmax ) m=-1.0;
+                        return vec2( t, m );
+                    }
+
+                    float softshadow( in vec3 ro, in vec3 rd, in float mint, in float tmax )
+                    {
+                        float res = 1.0;
+                        float t = mint;
+                        for( int i=0; i<16; i++ )
+                        {
+                            float h = map( ro + rd*t ).x;
+                            res = min( res, 8.0*h/t );
+                            t += clamp( h, 0.02, 0.10 );
+                            if( h<0.001 || t>tmax ) break;
+                        }
+                        return clamp( res, 0.0, 1.0 );
+                    }
+
+                    vec3 calcNormal( in vec3 pos )
+                    {
+                        vec3 eps = vec3( 0.001, 0.0, 0.0 );
+                        vec3 nor = vec3( map(pos+eps.xyy).x - map(pos-eps.xyy).x,
+                                         map(pos+eps.yxy).x - map(pos-eps.yxy).x,
+                                         map(pos+eps.yyx).x - map(pos-eps.yyx).x );
+                        return normalize(nor);
+                    }
+
+                    float calcAO( in vec3 pos, in vec3 nor )
+                    {
+                        float occ = 0.0;
+                        float sca = 1.0;
+                        for( int i=0; i<5; i++ )
+                        {
+                            float hr = 0.01 + 0.12*float(i)/4.0;
+                            vec3 aopos =  nor * hr + pos;
+                            float dd = map( aopos ).x;
+                            occ += -(dd-hr)*sca;
+                            sca *= 0.95;
+                        }
+                        return clamp( 1.0 - 3.0*occ, 0.0, 1.0 );    
+                    }
+
+                    vec3 render( in vec3 ro, in vec3 rd )
+                    { 
+                        vec3 col = vec3(0.7, 0.9, 1.0) +rd.y*0.8;
+                        vec2 res = castRay(ro,rd);
+                        float t = res.x;
+                      float m = res.y;
+                        if( m > -0.5 )
+                        {
+                            vec3 pos = ro + t*rd;
+                            vec3 nor = calcNormal( pos );
+                            vec3 ref = reflect( rd, nor );
+                            
+                            // material        
+                            col = 0.45 + 0.3*sin( vec3(0.05,0.08,0.10)*(m-1.0) );
+                        
+                            if( m<1.5 )
+                            {
+                                float f = mod( floor(5.0*pos.z) + floor(5.0*pos.x), 2.0);
+                                col = 0.4 + 0.1*f*vec3(1.0);
+                            }
+
+                            // lighting        
+                            float occ = calcAO( pos, nor );
+                            vec3  lig = normalize( vec3(-0.6, 0.7, -0.5) );
+                            float amb = clamp( 0.5+0.5*nor.y, 0.0, 1.0 );
+                            float dif = clamp( dot( nor, lig ), 0.0, 1.0 );
+                            float bac = clamp( dot( nor, normalize(vec3(-lig.x,0.0,-lig.z))), 0.0, 1.0 )*clamp( 1.0-pos.y,0.0,1.0);
+                            float dom = smoothstep( -0.1, 0.1, ref.y );
+                            float fre = pow( clamp(1.0+dot(nor,rd),0.0,1.0), 2.0 );
+                            float spe = pow(clamp( dot( ref, lig ), 0.0, 1.0 ),16.0);
+                            
+                            dif *= softshadow( pos, lig, 0.02, 2.5 );
+                            dom *= softshadow( pos, ref, 0.02, 2.5 );
+
+                            vec3 lin = vec3(0.0);
+                            lin += 1.20*dif*vec3(1.00,0.85,0.55);
+                            lin += 1.20*spe*vec3(1.00,0.85,0.55)*dif;
+                            lin += 0.20*amb*vec3(0.50,0.70,1.00)*occ;
+                            lin += 0.30*dom*vec3(0.50,0.70,1.00)*occ;
+                            lin += 0.30*bac*vec3(0.25,0.25,0.25)*occ;
+                            lin += 0.40*fre*vec3(1.00,1.00,1.00)*occ;
+                            col = col*lin;
+
+                          col = mix( col, vec3(0.8,0.9,1.0), 1.0-exp( -0.002*t*t ) );
+                        }
+                        return vec3( clamp(col,0.0,1.0) );
+                    }
+
+                    mat3 setCamera( in vec3 ro, in vec3 ta, float cr )
+                    {
+                        vec3 cw = normalize(ta-ro);
+                        vec3 cp = vec3(sin(cr), cos(cr),0.0);
+                        vec3 cu = normalize( cross(cw,cp) );
+                        vec3 cv = normalize( cross(cu,cw) );
+                        return mat3( cu, cv, cw );
+                    }
+
+                    void main()
+                    {
+                        vec2 q = gl_FragCoord.xy / resolution.xy;
+                        vec2 p = 2.0*q - 1.0;
+                        p.x *= resolution.x / resolution.y;
+                        vec2 mo =  mouse.xy;
+                         
+                        float time = 15.0 + time;
+
+                        // camera 
+                        vec3 ro = vec3( -0.5+3.5*cos(0.1*time + 6.0*mo.x), -0.0 + 4.0*mo.y, 0.5 + 3.5*sin(0.1*time + 6.0*mo.x) );
+                        vec3 ta = vec3( -0.5, -0.4, 0.5 );
+                      
+                        // camera-to-world transformation
+                        mat3 ca = setCamera( ro, ta, 0.0 );
+                        
+                        // ray direction
+                        vec3 rd = ca * normalize( vec3(p.xy,2.0) );
+
+                        // render 
+                        vec3 col = render( ro+vec3(1,0,0), rd );
+
+                        col = pow( col, vec3(0.7) );
+
+                        gl_FragColor=vec4( col, 1.0 );
+                    }
+
+
+</script>
+
+    <script id="electricty country" type="x-shader/x-fragment">
+
+
+
+                    //电子国度
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+                     
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+                     
+                    // by srtuss, 2013
+                    // was trying to find some sort of "mechanical" fractal for texture/heightmap
+                    // generation, but then i ended up with this.
+                     
+                    // rotate position around axis
+                    vec2 rotate(vec2 p, float a)
+                    {
+                      return vec2(p.x * cos(a) - p.y * sin(a), p.x * sin(a) + p.y * cos(a));
+                    }
+                     
+                    // 1D random numbers
+                    float rand(float n)
+                    {
+                        return fract(sin(n) * 43758.5453123);
+                    }
+                     
+                    // 2D random numbers
+                    vec2 rand2(in vec2 p)
+                    {
+                      return fract(vec2(sin(p.x * 1.32 + p.y * 54.077), cos(p.x * 91.32 + p.y * 9.077)));
+                    }
+                     
+                    // 1D noise
+                    float noise1(float p)
+                    {
+                      float fl = floor(p);
+                      float fc = fract(p);
+                      return mix(rand(fl), rand(fl + 1.0), fc);
+                    }
+                     
+                    // voronoi distance noise, based on iq's articles
+                    float voronoi(in vec2 x)
+                    {
+                      vec2 p = floor(x);
+                      vec2 f = fract(x);
+                      
+                      vec2 res = vec2(8.0);
+                      for(int j = -1; j <= 1; j ++)
+                      {
+                        for(int i = -1; i <= 1; i ++)
+                        {
+                          vec2 b = vec2(i, j);
+                          vec2 r = vec2(b) - f + rand2(p + b);
+                          
+                          // chebyshev distance, one of many ways to do this
+                          float d = max(abs(r.x), abs(r.y));
+                          
+                          if(d < res.x)
+                          {
+                            res.y = res.x;
+                            res.x = d;
+                          }
+                          else if(d < res.y)
+                          {
+                            res.y = d;
+                          }
+                        }
+                      }
+                      return res.y - res.x;
+                    }
+                     
+                     
+                    #define flicker (noise1(time * 2.0) * 0.9 + 0.5)
+                     
+                    void main(void)
+                    {
+                      vec2 uv = gl_FragCoord.xy / resolution.xy;
+                      uv = (uv - 0.5) * 2.0;
+                      vec2 suv = uv;
+                      uv.x *= resolution.x / resolution.y;
+                      
+                      
+                      float v = 0.0;
+                      
+                      // that looks highly interesting:
+                      //v = 1.0 - length(uv) * 1.3;
+                      
+                      
+                      // a bit of camera movement
+                      uv *= 0.6 + sin(time * 0.1) * 0.1;
+                      uv = rotate(uv, sin(time * 0.3) * 1.0);
+                      uv += time * 0.4;
+                      
+                      
+                      // add some noise octaves
+                      float a = 0.6, f = 1.0;
+                      
+                      for(int i = 0; i < 3; i ++) // 4 octaves also look nice, its getting a bit slow though
+                      { 
+                        float v1 = voronoi(uv * f + 1.0);
+                        float v2 = 0.0;
+                        
+                        // make the moving electrons-effect for higher octaves
+                        if(i > 0)
+                        {
+                          // of course everything based on voronoi
+                          v2 = voronoi(uv * f * 0.5 + 5.0 + time);
+                          
+                          float va = 0.0, vb = 0.0;
+                          va = 1.0 - smoothstep(0.0, 0.1, v1);
+                          vb = 1.0 - smoothstep(0.0, 0.08, v2);
+                          v += a * pow(va * (0.5 + vb), 2.0);
+                        }
+                        
+                        // make sharp edges
+                        v1 = 1.0 - smoothstep(0.0, 0.3, v1);
+                        
+                        // noise is used as intensity map
+                        v2 = a * (noise1(v1 * 5.5 + 0.1));
+                        
+                        // octave 0's intensity changes a bit
+                        if(i == 0)
+                          v += v2 * flicker;
+                        else
+                          v += v2;
+                        
+                        f *= 3.0;
+                        a *= 0.7;
+                      }
+                     
+                      // slight vignetting
+                      v *= exp(-0.6 * length(suv)) * 1.2;
+                      
+                      // use texture channel0 for color? why not.
+                      //vec3 cexp = texture2D(iChannel0, uv * 0.001).xyz * 3.0 + texture2D(iChannel0, uv * 0.01).xyz;//vec3(1.0, 2.0, 4.0);
+                      
+                      // old blueish color set
+                      vec3 cexp = vec3(3.0, 1.0, 3.0);
+                        cexp *= 1.3;
+                     
+                      vec3 col = vec3(pow(v, cexp.x), pow(v, cexp.y), pow(v, cexp.z)) * 2.0;
+                      
+                      gl_FragColor = vec4(col, 1.0);
+                    }
+
+
+</script>
+
+    <script id="red stars" type="x-shader/x-fragment">
+
+
+
+                    //红色星云
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+                     
+                     
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+
+                    #define iterations 14
+                    #define formuparam2 (0.3 + 0.7*(abs(2.0*(fract(time*0.002))-1.0)))
+                     
+                    #define volsteps 5
+                    #define stepsize 0.290
+                     
+                    #define zoom 0.900
+                    #define tile   0.850
+                    #define speed2  0.80
+                     
+                    #define brightness 0.003
+                    #define darkmatter 0.400
+                    #define distfading 0.560
+                    #define saturation 0.800
+
+
+                    #define transverseSpeed zoom*2.0
+                    #define cloud 0.11 
+
+                     
+                    float triangle(float x, float a) { 
+                      float output2 = 2.0*abs(  2.0*  ( (x/a) - floor( (x/a) + 0.5) ) ) - 1.0;
+                      return output2;
+                    }
+                     
+                    float field(in vec3 p) {  
+                      float strength = 7. + .03 * log(1.e-6 + fract(sin(time) * 4373.11));
+                      float accum = 0.;
+                      float prev = 0.;
+                      float tw = 0.;  
+
+                      for (int i = 0; i < 6; ++i) {
+                        float mag = dot(p, p);
+                        p = abs(p) / mag + vec3(-.5, -.8 + 0.1*sin(time*0.7 + 2.0), -1.1+0.3*cos(time*0.3));
+                        float w = exp(-float(i) / 7.);
+                        accum += w * exp(-strength * pow(abs(mag - prev), 2.3));
+                        tw += w;
+                        prev = mag;
+                      }
+                      return max(0., 5. * accum / tw - .7);
+                    }
+
+
+
+                    void main() {   
+                          vec2 uv2 =  gl_FragCoord.xy / resolution.xy;
+                      vec2 uvs =  uv2 * resolution.xy  / resolution.y;
+                      
+                      float time2 = time;               
+                            float speed = speed2;
+                            speed = .01 * cos(time2*0.02 + 3.1415926/4.0);          
+                      //speed = 0.0;  
+                          float formuparam = formuparam2;
+                      
+                          //get coords and direction  
+                      vec2 uv = uvs;           
+                      //mouse rotation
+                      float a_xz = -0.9;
+                      float a_yz = .6;
+                      float a_xy = -0.9 + time*0.08;  
+                      
+                      mat2 rot_xz = mat2(cos(a_xz),sin(a_xz),-sin(a_xz),cos(a_xz)); 
+                      mat2 rot_yz = mat2(cos(a_yz),sin(a_yz),-sin(a_yz),cos(a_yz));   
+                      mat2 rot_xy = mat2(cos(a_xy),sin(a_xy),-sin(a_xy),cos(a_xy));
+                      
+
+                      float v2 =1.0;  
+                      vec3 dir=vec3(uv*zoom,1.); 
+                      vec3 from=vec3(0.0, 0.0,0.0);                               
+                            from.x -= 5.0*(mouse.x-0.5);
+                            from.y -= 5.0*(mouse.y-0.5);
+                                   
+                                   
+                      vec3 forward = vec3(0.0,-0.0,1.);   
+                      from.x += transverseSpeed*(1.0)*cos(0.01*time) + 0.001*time;
+                      from.y += transverseSpeed*(1.0)*sin(0.01*time) +0.001*time;
+                      from.z += 0.003*time; 
+                      
+                      dir.xy*=rot_xy;
+                      forward.xy *= rot_xy;
+                      dir.xz*=rot_xz;
+                      forward.xz *= rot_xz; 
+                      dir.yz*= rot_yz;
+                      forward.yz *= rot_yz;
+                      
+                      from.xy*=-rot_xy;
+                      from.xz*=rot_xz;
+                      from.yz*= rot_yz;
+                       
+                      
+                      //zoom
+                      float zooom = (time2-3311.)*speed;
+                      from += forward* zooom;
+                      float sampleShift = mod( zooom, stepsize );
+                       
+                      float zoffset = -sampleShift;
+                      sampleShift /= stepsize; // make from 0 to 1
+                      
+                      //volumetric rendering
+                      float s=0.24;
+                      float s3 = s + stepsize/2.0;
+                      vec3 v=vec3(0.);
+                      float t3 = 0.0; 
+                      
+                      vec3 backCol2 = vec3(0.);
+                      for (int r=0; r<volsteps; r++) {
+                        vec3 p2=from+(s+zoffset)*dir;// + vec3(0.,0.,zoffset);
+                        vec3 p3=from+(s3+zoffset)*dir;// + vec3(0.,0.,zoffset);
+                        
+                        p2 = abs(vec3(tile)-mod(p2,vec3(tile*2.))); // tiling fold
+                        p3 = abs(vec3(tile)-mod(p3,vec3(tile*2.))); // tiling fold    
+                        #ifdef cloud
+                        t3 = field(p3);
+                        #endif
+                        
+                        float pa,a=pa=0.;
+                        for (int i=0; i<iterations; i++) {
+                          p2=abs(p2)/dot(p2,p2)-formuparam; // the magic formula
+                          //p=abs(p)/max(dot(p,p),0.005)-formuparam; // another interesting way to reduce noise
+                          float D = abs(length(p2)-pa); // absolute sum of average change
+                          a += i > 7 ? min( 12., D) : D;
+                          pa=length(p2);
+                        }
+                        
+                        
+                        //float dm=max(0.,darkmatter-a*a*.001); //dark matter
+                        a*=a*a; // add contrast
+                        //if (r>3) fade*=1.-dm; // dark matter, don't render near
+                        // brightens stuff up a bit
+                        float s1 = s+zoffset;
+                        // need closed form expression for this, now that we shift samples
+                        float fade = pow(distfading,max(0.,float(r)-sampleShift));    
+                        //t3 += fade;   
+                        v+=fade;
+                              //backCol2 -= fade;
+
+                        // fade out samples as they approach the camera
+                        if( r == 0 )
+                          fade *= (1. - (sampleShift));
+                        // fade in samples as they approach from the distance
+                        if( r == volsteps-1 )
+                          fade *= sampleShift;
+                        v+=vec3(s1,s1*s1,s1*s1*s1*s1)*a*brightness*fade; // coloring based on distance
+                        
+                        backCol2 += mix(.4, 1., v2) * vec3(1.8 * t3 * t3 * t3, 1.4 * t3 * t3, t3) * fade;
+
+                        
+                        s+=stepsize;
+                        s3 += stepsize;   
+                      }//фор
+                               
+                      v=mix(vec3(length(v)),v,saturation); //color adjust 
+
+                      vec4 forCol2 = vec4(v*.01,1.);  
+                      #ifdef cloud
+                      backCol2 *= cloud;
+                      #endif  
+                      backCol2.b *= -3.8;
+                      backCol2.r *= 0.05; 
+                      
+                      backCol2.b = 0.5*mix(backCol2.g, backCol2.b, 0.8);
+                      backCol2.g = -0.;
+                      backCol2.bg = mix(backCol2.gb, backCol2.bg, 0.5*(cos(time*0.01) + 1.0));  
+                      gl_FragColor = forCol2 + vec4(backCol2, 1.0);
+                    }
+
+
+
+</script>
+
+    <script id="beautiful wait" type="x-shader/x-fragment">
+
+                    //高级等待 *****
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+                    #extension GL_OES_standard_derivatives : enable
+                    uniform float time;
+                    uniform vec2 resolution;
+                    const float INTERVAL = 2.;
+                    const float PI = 3.14159265358979323844;
+                    //
+                    //  r*cos(a) = R + t*(R*cos(b) - R)
+                    //  r*sin(a) = t*R*sin(b)
+                    //
+                    //  t = (r*sin(a))/(R*sin(b))
+                    //
+                    //  r*cos(a) = R + (r*sin(a))/(R*sin(b))*(R*cos(b) - R)
+                    //  r*cos(a) = R + (r*sin(a)/sin(b))*(cos(b) - 1)
+                    //  r*(cos(a) - (sin(a)/sin(b))*(cos(b) - 1)) = R
+                    float inside_polygon(vec2 pos, vec2 center, float r, float n, float s)
+                    {
+                            float theta = 2.*PI/n;
+                            vec2 d = pos - center;
+                            float a = mod(mod(atan(d.y, d.x) + s, 2.*PI), theta);
+                            float l = length(d);
+                           float m = r*cos(.5*theta)/cos(a - .5*theta); // r/(cos(a) - (sin(a)/sin(theta))*(cos(theta) - 1.));
+                           const float border = .001;
+                           return smoothstep(m + border, m - border, l);
+                    }
+                    float wobble(vec2 pos)
+                    {
+                            vec2 d = pos;
+                            float a = (atan(d.y, d.x) + PI/2.)/(2.*PI);
+                            float l = .75;
+                            float t = mod(time, INTERVAL)/INTERVAL;
+                            float o = t*(1. + l);
+                            return smoothstep(o, o - l, a);
+                    }
+                    float inside_triangle(vec2 pos, vec2 center, float r, float s)
+                    {
+                           return inside_polygon(pos, center, wobble(center)*r, 3., s);
+                    }
+                    float inside_triangles(vec2 pos, float r)
+                    {
+                            const float da = 2.*PI/6.;
+                            float a = 0.;
+                            float v = 0.;
+                            for (int i = 0; i < 6; i++) {
+                                    float c = cos(a);
+                                    float s = sin(a);
+                                    vec2 d = vec2(c, s);
+                                    vec2 n = vec2(-s, c);
+                                    vec2 o0 = (2./3.)*sqrt(3.)*d*r;
+                                    vec2 o1 = (5./6.)*sqrt(3.)*d*r;
+                                    float r_triangle = 1.*r/sqrt(3.);
+                                    v += inside_triangle(pos, o0, r_triangle, a) +
+                                          inside_triangle(pos, o1 - n*.5*r, r_triangle, a + PI) +
+                                            inside_triangle(pos, o1 + n*.5*r, r_triangle, a + PI);
+                                    a += da;
+                            }
+                            return v;
+                    }
+                    void main()
+                    {
+                            const float radius = 20.;
+                            vec2 pos = (gl_FragCoord.xy*2. - resolution)/min(resolution.x, resolution.y);
+                            float r0 = .25;
+                            float r1 = 2.*r0;
+                            float r = mix(r1, r0, mod(time, INTERVAL)/INTERVAL);
+                            float v = (inside_triangles(pos, r) + inside_polygon(pos, vec2(0., 0.), r, 6., PI/6.));
+                            vec4 bg = mix(vec4(1.,.0,1.,1.),vec4(.0,.8,1.,1.),gl_FragCoord.y/resolution.y);
+                            vec4 tri = mix(vec4(1.3,.0,1.,1.),vec4(.0,1.3,1.3,1.),gl_FragCoord.y/resolution.y);
+                            gl_FragColor = mix(bg, tri, v);
+                            //mix(vec4(.5,.1.,1.,1.),vec4(.0,.25,.25,1.),gl_FragCoord.y/resolution.y)
+                    }
+
+
+
+</script>
+
+    <script id="old wall" type="x-shader/x-fragment">
+
+                    //旧旧的墙面 *****
+                    // 00f404afdd835ac3af3602c8943738ea - please mark changes (and/or add docs), and retain this line.
+
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+                     
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+                    float _MinStep = 0.125;
+
+                    //////////////////////////////////////////////////////////////
+                    // http://www.gamedev.net/topic/502913-fast-computed-noise/
+                    // replaced costly cos with z^2. fullreset
+                    vec4 random4 (const vec4 x) {
+                        vec4 z = mod(mod(x, vec4(5612.0)), vec4(3.1415927 * 2.0));
+                        return fract ((z*z) * vec4(56812.5453));
+                    }
+                    const float A = 1.0;
+                    const float B = 57.0;
+                    const float C = 113.0;
+                    const vec3 ABC = vec3(A, B, C);
+                    const vec4 A3 = vec4(0, B, C, C+B);
+                    const vec4 A4 = vec4(A, A+B, C+A, C+A+B);
+                    float cnoise4 (const in vec3 xx) {
+                        vec3 x = xx; // mod(xx + 32768.0, 65536.0); // ignore edge issue
+                        vec3 fx = fract(x);
+                        vec3 ix = x-fx;
+                        vec3 wx = fx*fx*(3.0-2.0*fx);
+                        float nn = dot(ix, ABC);
+
+                        vec4 N1 = nn + A3;
+                        vec4 N2 = nn + A4;
+                        vec4 R1 = random4(N1);
+                        vec4 R2 = random4(N2);
+                        vec4 R = mix(R1, R2, wx.x);
+                        float re = mix(mix(R.x, R.y, wx.y), mix(R.z, R.w, wx.y), wx.z);
+
+                        return 1.0 - 2.0 * re;
+                    }
+
+                    //////////////////////////////////////////////////////////////
+                    // distance functions
+                    // http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+                    float sdSphere( vec3 p, float s ) { return length(p)-s; }
+                    float udBox( vec3 p, vec3 b ) {  return length(max(abs(p)-b,0.0)); }
+                    float udRoundBox( vec3 p, vec3 b, float r ) { return length(max(abs(p)-b,0.0))-r; }
+                    float sdTorus( vec3 p, vec2 t ) { vec2 q = vec2(length(p.xz)-t.x,p.y);  return length(q)-t.y; }
+                    vec3  opRep(vec3 p, vec3 r) { return mod(p,r)-0.5*r; }
+                    vec3  opTx(vec3 p, mat4 m ) { return (m*vec4(p,1.0)).xyz; }
+
+                    /////////////////////////////////////////////////////
+                    // the rest
+
+                    float fbm(vec3 p) {
+                        float f;
+                        f = 0.5000*cnoise4( p ); p = p*2.02;
+                        f += 0.2500*cnoise4( p ); p = p*2.03;
+                        f += 0.1250*cnoise4( p ); p = p*2.01;
+                        f += 0.0625*cnoise4( p ); 
+                      return f;
+                    }
+
+                    float scene(vec3 p) { 
+                      vec3 pw = vec3(0.,0.,10.);
+                      float pa = udRoundBox(p+pw,vec3(100.,5,5.),0.22);
+                      float pb = udRoundBox(p-pw,vec3(100.,5,5.),0.22);
+                      float d = min(pa,pb);
+                      
+                      pa = udRoundBox(p+pw*2.,vec3(100.,80.,.2),0.22);
+                      pb = udRoundBox(p-pw*2.,vec3(100.,80.,.2),0.22);
+                      d = min(d,min(pa,pb));
+
+                      vec3 c = opRep(p,vec3(20.,4.5,14.))-vec3(0.,0.,7.);
+                      d = min(d,udRoundBox(c+pw+vec3(0.,0.0,-3.),vec3(1.75,2.,0.75),0.22));
+
+                      float e = udRoundBox(p-vec3(0.,30.,4.),vec3(100.,0.1,0.1),0.2);
+                      e = min(e,udRoundBox(p-vec3(0.,31.,4.),vec3(100.,0.06,0.06),0.1));
+                      e = min(e,udRoundBox(p-vec3(0.,5.,1.),vec3(100.,0.1,0.1),0.2));
+                      e = min(e,udRoundBox(p-vec3(0.,4.,1.),vec3(100.,0.1,0.1),0.2)); 
+                      e = min(e,udRoundBox(p-vec3(7.45,0.,-7.5),vec3(0.1,100.,0.1),0.1)); 
+
+                      float n = fbm(p);   
+                      return min(e,n*0.32+d); // 'texture'
+                    }
+
+                    vec4 color(float d) { 
+                      return mix(vec4(1.,1.,1.,0.25),vec4(0.2,0.1,0.,0.05),smoothstep(0.,0.1,d)); 
+                    }
+
+                    vec4 ray(vec3 pos, vec3 step) {
+                        vec4 sum = vec4(0.);
+                        vec4 col;
+                        float d = 9999.0;
+                    #define RAY1  { d = scene(pos); col = color(d); col.rgb *= col.a; sum += col*(1.0 - sum.a); pos += step*max(d,_MinStep); }
+                    #define RAY4  RAY1 RAY1 RAY1 RAY1
+                        RAY4 RAY4 RAY4 RAY4
+                        return sum;
+                    }
+
+                    void main( void ) {
+                      vec3 e = vec3(sin(time*0.2)*20.,14.,-20.); 
+                      vec3 p = vec3((gl_FragCoord.xy / resolution.xy) * 2. -1., 1.);
+                      p.x *= resolution.x/resolution.y;
+                      p += e;
+                      gl_FragColor = ray(p, normalize(p-e));
+                    }
+
+
+
+
+</script>
+
+    <script id="color lines" type="x-shader/x-fragment">
+
+
+
+
+
+
+                    //淡彩色线条
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    uniform vec2 resolution;
+                    uniform float time;
+
+                    float d2y(float d){ d*= 40.; return 1./(d*d);}
+
+                    vec3 hsv2rgb(vec3 c)
+                    {
+                        vec4 K = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+                        vec3 p = abs(fract(c.xxx + K.xyz) * 6.0 - K.www);
+                        return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
+                    }
+
+                    float gauss(float s, float x){
+                        return (0.85)*exp(-x*x/(2.*s*s));
+                    }
+                    #if 1
+                    float blur(float dist, float width, float blur, float intens){
+                        float w = width;
+                        float e = 0.85*blur;
+                        dist*=0.75;
+                        float b = smoothstep(-w-e, -w+e, dist)-smoothstep(w-e, w+e, dist);
+                        return 1.0*pow(b,1.9)*(1.+80.*blur)*intens;
+                        //return 0.9*b*intens;
+                    }
+                    #else
+                    float blur(float dist, float width, float blur, float intens){
+                        float w = width;
+                        dist = max(abs(dist)-width,0.);
+                        float b = gauss(0.02+w*10.*blur,dist);
+                        return b*intens;
+                    }
+                    #endif
+                    float d2y2(float d, float i){
+                        float b = 0.04*i+0.0001;
+                        return blur(d , 0.03, b, 0.4);
+                    }
+
+
+
+                    float f(float x){
+                        return blur(0.5*x, 0.03, 0.04+0.5, 1.);
+                    }
+
+
+                    #define N 8
+                    // hauteur de la vague
+                    float wave(float x, int i){
+                        float i_f=float(i);
+                        float fy = (3.3-0.5*i_f)*sin(x*2.+2.8*time+.6*i_f);
+                        return fy * (0.4+0.3*cos(x));
+                    }
+
+                    void main(void)
+                    {
+                        vec2 uv = (gl_FragCoord.xy / resolution - vec2(0.5)) * vec2(resolution.x / resolution.y, 1.0) * 1.0;
+                        uv.y *= 2.2;
+                        uv.x *= 2.1;
+
+                      
+                        float yf = 0.*d2y(distance(uv.y*2., f(uv.x)));
+                        vec3 col = vec3(0.0);
+                        for(int i = 0; i<N; ++i){
+                            float i_f = float(i)*0.8+1.;
+                            float y = d2y2(distance(3.*uv.y, wave(uv.x, i)),i_f);
+                            col += 0.8*y *hsv2rgb(vec3(0.00015*time+i_f*0.1-0.05, 0.6,1.0));
+                            
+                        }
+                        
+                        gl_FragColor = vec4(vec3(yf)+(233./255.)-col, 1.0);
+                    }
+
+
+
+
+</script>
+
+    <script id="toon cloud" type="x-shader/x-fragment">
+
+
+
+
+
+                    //卡通云 *****
+                    // ----------------------------------------------------------------------------------------
+                    //  "Toon Cloud" by Antoine Clappier - March 2015
+                    //
+                    //  Licensed under:
+                    //  A Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.
+                    //  http://creativecommons.org/licenses/by-nc-sa/4.0/
+                    // ----------------------------------------------------------------------------------------
+                    // original from https://www.shadertoy.com/view/4t23RR
+                    // ----------------------------------------------------------------------------------------
+
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    uniform vec2 resolution;
+                    uniform float time;
+
+                    #define TAU 6.28318530718
+
+
+                    const vec3 BackColor  = vec3(0.0, 0.4, 0.58);
+                    const vec3 CloudColor = vec3(0.18,0.70,0.87);
+
+
+                    float Func(float pX)
+                    {
+                      return 0.6*(0.5*sin(0.1*pX) + 0.5*sin(0.553*pX) + 0.7*sin(1.2*pX));
+                    }
+
+
+                    float FuncR(float pX)
+                    {
+                      return 0.5 + 0.25*(1.0 + sin(mod(40.0*pX, TAU)));
+                    }
+
+
+                    float Layer(vec2 pQ, float pT)
+                    {
+                      vec2 Qt = 3.5*pQ;
+                      pT *= 0.5;
+                      Qt.x += pT;
+
+                      float Xi = floor(Qt.x);
+                      float Xf = Qt.x - Xi -0.5;
+
+                      vec2 C;
+                      float Yi;
+                      float D = 1.0 - step(Qt.y,  Func(Qt.x));
+
+                      // Disk:
+                      Yi = Func(Xi + 0.5);
+                      C = vec2(Xf, Qt.y - Yi ); 
+                      D =  min(D, length(C) - FuncR(Xi+ pT/80.0));
+
+                      // Previous disk:
+                      Yi = Func(Xi+1.0 + 0.5);
+                      C = vec2(Xf-1.0, Qt.y - Yi ); 
+                      D =  min(D, length(C) - FuncR(Xi+1.0+ pT/80.0));
+
+                      // Next Disk:
+                      Yi = Func(Xi-1.0 + 0.5);
+                      C = vec2(Xf+1.0, Qt.y - Yi ); 
+                      D =  min(D, length(C) - FuncR(Xi-1.0+ pT/80.0));
+
+                      return min(1.0, D);
+                    }
+
+                    void main(void){
+                      vec2 uv = 1.2*(2.0*gl_FragCoord.xy - resolution.xy) / resolution.y;
+                      
+                      // Render:
+                      vec3 Color= BackColor;
+
+                      for(float J=0.0; J<=1.0; J+=0.2)
+                      {
+                        // Cloud Layer: 
+                        float Lt =  time*(0.5  + 2.0*J)*(1.0 + 0.1*sin(226.0*J)) + 17.0*J;
+                        vec2 Lp = vec2(0.0, 0.3+1.5*( J - 0.5));
+                        float L = Layer(uv + Lp, Lt);
+
+                        // Blur and color:
+                        float Blur = 4.0*(0.5*abs(2.0 - 5.0*J))/(11.0 - 5.0*J);
+
+                        float V = mix( 0.0, 1.0, 1.0 - smoothstep( 0.0, 0.01 +0.2*Blur, L ) );
+                        vec3 Lc=  mix( CloudColor, vec3(1.0), J);
+
+                        Color =mix(Color, Lc,  V);
+                      }
+                      gl_FragColor = vec4(Color,1.);
+                    }
+</script>
+
+    <script id="thinkering" type="x-shader/x-fragment">
+
+// bpt.2017 thinkering
+
+#ifdef GL_ES
+precision highp float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+varying vec2 surfacePosition;
+
+// using as a starting point thx https://www.shadertoy.com/view/MtKSWt
+
+vec4 BezierPoint(vec4 p0, vec4 p1, vec4 p2, float t){
+    vec4 v1 = p1-p0;
+    vec4 v2 = p2-p1;
+    vec4 o0 = p0+v1*t;
+    vec4 o1 = p1+v2*t;
+    vec4 v3 = o1-o0;
+    return v3*t+o0;
+}
+
+float dot2(vec4 v) {return dot(v,v);}
+
+float BezierLine(vec4 p, vec4 a, vec4 b, vec4 c,float minDist)
+{
+    for( float i = 0.0; i <= 1.0; i+=0.001)
+    {
+        minDist = min( dot2(p-BezierPoint(a,b,c,i)), minDist);
+    }
+    return pow(minDist,0.125);
+}
+
+void main( void )
+{
+    vec2 uv = (surfacePosition*vec2(2.0,2.0));
+    vec4 p3 = vec2(1.,0.).xyxy;
+//    vec4 p2 = vec4(0.0,sin(time)*uv.x,0.0,sin(time)*uv.x)*cos(time*2.0);//
+    vec4 p2 = mouse.xyxy*8.0-4.0;
+    vec4 p1 = -p3;
+    
+    gl_FragColor = vec4( vec3(
+         BezierLine(vec4(uv,uv),p1,p2,p3,1.0)
+    ),1.0);
+}
+</script>
+
+    <script id="Majestic Wireframe Cube" type="x-shader/x-fragment">
+ // Majestic Wireframe Cube
+// By: Brandon Fogerty
+// bfogerty at gmail dot com
+// xdpixel.com
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+float line( vec2 a, vec2 b, vec2 p )
+{
+    vec2 aTob = b - a;
+    vec2 aTop = p - a;
+
+    float t = dot( aTop, aTob ) / dot( aTob, aTob);
+
+    t = clamp( t, 0.0, 1.0);
+
+    float d = length( p - (a + aTob * t) );
+    d = 0.05 / d;
+
+    d = pow(d, 7.0);
+    return clamp( d, 0.0, 1.0 );
+}
+
+mat4 perspectiveMatrix(float fovYInRad, float aspectRatio)
+{    
+    float yScale = 1.0/tan(fovYInRad / 2.0);
+    float xScale = yScale / aspectRatio;  
+    float zf = 100.0;
+    float zn = 0.3;
+    
+    float z1 = zf/(zf-zn);
+    float z2 = -zn*zf/(zf-zn);
+
+    mat4 result = mat4(xScale, 0.0, 0.0, 0.0,
+              0.0, yScale, 0.0, 0.0,
+              0.0, 0.0, z1, z2,
+              0.0, 0.0, -1.0, 0.0);
+    
+    return result;
+}
+
+mat4 translationMatrix(vec3 pos)
+{
+    mat4 result = 
+    mat4(1.0, 0.0, 0.0, 0.0, 
+         0.0, 1.0, 0.0, 0.0,
+         0.0, 0.0, 1.0, 0.0,
+         pos.x, pos.y, pos.z, 1.0 );
+    
+    return result;
+}
+
+mat4 rotXMatrix(float theta)
+{
+    float cs = cos(theta);
+    float ss = sin(theta);
+
+    mat4 result = 
+    mat4(1.0, 0.0, 0.0, 0.0, 
+         0.0, cs, -ss, 0.0,
+         0.0, ss, cs, 0.0,
+         0.0, 0.0, 0.0, 1.0 );
+
+    return result;
+}
+
+mat4 rotYMatrix(float theta)
+{
+    float cs = cos(theta);
+    float ss = sin(theta);
+
+    mat4 result = 
+    mat4(cs, 0.0, -ss, 0.0, 
+         0.0, 1.0, 0.0, 0.0,
+         ss, 0.0, cs, 0.0,
+         0.0, 0.0, 0.0, 1.0 );
+
+    return result;
+}
+
+float particle(vec2 uv, vec4 vert, mat4 mvp, vec2 sizeRange, float sizeOffset, vec2 moveSpeed)
+{
+    vec4 v = mvp * vert;
+    vec2 vp = (v.xy / v.w);
+
+    float size = mix(sizeRange.x, sizeRange.y, sin(time + sizeOffset) * 0.5 + 0.5);
+    float t = 1.0 / abs(length(uv.xy - (vp.xy + vec2(cos(time * moveSpeed.x), sin(time * moveSpeed.y)))) * size);
+
+    t = pow( t, 1.5);
+    
+    return t;
+}
+
+void main( void )
+{
+    vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;
+
+    uv *= 10.0;
+
+    const float fovYInRad = (45.0/180.0) * 3.14159;
+    float aspectRatio = resolution.x / resolution.y;
+
+    const float vs = 10.0;
+    #define maxVerts 16
+    vec4 verts [maxVerts];
+    verts[0] = vec4( -vs, -vs, vs, 1.0 );
+    verts[1] = vec4( -vs,  vs, vs, 1.0 );
+    verts[2] = vec4(  vs,  vs, vs, 1.0 );
+    verts[3] = vec4(  vs, -vs, vs, 1.0 );
+
+    verts[4] = vec4( -vs, -vs, vs, 1.0 );
+    verts[5] = vec4( -vs,  vs, vs, 1.0 );
+    verts[6] = vec4( -vs,  vs, -vs, 1.0 );
+    verts[7] = vec4( -vs, -vs, -vs, 1.0 );
+
+    verts[8] = vec4( -vs, -vs, -vs, 1.0 );
+    verts[9] = vec4( -vs,  vs, -vs, 1.0 );
+    verts[10] = vec4( vs,  vs, -vs, 1.0 );
+    verts[11] = vec4( vs, -vs, -vs, 1.0 );
+
+    verts[12] = vec4( vs, -vs, vs, 1.0 );
+    verts[13] = vec4( vs,  vs, vs, 1.0 );
+    verts[14] = vec4( vs,  vs, -vs, 1.0 );
+    verts[15] = vec4( vs, -vs, -vs, 1.0 );
+
+    float moveX = mix(10.0, -10.0, sin(time * 0.4) * 0.5 + 0.5);
+    float moveY = mix(10.0, -10.0, sin(time * 0.2) * 0.5 + 0.5);
+    float moveZ = mix(40.0, 60.0, sin(time * 0.2) * 0.5 + 0.5);
+
+    vec3 pos = vec3( moveX, moveY, moveZ);
+    mat4 rotY = rotYMatrix(time) * rotXMatrix(time * 0.5);
+
+    mat4 worldMat = translationMatrix(pos) * rotY;
+    mat4 perspective = perspectiveMatrix(fovYInRad, aspectRatio);
+
+    mat4 mvp = perspective * worldMat;
+
+  
+  
+  
+    float t = 0.0;
+    for(int i = 0; i < maxVerts; ++i)
+    {
+        vec4 startWorldVert = mvp * verts[i];
+        vec4 endWorldVert;
+        if( i+1 < maxVerts)
+        {
+            endWorldVert = mvp * verts[i + 1];
+        }
+        else
+        {
+            endWorldVert = mvp * verts[i - 3];
+        }
+
+        if(i != 0 && mod(float(i+1), 4.0) == 0.0)
+        {
+            endWorldVert = mvp * verts[i - 3];
+        }
+
+        vec2 sp = startWorldVert.xy / startWorldVert.w;
+        vec2 ep = endWorldVert.xy / endWorldVert.w;
+
+        t += line( sp, ep, uv);
+    }
+
+    vec3 fc = vec3( 0.00 );
+    fc += vec3(pow(abs(uv.y / 10.0), 2.5));
+
+    fc += vec3( 2.0, 4.0, 8.0 ) * pow(t, 0.2);
+
+  
+    t = particle(uv, verts[0], mvp, vec2(20.0, 40.0), 1.0, vec2( 3.0, 1.0));
+    fc += vec3(8.0, 4.0, 2.0) * t;
+
+    t = particle(uv, verts[1], mvp, vec2(20.0, 40.0), 14.0, vec2( 1.0, 3.0));
+    fc += vec3(4.0, 8.0, 2.0) * t;
+
+    t = particle(uv, verts[10], mvp, vec2(10.0, 40.0), 25.0, vec2( 2.0, 1.0));
+    fc += vec3(3.0, 2.0, 7.0) * t;
+
+    t = particle(uv, verts[12], mvp, vec2(10.0, 40.0), 78.0, vec2( 5.0, 3.0));
+    fc += vec3(4.0, 3.0, 8.0) * t;
+
+    t = particle(uv, verts[6], mvp, vec2(10.0, 40.0), 100.0, vec2( 5.0, 3.0));
+    fc += vec3(8.0, 1.0, 1.0) * t;
+
+    gl_FragColor = vec4( fc, 1.0 );
+
+}      
+
+
+
+
+
+
+</script>
+
+    <script id="shui long tou" type="x-shader/x-fragment">
+
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+// Spout - @P_Malin
+
+// Port of textured version from - www.shadertoy.com/view/lsXGzH
+
+//#define LOW_QUALITY
+
+#ifdef LOW_QUALITY
+    #define kRaymarchMaxIter 16
+#else
+    #define kRaymarchMaxIter 32
+    
+    #define ENABLE_AMBIENT_OCCLUSION
+    #define DOUBLE_SIDED_TRANSPARENCY
+#endif
+
+#define ENABLE_SPECULAR
+#define ENABLE_REFLECTIONS
+#define ENABLE_TRANSPARENCY
+#define ENABLE_SHADOWS
+#define ENABLE_FOG
+
+#define ENABLE_DIRECTIONAL_LIGHT
+#define ENABLE_DIRECTIONAL_LIGHT_FLARE
+
+//#define ENABLE_POINT_LIGHT
+//#define ENABLE_POINT_LIGHT_FLARE
+
+const float kPipeRadius = 0.4;
+const float kPipeThickness = 0.15;
+const float kPipeHeight = 2.0;
+//float kPipeHeight = 2.0 + sin(iGlobalTime);
+
+const float kWaterNoiseScale = 0.025;
+
+const float kWaterVelocity = 1.0;
+
+const float kWaterAccel = -1.0;
+
+const float kWaterAnimSpeed = 80.0;
+const float kTrenchWaterAnimSpeed = 20.0;
+
+const float watRef = 1.0 / 1.3330;
+
+float kRipplePos = sqrt(abs(2.0 * kPipeHeight / kWaterAccel)) * kWaterVelocity;
+
+const float kPI = 3.141592654;
+const float kTwoPI = kPI * 2.0;
+
+const float kNoTransparency = -1.0;
+const float kTransparency = 1.0;
+const float kInverseTransparency = 0.0;
+
+struct C_Ray
+{
+    vec3 vOrigin;
+    vec3 vDir;
+    float fStartDistance;
+    float fLength;
+};
+
+struct C_HitInfo
+{
+    vec3 vPos;
+    float fDistance;
+    vec3 vObjectId;
+};
+    
+struct C_Surface
+{
+    vec3 vNormal;
+    vec3 cReflection;
+    vec3 cTransmission;    
+};
+
+struct C_Material
+{
+    vec3 cAlbedo;
+    float fR0;
+    float fSmoothness;
+    vec2 vParam;
+
+    float fTransparency;
+    float fRefractiveIndex;
+};
+
+struct C_Shading
+{
+    vec3 cDiffuse;
+    vec3 cSpecular;
+};
+
+struct C_PointLight
+{
+    vec3 vPos;
+    vec3 cColour;
+};
+
+struct C_DirectionalLight
+{
+    vec3 vDir;
+    vec3 cColour;
+};
+
+vec3 RotateX( const in vec3 vPos, const in float fAngle )
+{
+    float s = sin(fAngle);
+    float c = cos(fAngle);
+    
+    vec3 vResult = vec3( vPos.x, c * vPos.y + s * vPos.z, -s * vPos.y + c * vPos.z);
+    
+    return vResult;
+}
+
+vec3 RotateY( const in vec3 vPos, const in float fAngle )
+{
+    float s = sin(fAngle);
+    float c = cos(fAngle);
+    
+    vec3 vResult = vec3( c * vPos.x + s * vPos.z, vPos.y, -s * vPos.x + c * vPos.z);
+    
+    return vResult;
+}
+
+vec3 RotateZ( const in vec3 vPos, const in float fAngle )
+{
+    float s = sin(fAngle);
+    float c = cos(fAngle);
+    
+    vec3 vResult = vec3( c * vPos.x + s * vPos.y, -s * vPos.x + c * vPos.y, vPos.z);
+    
+    return vResult;
+}
+
+/////////////////////////////////////
+// Distance Field CSG
+// These carry with them the material parameters in yzw
+
+vec4 DistCombineUnion( const in vec4 v1, const in vec4 v2 )
+{
+    //if(v1.x < v2.x) return v1; else return v2;
+    return mix(v1, v2, step(v2.x, v1.x));
+}
+
+vec4 DistCombineUnionConditional( const in vec4 v1, const in vec4 v2, const in float fCondition )
+{    
+  //if( fCondition < 0.0 )
+  //            return v1;
+                
+    return mix(v1, v2, step(v2.x, v1.x) * step(0.0, fCondition));
+}
+
+vec4 DistCombineIntersect( const in vec4 v1, const in vec4 v2 )
+{
+    return mix(v2, v1, step(v2.x,v1.x));
+}
+
+vec4 DistCombineSubtract( const in vec4 v1, const in vec4 v2 )
+{
+    return DistCombineIntersect(v1, vec4(-v2.x, v2.yzw));
+}
+
+/////////////////////////////////////
+// Scene Description 
+
+const float kMaterialIdWall = 1.0;
+const float kMaterialIdPipe = 2.0;
+const float kMaterialIdWater = 3.0;
+
+float Noise(vec2 p)
+{
+    vec2 s = sin(p * 0.6345) + sin(p * 1.62423);
+    return dot(s, vec2(0.125)) + 0.5;
+}
+
+// result is x=scene distance y=material or object id; zw are material specific parameters (maybe uv co-ordinates)
+vec4 GetDistanceScene( const in vec3 vPos, const in float fTransparentScale )
+{          
+    vec4 vResult = vec4(10000.0, -1.0, 0.0, 0.0);
+            
+  float fDistFloor = vPos.y;
+  float fDistBrick = fDistFloor;
+  
+  float fDistTrench = length(vPos.yz + vec2(-0.4, 0.0)) - 1.0;
+  fDistBrick = max(fDistBrick, -(fDistTrench));
+  
+  float fDistWall = vPos.x + 1.0;
+  fDistBrick = min(fDistBrick, fDistWall);
+  
+    vec4 vDistFloor = vec4(fDistBrick, kMaterialIdWall, vPos.xz + vec2(vPos.y, 0.0));
+    vResult = DistCombineUnion(vResult, vDistFloor);    
+
+    vec3 vWaterDomain = vPos - vec3(0.0, kPipeHeight, 0.0);
+
+    float t= max(vWaterDomain.x / kWaterVelocity, 0.0);
+  
+  // Equations of motion
+  float s = 0.5 * kWaterAccel * t * t;
+  float v = -kWaterAccel * t;
+  
+  vWaterDomain.y -= s;    
+                
+    float fDistWater = (length(vWaterDomain.yz) - kPipeRadius);
+                
+    float fDistPipe = max(fDistWater - kPipeThickness, vWaterDomain.x);
+    fDistPipe = max(fDistPipe, -fDistWater); // subtract the water from the pipe to make the hole
+    vec4 vDistPipe = vec4(fDistPipe, kMaterialIdPipe, vPos.xy);        
+        
+    vResult = DistCombineUnion(vResult, vDistPipe);    
+  
+  // compensate for domain distortion of water, otherwise ray sometimes misses
+  fDistWater /= (1.0 + v * 0.5);
+  
+    vec2 vNoiseDomain = vPos.xz;
+                
+  // modify noise for water in trench
+  float fInTrench = step(vPos.y, (-0.1 + 0.05));        
+  vec2 vRippleCentre1 = vPos.xz - vec2(kRipplePos, 0.0);
+  vNoiseDomain.x = mix(vNoiseDomain.x, length(vRippleCentre1), fInTrench);
+  float fNoiseScale = mix(t * t, 1.0 / (1.0 + vNoiseDomain.x), fInTrench) * kWaterNoiseScale;
+  float fWaterSpeed = mix(kWaterAnimSpeed * kWaterVelocity, kTrenchWaterAnimSpeed, fInTrench);
+  
+  vNoiseDomain *= 30.0; 
+  vNoiseDomain.x += -time * fWaterSpeed;
+  
+  float fTrenchWaterDist = vPos.y + 0.1;
+  fDistWater = min(fDistWater, fTrenchWaterDist);
+  
+  fDistWater += Noise(vNoiseDomain) * fNoiseScale;
+  
+  // Negate the distance to the water if transparent scale is 0.0     
+  // This allows us to ratrace "out" of water
+  fDistWater *= (fTransparentScale * 2.0) - 1.0;
+  
+  vec4 vDistWater = vec4(fDistWater, kMaterialIdWater, vPos.xy);        
+  // The condition allows us to ignore water for secondary rays
+  vResult = DistCombineUnionConditional(vResult, vDistWater, fTransparentScale);
+              
+    return vResult;
+}
+
+float GetRayFirstStep( const in C_Ray ray )
+{
+    return ray.fStartDistance;  
+}
+
+C_Material GetObjectMaterial( const in C_HitInfo hitInfo )
+{
+    C_Material mat;
+              
+    if(hitInfo.vObjectId.x == kMaterialIdWall)
+    {
+        // floor
+        mat.fR0 = 0.02;
+  vec2 vTile = step(vec2(0.15), fract(hitInfo.vObjectId.yz));
+  float fTile = vTile.x * vTile.y;
+        mat.cAlbedo = vec3(1.0) * (fTile * 0.8 + 0.2);
+        mat.fSmoothness = 1.0;
+        
+        mat.fSmoothness = mat.cAlbedo.r;
+        mat.fTransparency = 0.0;
+    }
+    else
+    if(hitInfo.vObjectId.x == kMaterialIdPipe)
+    {
+        // pipe
+        mat.fR0 = 0.8;
+        mat.fSmoothness = 1.0;
+        mat.cAlbedo = vec3(0.5);
+        mat.fTransparency = 0.0;
+    }
+    else
+    {
+  // water
+        mat.fR0 = 0.01;
+        mat.fSmoothness = 1.0;
+        mat.fTransparency = 1.0;
+        mat.fRefractiveIndex = watRef; //1.0 / 1.3330;
+        const float fExtinctionScale = 2.0;
+    const vec3 vExtinction = vec3(0.3, 0.7, 0.9);
+        mat.cAlbedo = (vec3(1.0) - vExtinction) * fExtinctionScale; // becomes extinction for transparency
+    }
+    
+    return mat;
+}
+
+vec3 GetSkyGradient( const in vec3 vDir )
+{
+    const vec3 cColourTop = vec3(0.7, 0.8, 1.0);
+    const vec3 cColourHorizon = cColourTop * 0.5;
+
+    float fBlend = clamp(vDir.y, 0.0, 1.0);
+    return mix(cColourHorizon, cColourTop, fBlend);
+}
+
+C_PointLight GetPointLight()
+{
+    C_PointLight result;
+
+    result.vPos = vec3(0.5, 1.0, -2.0);
+    result.cColour = vec3(32.0, 6.0, 1.0) * 10.0;
+
+    return result;
+}
+
+C_DirectionalLight GetDirectionalLight()
+{
+    C_DirectionalLight result;
+
+    result.vDir = normalize(vec3(-0.2, -0.3, 0.5));
+    result.cColour = vec3(8.0, 7.5, 7.0);
+
+    return result;
+}
+
+vec3 GetAmbientLight(const in vec3 vNormal)
+{
+    return GetSkyGradient(vNormal);
+}
+
+/////////////////////////////////////
+// Raymarching 
+
+vec3 GetSceneNormal( const in vec3 vPos, const in float fTransparentScale )
+{
+    // tetrahedron normal
+    const float fDelta = 0.025;
+
+    vec3 vOffset1 = vec3( fDelta, -fDelta, -fDelta);
+    vec3 vOffset2 = vec3(-fDelta, -fDelta,  fDelta);
+    vec3 vOffset3 = vec3(-fDelta,  fDelta, -fDelta);
+    vec3 vOffset4 = vec3( fDelta,  fDelta,  fDelta);
+
+    float f1 = GetDistanceScene( vPos + vOffset1, fTransparentScale ).x;
+    float f2 = GetDistanceScene( vPos + vOffset2, fTransparentScale ).x;
+    float f3 = GetDistanceScene( vPos + vOffset3, fTransparentScale ).x;
+    float f4 = GetDistanceScene( vPos + vOffset4, fTransparentScale ).x;
+
+    vec3 vNormal = vOffset1 * f1 + vOffset2 * f2 + vOffset3 * f3 + vOffset4 * f4;
+
+    return normalize( vNormal );
+}
+
+#define kRaymarchEpsilon 0.01
+// This is an excellent resource on ray marching -> http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm
+void Raymarch( const in C_Ray ray, out C_HitInfo result, const int maxIter, const float fTransparentScale )
+{        
+    result.fDistance = GetRayFirstStep( ray );
+    result.vObjectId.x = 0.0;
+        
+    for(int i=0;i<=kRaymarchMaxIter;i++)              
+    {
+        result.vPos = ray.vOrigin + ray.vDir * result.fDistance;
+        vec4 vSceneDist = GetDistanceScene( result.vPos, fTransparentScale );
+        result.vObjectId = vSceneDist.yzw;
+        
+        // abs allows backward stepping - should only be necessary for non uniform distance functions
+        if((abs(vSceneDist.x) <= kRaymarchEpsilon) || (result.fDistance >= ray.fLength) || (i > maxIter))
+        {
+            break;
+        }                        
+
+        result.fDistance = result.fDistance + vSceneDist.x; 
+    }
+
+
+    if(result.fDistance >= ray.fLength)
+    {
+        result.fDistance = 1000.0;
+        result.vPos = ray.vOrigin + ray.vDir * result.fDistance;
+        result.vObjectId.x = 0.0;
+    }
+}
+
+float GetShadow( const in vec3 vPos, const in vec3 vNormal, const in vec3 vLightDir, const in float fLightDistance )
+{
+    #ifdef ENABLE_SHADOWS
+    C_Ray shadowRay;
+    shadowRay.vDir = vLightDir;
+    shadowRay.vOrigin = vPos;
+    const float fShadowBias = 0.05;
+    shadowRay.fStartDistance = fShadowBias / abs(dot(vLightDir, vNormal));
+    shadowRay.fLength = fLightDistance - shadowRay.fStartDistance;
+  
+    C_HitInfo shadowIntersect;
+    Raymarch(shadowRay, shadowIntersect, 32, kNoTransparency);
+    
+    float fShadow = step(0.0, shadowIntersect.fDistance) * step(fLightDistance, shadowIntersect.fDistance );
+    
+    return fShadow;          
+    #else
+      return 1.0;
+    #endif
+}
+
+// use distance field to evaluate ambient occlusion
+float GetAmbientOcclusion(const in C_HitInfo intersection, const in C_Surface surface)
+{
+    #ifdef ENABLE_AMBIENT_OCCLUSION    
+    vec3 vPos = intersection.vPos;
+    vec3 vNormal = surface.vNormal;
+  
+    float fAmbientOcclusion = 1.0;
+  
+    float fDist = 0.0;
+    for(int i=0; i<=5; i++)
+    {
+      fDist += 0.1;
+  
+      vec4 vSceneDist = GetDistanceScene(vPos + vNormal * fDist, kNoTransparency);
+  
+      fAmbientOcclusion *= 1.0 - max(0.0, (fDist - vSceneDist.x) * 0.2 / fDist );                                 
+    }
+  
+    return fAmbientOcclusion;
+    #else
+      return 1.0;
+    #endif    
+}
+
+/////////////////////////////////////
+// Lighting and Shading
+
+#define kFogDensity 0.05
+
+void ApplyAtmosphere(inout vec3 col, const in C_Ray ray, const in C_HitInfo hitInfo)
+{
+    #ifdef ENABLE_FOG
+    // fog
+    float fFogAmount = exp(hitInfo.fDistance * -kFogDensity);
+    vec3 cFog = GetSkyGradient(ray.vDir);
+
+    #ifdef ENABLE_DIRECTIONAL_LIGHT_FLARE
+    C_DirectionalLight directionalLight = GetDirectionalLight();
+    float fDirDot = clamp(dot(-directionalLight.vDir, ray.vDir), 0.0, 1.0);
+    cFog += directionalLight.cColour * pow(fDirDot, 10.0);
+    #endif 
+
+    col = mix(cFog, col, fFogAmount);
+    #endif
+
+    // glare from light (a bit hacky - use length of closest approach from ray to light)
+    #ifdef ENABLE_POINT_LIGHT_FLARE
+    C_PointLight pointLight = GetPointLight();
+
+    vec3 vToLight = pointLight.vPos - ray.vOrigin;
+    float fPointDot = dot(vToLight, ray.vDir);
+    fPointDot = clamp(fPointDot, 0.0, hitInfo.fDistance);
+
+    vec3 vClosestPoint = ray.vOrigin + ray.vDir * fPointDot;
+    float fDist = length(vClosestPoint - pointLight.vPos);
+    col += pointLight.cColour * 0.01/ (fDist * fDist);
+    #endif    
+}
+
+// http://en.wikipedia.org/wiki/Schlick's_approximation
+float Schlick( const in vec3 vNormal, const in vec3 vView, const in float fR0, const in float fSmoothFactor)
+{
+    float fDot = dot(vNormal, -vView);
+    fDot = clamp((1.0 - fDot), 0.0, 1.0);
+    float fDotPow = pow(fDot, 5.0);
+    return fR0 + (1.0 - fR0) * fDotPow * fSmoothFactor;
+}
+
+vec3 ApplyFresnel(const in vec3 vDiffuse, const in vec3 vSpecular, const in vec3 vNormal, const in vec3 vView, const in C_Material material)
+{
+    float fFresnel = Schlick(vNormal, vView, material.fR0, material.fSmoothness * 0.9 + 0.1);
+    return mix(vDiffuse, vSpecular, fFresnel);    
+}
+
+float GetBlinnPhongIntensity(const in vec3 vIncidentDir, const in vec3 vLightDir, const in vec3 vNormal, const in float fSmoothness)
+{          
+    vec3 vHalf = normalize(vLightDir - vIncidentDir);
+    float fNdotH = max(0.0, dot(vHalf, vNormal));
+
+    float fSpecPower = exp2(4.0 + 6.0 * fSmoothness);
+    float fSpecIntensity = (fSpecPower + 2.0) * 0.125;
+
+    return pow(fNdotH, fSpecPower) * fSpecIntensity;
+}
+
+C_Shading ApplyPointLight( const in C_PointLight light, const in vec3 vSurfacePos, const in vec3 vIncidentDir, const in vec3 vNormal, const in C_Material material )
+{
+    C_Shading shading;
+    
+    vec3 vToLight = light.vPos - vSurfacePos;
+    vec3 vLightDir = normalize(vToLight);
+    float fLightDistance = length(vToLight);
+    
+    float fAttenuation = 1.0 / (fLightDistance * fLightDistance);
+    
+    float fShadowFactor = GetShadow( vSurfacePos, vNormal, vLightDir, fLightDistance );
+    vec3 vIncidentLight = light.cColour * fShadowFactor * fAttenuation * max(0.0, dot(vLightDir, vNormal));
+    
+    shading.cDiffuse = vIncidentLight;                                  
+    shading.cSpecular = GetBlinnPhongIntensity( vIncidentDir, vLightDir, vNormal, material.fSmoothness ) * vIncidentLight;
+    
+    return shading;
+}  
+
+C_Shading ApplyDirectionalLight( const in C_DirectionalLight light, const in vec3 vSurfacePos, const in vec3 vIncidentDir, const in vec3 vNormal, const in C_Material material )
+{
+    C_Shading shading;
+
+    const float kShadowRayLength = 10.0;      
+    vec3 vLightDir = -light.vDir;
+    float fShadowFactor = GetShadow( vSurfacePos, vNormal, vLightDir, kShadowRayLength );
+    vec3 vIncidentLight = light.cColour * fShadowFactor * max(0.0, dot(vLightDir, vNormal));
+    
+    shading.cDiffuse = vIncidentLight;                                  
+    shading.cSpecular = GetBlinnPhongIntensity( vIncidentDir, vLightDir, vNormal, material.fSmoothness ) * vIncidentLight;
+    
+    return shading;
+}  
+
+
+vec3 ShadeSurface(const in C_Ray ray, const in C_HitInfo hitInfo, const in C_Surface surface, const in C_Material material)
+{
+    vec3 cScene;
+    
+    C_Shading shading;
+
+    shading.cDiffuse = vec3(0.0);
+    shading.cSpecular = vec3(0.0);
+    
+    float fAmbientOcclusion = GetAmbientOcclusion(hitInfo, surface);
+    vec3 vAmbientLight = GetAmbientLight(surface.vNormal) * fAmbientOcclusion;
+    
+    shading.cDiffuse += vAmbientLight;
+    shading.cSpecular += surface.cReflection;
+              
+    #ifdef ENABLE_POINT_LIGHT
+    C_PointLight pointLight = GetPointLight();
+    C_Shading pointLighting = ApplyPointLight(pointLight, hitInfo.vPos,ray.vDir, surface.vNormal, material);
+    shading.cDiffuse += pointLighting.cDiffuse;
+    shading.cSpecular += pointLighting.cSpecular;
+    #endif
+
+    #ifdef ENABLE_DIRECTIONAL_LIGHT
+  C_DirectionalLight directionalLight = GetDirectionalLight();
+    C_Shading directionLighting = ApplyDirectionalLight(directionalLight, hitInfo.vPos, ray.vDir, surface.vNormal, material);
+    shading.cDiffuse += directionLighting.cDiffuse;
+    shading.cSpecular += directionLighting.cSpecular;
+    #endif
+
+    vec3 vDiffuseReflection = shading.cDiffuse * material.cAlbedo;          
+
+    // swap diffuse for transmission
+    vDiffuseReflection = mix(vDiffuseReflection, surface.cTransmission, material.fTransparency);    
+
+    #ifdef ENABLE_SPECULAR
+    cScene = ApplyFresnel(vDiffuseReflection , shading.cSpecular, surface.vNormal, ray.vDir, material);
+    #else
+    cScene = vDiffuseReflection;
+    #endif
+    
+    return cScene;
+}
+
+vec3 GetSceneColourSecondary( const in C_Ray ray );
+
+vec3 GetReflection( const in C_Ray ray, const in C_HitInfo hitInfo, const in C_Surface surface )
+{
+    #ifdef ENABLE_REFLECTIONS    
+    {
+        // get colour from reflected ray
+        const float fSeparation    = 0.1;
+
+        C_Ray reflectRay;
+        reflectRay.vDir = reflect(ray.vDir, surface.vNormal);
+        reflectRay.vOrigin = hitInfo.vPos;
+        reflectRay.fLength = 16.0;
+        reflectRay.fStartDistance = fSeparation / abs(dot(reflectRay.vDir, surface.vNormal));
+        
+        return GetSceneColourSecondary(reflectRay);      
+    }
+    #else
+        return GetSkyGradient(reflect(ray.vDir, surface.vNormal));                              
+    #endif
+}
+
+vec3 GetTransmission( const in C_Ray ray, const in C_HitInfo hitInfo, const in C_Surface surface, const in C_Material material )
+{
+    #ifdef ENABLE_TRANSPARENCY  
+    {
+        const float fSeparation = 0.05;
+
+        // Trace until outside transparent object
+        C_Ray refractRay;
+        // we dont handle total internal reflection (in that case refract returns a zero length vector)
+        refractRay.vDir = refract(ray.vDir, surface.vNormal, material.fRefractiveIndex);
+        refractRay.vOrigin = hitInfo.vPos;
+        refractRay.fLength = 16.0;
+        refractRay.fStartDistance = fSeparation / abs(dot(refractRay.vDir, surface.vNormal));
+
+    #ifdef DOUBLE_SIDED_TRANSPARENCY
+    
+      C_HitInfo hitInfo2;
+      Raymarch(refractRay, hitInfo2, 32, kInverseTransparency);
+      vec3 vNormal = GetSceneNormal(hitInfo2.vPos, kInverseTransparency);
+      
+      // get colour from rest of scene
+      C_Ray refractRay2;
+      refractRay2.vDir = refract(refractRay.vDir, vNormal, 1.0 / material.fRefractiveIndex);
+      refractRay2.vOrigin = hitInfo2.vPos;
+      refractRay2.fLength = 16.0;
+      refractRay2.fStartDistance = 0.0;//fSeparation / abs(dot(refractRay2.vDir, vNormal));
+      
+      float fExtinctionDist = hitInfo2.fDistance;
+      vec3 vSceneColour = GetSceneColourSecondary(refractRay2);
+    
+    #else
+    
+      vec3 vSceneColour = GetSceneColourSecondary(refractRay);                                                                        
+      float fExtinctionDist = 0.5;
+    
+    #endif
+                                
+        vec3 cMaterialExtinction = material.cAlbedo;
+        // extinction should really be exp(-) but this is a nice hack to get RGB
+        vec3 cExtinction = (1.0 / (1.0 + (cMaterialExtinction * fExtinctionDist)));
+                                
+                                return vSceneColour * cExtinction;
+    }
+    #else
+        return GetSkyGradient(reflect(ray.vDir, surface.vNormal));                              
+    #endif
+}
+
+// no reflections, no transparency, used for secondary rays
+vec3 GetSceneColourSecondary( const in C_Ray ray )
+{
+    C_HitInfo hitInfo;
+    Raymarch(ray, hitInfo, 32, kNoTransparency);
+                        
+    vec3 cScene;
+
+    if(hitInfo.vObjectId.x < 0.5)
+    {
+        cScene = GetSkyGradient(ray.vDir);
+    }
+    else
+    {
+        C_Surface surface;        
+        surface.vNormal = GetSceneNormal(hitInfo.vPos, kNoTransparency);
+
+        C_Material material = GetObjectMaterial(hitInfo);
+
+        // use sky gradient instead of reflection
+        surface.cReflection = GetSkyGradient(reflect(ray.vDir, surface.vNormal));
+        
+        material.fTransparency = 0.0;
+
+        // apply lighting
+        cScene = ShadeSurface(ray, hitInfo, surface, material);
+    }
+
+    ApplyAtmosphere(cScene, ray, hitInfo);
+
+    return cScene;
+}
+
+vec3 GetSceneColourPrimary( const in C_Ray ray )
+{                                                          
+    C_HitInfo intersection;
+    Raymarch(ray, intersection, 256, kTransparency);
+                
+    vec3 cScene;
+
+    if(intersection.vObjectId.x < 0.5)
+    {
+        cScene = GetSkyGradient(ray.vDir);
+    }
+    else
+    {
+        C_Surface surface;
+        
+        surface.vNormal = GetSceneNormal(intersection.vPos, kTransparency);
+
+        C_Material material = GetObjectMaterial(intersection);
+
+        surface.cReflection = GetReflection(ray, intersection, surface);
+
+        if(material.fTransparency > 0.0)
+        {    
+            surface.cTransmission = GetTransmission(ray, intersection, surface, material);
+        }
+
+        // apply lighting
+        cScene = ShadeSurface(ray, intersection, surface, material);
+    }
+
+    ApplyAtmosphere(cScene, ray, intersection);
+
+    return cScene;
+}
+
+float kFarClip = 30.0;
+
+void GetCameraRay( const in vec3 vPos, const in vec3 vForwards, const in vec3 vWorldUp, out C_Ray ray)
+{
+    vec2 vUV = ( gl_FragCoord.xy / resolution.xy );
+    vec2 vViewCoord = vUV * 2.0 - 1.0;
+
+    float fRatio = resolution.x / resolution.y;
+    vViewCoord.y /= fRatio;                          
+
+    ray.vOrigin = vPos;
+
+    vec3 vRight = normalize(cross(vForwards, vWorldUp));
+    vec3 vUp = cross(vRight, vForwards);
+        
+    ray.vDir = normalize( vRight * vViewCoord.x + vUp * vViewCoord.y + vForwards); 
+    ray.fStartDistance = 0.0;
+    ray.fLength = kFarClip;      
+}
+
+void GetCameraRayLookat( const in vec3 vPos, const in vec3 vInterest, out C_Ray ray)
+{
+    vec3 vForwards = normalize(vInterest - vPos);
+    vec3 vUp = vec3(0.0, 0.1, 0.0);
+
+    GetCameraRay(vPos, vForwards, vUp, ray);
+}
+
+vec3 OrbitPoint( const in float fHeading, const in float fElevation )
+{
+    return vec3(sin(fHeading) * cos(fElevation), sin(fElevation), cos(fHeading) * cos(fElevation));
+}
+
+vec3 Gamma( const in vec3 cCol )
+{
+    return cCol * cCol;
+}
+
+vec3 Tonemap( const in vec3 cCol )
+{
+    // simple Reinhard tonemapping operator    
+    vec3 vResult = cCol / (0.2 + cCol);
+
+    return Gamma(vResult);
+}
+
+void main( void )
+{
+    C_Ray ray;
+    
+    float fHeading = mix(-0.7, kPI + 0.5, mouse.x);
+    float fElevation = mix(1.5, -0.25, mouse.y);
+    float fCameraDist = mix(4.0, 2.5, mouse.y);
+    
+    vec3 vCameraPos = OrbitPoint(fHeading, fElevation) * fCameraDist;
+    vec3 vCameraIntrest = vec3(1.0, 0.9, 0.0);
+
+    GetCameraRayLookat( vCameraIntrest + vCameraPos, vCameraIntrest, ray);
+
+    vec3 cScene = GetSceneColourPrimary( ray );  
+
+    const float fExposure = 3.0;    
+    gl_FragColor = vec4( Tonemap(cScene), 1.0 );
+}
+</script>
+
+    <script id="rubiks cube" type="x-shader/x-fragment">
+// GLSL rubik's cube by Kabuto
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+// Traces a single big cube (= here: layer of 3x3 small cubes)
+void cubetrace(vec3 pos, vec3 dir, vec3 scale, vec3 ofs, inout vec4 hit) {
+  pos *= scale;
+  pos += ofs;
+  dir *= scale;
+  vec3 h1 = (-pos-sign(dir))/dir;
+  vec3 h2 = (-pos+sign(dir))/dir;
+  float h1f = max(max(h1.x,h1.y),h1.z);
+  float h2f = min(min(h2.x,h2.y),h2.z);
+  if (h1f < h2f && h1f < hit.w) {
+    hit = vec4((pos+dir*h1f-ofs)/scale,h1f);
+  }
+}
+
+// What layer to rotate in what frame
+// x: rotation axis (0 to 2), y: rotation layer (0 to 2), z: rotation direction (-1 or 1)
+// Math has to be that way (rounding redundantly) due to numerical precision issues
+vec3 rotframe(float time) {
+  time = floor(time)+.5;
+  return floor(vec3(mod(time,3.),mod(floor(time/3.+.1)+.5,3.),floor(mod(time,2.))*2.-1.));
+}
+
+
+const int FRAMES = 32;
+
+void main( void ) {
+  vec3 pos = vec3(0.,-.21,-7.);
+  vec2 uv = (gl_FragCoord.xy - resolution*.5)/resolution.y*.5;
+  vec3 dir = normalize(vec3(uv,1.));
+
+  float tf = mod(time,float(FRAMES))+1e-5;
+  vec3 r = rotframe(tf);
+  
+  float t2 = time*.3;
+  mat3 globalrot = mat3(cos(t2),0,-sin(t2),0,1,0,sin(t2),0,cos(t2));
+  
+  float t = -fract(tf)*3.141592653589*.5*r.z;
+  mat3 rot = r.x < .5 ?
+    mat3(1,0,0,0,cos(t),sin(t),0,-sin(t),cos(t))
+  : r.x < 1.5 ?
+    mat3(cos(t),0,-sin(t),0,1,0,sin(t),0,cos(t)) :
+    mat3(cos(t),sin(t),0,-sin(t),cos(t),0,0,0,1);
+
+  mat3 rot2 = mat3(1,0,0,0,1,0,0,0,1);
+
+  float a = -.4;
+  mat3 prot = mat3(1,0,0,0,cos(a),sin(a),0,-sin(a),cos(a))*globalrot;
+  pos *= prot;
+  dir *= prot;
+
+  vec4 vhit = vec4(0,0,0,1e9);
+  vec3 s = r.x < .5 ? vec3(1,0,0) : r.x < 1.5 ? vec3(0,1,0) : vec3(0,0,1);
+  cubetrace(pos*(r.y==0.?rot:rot2),dir*(r.y==0.?rot:rot2),vec3(1,1,1)+s*2.,s*2.,vhit);
+  cubetrace(pos*(r.y==1.?rot:rot2),dir*(r.y==1.?rot:rot2),vec3(1,1,1)+s*2.,vec3(0, 0,0),vhit);
+  cubetrace(pos*(r.y==2.?rot:rot2),dir*(r.y==2.?rot:rot2),vec3(1,1,1)+s*2.,-s*2.,vhit);
+  
+    
+    
+  vec3 hit = vhit.xyz;
+  
+  for (int i = FRAMES-1; i >= 0; i--) {
+    if (float(i)+1. < tf) {
+      vec3 r = rotframe(float(i));
+      hit = r.x < .5 ? hit : r.x < 1.5 ? hit.yzx : hit.zxy;
+      if (abs(floor(hit.x*1.49+1.5)- r.y) < .5) hit.yz *= mat2(0,-r.z,r.z,0);
+      hit = r.x < .5 ? hit : r.x < 1.5 ? hit.zxy : hit.yzx;
+    }
+  }
+  
+  
+  vec3 ahit = abs(hit.xyz);
+  vec3 side = sign(hit.xyz)*step(vec3(.99),ahit);
+  float m = max(max(ahit.x,ahit.y),ahit.z);
+  
+  hit.xyz *= 3.;
+  hit.xyz = abs(fract(hit.xyz*.5+.5)-.5)*2.;
+  float b = max(max(hit.x,hit.y),hit.z);
+  float d = min(min(hit.x,hit.y),hit.z);
+  float c = hit.x+hit.y+hit.z-b-d;
+  c = max(c-.7,0.);
+  d = max(d-.7,0.);
+  
+  
+  
+  vec3 facecolour = max(side,vec3(0)) + (1.+min(side,vec3(0)))*dot(-min(side,vec3(0)),vec3(1));
+  vec3 colour = vec3(step(sqrt(c*c+d*d),.17)*step(.99,m))*facecolour+step(m,.1);
+  colour += 1.-min(1.,float(FRAMES)-tf);
+  
+  gl_FragColor = vec4( colour, 1.0 );
+
+}
+</script>
+
+    <script id="cloud" type="x-shader/x-fragment">
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+//uniform vec2 mouse;
+uniform vec2 resolution;
+
+const float cloudscale = 1.1;
+const float speed = 0.01;
+const float clouddark = 0.5;
+const float cloudlight = 0.3;
+const float cloudcover = 0.2;
+const float cloudalpha = 8.0;
+const float skytint = 0.5;
+const vec3 skycolour1 = vec3(0.2, 0.4, 0.6);
+const vec3 skycolour2 = vec3(0.4, 0.7, 1.0);
+
+const mat2 m = mat2( 1.6,  1.2, -1.2,  1.6 );
+
+
+vec2 hash( vec2 p ) {
+  p = vec2(dot(p,vec2(127.1,311.7)), dot(p,vec2(269.5,183.3)));
+  return -1.0 + 2.0*fract(sin(p)*43758.5453123);
+}
+
+float noise( in vec2 p ) {
+    const float K1 = 0.366025404; // (sqrt(3)-1)/2;
+    const float K2 = 0.211324865; // (3-sqrt(3))/6;
+    
+    vec2 i = floor(p + (p.x+p.y)*K1);
+    vec2 a = p - i + (i.x+i.y)*K2;
+    vec2 o = (a.x>a.y) ? vec2(1.0,0.0) : vec2(0.0,1.0); //vec2 of = 0.5 + 0.5*vec2(sign(a.x-a.y), sign(a.y-a.x));
+    vec2 b = a - o + K2;
+    vec2 c = a - 1.0 + 2.0*K2;
+    vec3 h = max(0.5-vec3(dot(a,a), dot(b,b), dot(c,c) ), 0.0 );
+    vec3 n = h*h*h*h*vec3( dot(a,hash(i+0.0)), dot(b,hash(i+o)), dot(c,hash(i+1.0)));
+    
+    return dot(n, vec3(70.0));
+}
+
+float fbm(vec2 n) {
+  float total = 0.0, amplitude = 0.1;
+  for (int i = 0; i < 7; i++) {
+    total += noise(n) * amplitude;
+    n = m * n;
+    amplitude *= 0.4;
+  }
+  return total;
+}
+
+// -----------------------------------------------
+
+void main() {
+
+    vec2 p = gl_FragCoord.xy / (resolution.xy);
+    vec2 uv = p*vec2(resolution.x / resolution.y, 0.9);
+    float localTime = time * speed;
+    float q = fbm(uv * cloudscale * 0.1);
+
+    //ridged noise shape
+  float r = 0.0;
+  uv *= cloudscale;
+    uv -= q - localTime;
+    float weight = 0.8;
+    for (int i=0; i<8; i++){
+    r += abs(weight*noise( uv ));
+        uv = m*uv + localTime;
+    weight *= 0.7;
+    }
+
+    //noise shape
+  float f = 0.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale;
+    uv -= q - localTime;
+    weight = 0.7;
+    for (int i=0; i<8; i++){
+    f += weight*noise( uv );
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    f *= r + f;
+
+    //noise colour
+    float c = 0.0;
+   localTime = time * speed * 2.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale*2.0;
+    uv -= q - localTime;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+    c += weight*noise( uv );
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    //noise ridge colour
+    float c1 = 0.0;
+   localTime = time * speed * 3.0;
+    uv = p*vec2(resolution.x/resolution.y,1.0);
+  uv *= cloudscale*3.0;
+    uv -= q - localTime;
+    weight = 0.4;
+    for (int i=0; i<7; i++){
+    c1 += abs(weight*noise( uv ));
+        uv = m*uv + localTime;
+    weight *= 0.6;
+    }
+
+    c += c1;
+
+    vec3 skycolour = mix(skycolour2, skycolour1, p.y);
+    vec3 cloudcolour = vec3(1.1, 1.1, 0.9) * clamp((clouddark + cloudlight*c), 0.0, 1.0);
+
+    f = cloudcover + cloudalpha*f*r;
+
+    vec3 result = mix(skycolour, clamp(skytint * skycolour + cloudcolour, 0.0, 1.0), clamp(f + c, 0.0, 1.0));
+
+  gl_FragColor = vec4( result, 1.0 );
+}
+</script>
+
+    <script id="big tree" type="x-shader/x-fragment">
+
+#ifdef GL_ES
+precision mediump float;
+#endif
+
+#extension GL_OES_standard_derivatives : enable
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+varying vec2 surfacePosition;
+
+const float tri_a = tan(3.14/3.);
+bool tri(vec2 p, float k){
+  return p.y < p.x * tri_a + k && p.y < p.x * -tri_a + k && p.y > -k;
+}
+
+void main( void ) {
+  vec2 p = surfacePosition;
+  float z = 1.0;
+  vec3 color = vec3(.4+.2*float(mod(floor(p.x*32.), 2.)==mod(floor(p.y*32.), 2.)));
+  
+  #define R2(T) mat2(cos(T), -sin(T), sin(T), cos(T))
+  
+  p = surfacePosition+vec2(0,.5);
+  for(int i = 0; i <= 15; i += 1){
+    if(tri(p, 0.04)){
+      color = vec3(0.4,0.3,0.0);
+      z += 0.125;
+    }
+    p.y -= 0.03;
+    p *= R2((mouse.x-.5)*0.1*cos(time+float(i))*cos(time+float(i)));
+  }
+  p.y += 0.1;
+  for(int i = 0; i <= 4; i += 1){
+    p *= R2(-.93*2.*3.14159*sign(p.x));
+    p.y += -0.09;
+    if(tri(p*vec2(1.5,1), 0.06)){
+      color = vec3(0.4,0.3,0.0);
+      z += 0.25;
+    }
+    p *= 1.1*R2((mouse.x-.5)*0.4*cos(time+float(i))*cos(time+float(i)));
+  }
+  //p *= R2(atan(p.x, p.y)*12.);
+  for(int i = 0; i <= 7; i += 1){
+    if(tri(p, 0.125*abs(length(p*5.)-.5))){
+      color = vec3(0.1+z*0.1,0.3,0.1);
+      z += 0.1;
+      z *= 1.2;
+    }
+    p.y -= 0.033;
+    p *= 0.9*R2(-.95*2.*3.14159*sign(p.x));
+    p *= R2((mouse.x-.5)*0.3*cos(time+float(i))*cos(time+float(i)));
+  }
+  
+  gl_FragColor = vec4( color*z, 1.0 );
+}           
+</script>
+
+    <script id="colorful voronoi" type="x-shader/x-fragment">
+
+
+                    // Colorful Voronoi
+                    // By: Brandon Fogerty
+                    // bfogerty at gmail dot com
+                    // xdpixel.com
+
+                    #ifdef GL_ES
+                    precision mediump float;
+                    #endif
+
+                    uniform float time;
+                    uniform vec2 mouse;
+                    uniform vec2 resolution;
+
+                    vec2 hash(vec2 p)
+                    {
+                        mat2 m = mat2(  13.85, 47.77,
+                                        99.41, 88.48
+                                    );
+
+                        return fract(sin(m*p) * 46738.29);
+                    }
+
+                    float voronoi(vec2 p)
+                    {
+                        vec2 g = floor(p);
+                        vec2 f = fract(p);
+
+                        float distanceToClosestFeaturePoint = 1.0;
+                        for(int y = -1; y <= 1; y++)
+                        {
+                            for(int x = -1; x <= 1; x++)
+                            {
+                                vec2 latticePoint = vec2(x, y);
+                                float currentDistance = distance(latticePoint + hash(g+latticePoint), f);
+                                distanceToClosestFeaturePoint = min(distanceToClosestFeaturePoint, currentDistance);
+                            }
+                        }
+
+                        return distanceToClosestFeaturePoint;
+                    }
+
+                    void main( void )
+                    {
+                        vec2 uv = ( gl_FragCoord.xy / resolution.xy ) * 2.0 - 1.0;
+                        uv.x *= resolution.x / resolution.y;
+
+                        float offset = voronoi(uv*10.0 + vec2(time));
+                        float t = 1.0/abs(((uv.x + sin(uv.y + time)) + offset) * 30.0);
+
+                        float r = voronoi( uv * 1.0 ) * 10.0;
+                        vec3 finalColor = vec3(10.0 * uv.y, 2.0, 1.0 * r) * t;
+                        
+                        gl_FragColor = vec4(finalColor, 1.0 );
+                    }
+
+</script>
+
+    <script id="small flower" type="x-shader/x-fragment">
+                    #ifdef GL_ES
+precision mediump float;
+#endif
+
+uniform float time;
+uniform vec2 mouse;
+uniform vec2 resolution;
+
+#define pi 3.1415926535897932384626433832795
+#define flyCount 30.
+
+
+float testFuncFloor(float v){
+
+    const float amplitude=1.;
+    const float t=pi*2.;
+    float k=4.*amplitude/t;
+    float r=mod( v  ,t);
+    float d=floor(v /(.5* t) );
+    
+  return mix(k* r-amplitude ,  amplitude*3.-k* r ,mod(d,2.)  );
+}
+
+float getRad(vec2 q){
+   return atan(q.y,q.x); 
+}
+
+vec2 noise(vec2 tc){
+    //return (2.*texture2D(iChannel0, tc).xy-1.).xy;
+    return vec2(fract(sin(tc.x) ),fract(sin(tc.y) ) );
+}
+
+float firefly(vec2 p,float size){
+    
+  //return smoothstep(0.,size,dot(p,p)*200. );
+  return smoothstep(0.,size,length(p) );
+
+}
+
+const float pow=1.;
+const float flySpeed=0.1;
+
+
+vec3 RetroCrtEffect(vec3 rgb, vec2 texCoord, vec2 resolution)
+{
+    const float blendFactor = 0.1; // range (0.0, 1.0]
+    float artifact = cos(texCoord.y * resolution.y * 2.0) * 0.5 + 0.5;
+    return max(rgb - vec3(artifact * blendFactor), vec3(0.0));
+}
+
+void main( void ) {
+
+    float pow=1.;
+    const float duration=1.;
+    float t=duration*(1.+sin(3.* time ) );
+  vec2 p= gl_FragCoord.xy / resolution.xy;
+   
+  float ratio= resolution.y/resolution.x;
+    
+     vec2 uv=p;
+    uv.y*=ratio;
+    
+    
+    vec2 flowerP=vec2(.618,0.518);
+    vec2 q=p-flowerP-vec2( pow*.008*cos(3.*time) ,pow*.008*sin(3.*time) ) ;
+    vec2 rootP=p-+flowerP-vec2( pow*.02*cos(3.*time)*p.y ,-0.48+pow*.008*sin(3.*time) );
+   
+  q.y*=ratio;
+  
+    //sky
+    vec3 col=mix( vec3(0.1,0.6,0.5), vec3(0.2,0.1,0.2), sqrt(p.y)*.6 );
+    
+
+    //draw stem 
+    float width=0.01;
+    float h=.5;
+    float w=.0005;
+    col=mix(vec3(.5,.7,.4),col, 1.- (1.- smoothstep(h,h+width, abs(rootP.y ) )  ) * (1.- smoothstep(w,w+width, abs(rootP.x-0.1*sin(4.*rootP.y+pi*.35) ) )  ) );
+    
+    //draw flower 
+    vec3 flowerCol=mix(vec3(.7,.7,.2),vec3(.7,.9,.7), smoothstep( .0,1.,length(q)*10. ) ) ;
+
+    const float edge=.02;
+    float r= .1+0.05*( testFuncFloor( getRad( q ) *7.  + 2.*q.x*(t-duration)  )  );
+
+  col=mix(flowerCol,col, smoothstep(r,r+edge,  length( q )  ) );
+    
+  //draw buds
+    float r1=0.;
+    r1=.04;
+    vec3 budCol=mix (vec3(.3,.4,0.),vec3(.9,.8,0.), length(q)*10. );
+  col=mix(budCol,col, smoothstep(r1,r1+0.01,  length( q )  ) );
+    
+    //draw firefly
+  //vec3 flyCol=mix (vec3(.1,.4,0.1),vec3(.1,1.,1.), length(q)*10. );
+  
+    for (float i=0.;i<flyCount;i++){
+    
+        float seed=i/flyCount;
+  float seed2=fract(i/flyCount*5.);
+        float t1=1.*(1.+sin(noise(vec2(seed) ).x* time ) );
+      vec2 fireflyP=uv- 
+        vec2(noise(vec2(seed2) ).x+noise(vec2(seed2) ).x*t1*flySpeed,
+       noise(vec2(seed) ).y+noise(vec2(seed) ).y*t1*flySpeed);
+      
+    float fly= firefly( fireflyP,.002+.008*seed );
+      vec3 flyCol=mix(vec3(0.1,0.9,0.1)*t1,vec3(0.), fly );
+      col+=flyCol;
+    }
+
+    //vec3 color = RetroCrtEffect(col, uv, resolution.xy);
+    vec3 color = col;
+
+  
+    gl_FragColor= vec4(color, 1.0);
+  /*
+  vec2 position = ( gl_FragCoord.xy / resolution.xy ) + mouse / 4.0;
+
+  float color = 0.0;
+  color += sin( position.x * cos( time / 15.0 ) * 80.0 ) + cos( position.y * cos( time / 15.0 ) * 10.0 );
+  color += sin( position.y * sin( time / 10.0 ) * 40.0 ) + cos( position.x * sin( time / 25.0 ) * 40.0 );
+  color += sin( position.x * sin( time / 5.0 ) * 10.0 ) + sin( position.y * sin( time / 35.0 ) * 80.0 );
+  color *= sin( time / 10.0 ) * 0.5;
+
+  gl_FragColor = vec4( vec3( color, color * 0.5, sin( color + time / 3.0 ) * 0.75 ), 1.0 );
+  */
+}
+
+    </script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+      #ifdef GL_ES
+      precision mediump float;
+      #endif
+
+      uniform vec2 resolution;
+      uniform sampler2D texture;
+
+      void main() {
+
+        vec2 uv = gl_FragCoord.xy / resolution.xy;
+        gl_FragColor = texture2D( texture, uv );
+
+      }
+
+    </script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+      attribute vec3 position;
+
+      void main() {
+
+        gl_Position = vec4( position, 1.0 );
+
+      }
+
+    </script>
+
+    <script id="surfaceVertexShader" type="x-shader/x-vertex">
+
+      attribute vec3 position;
+      attribute vec2 surfacePosAttrib;
+      varying vec2 surfacePosition;
+
+      void main() {
+
+        surfacePosition = surfacePosAttrib;
+        gl_Position = vec4( position, 1.0 );
+
+      }
+
+    </script>
+
+    <script>
+
+      initialize_helper();
+
+      var compressor=initialize_compressor();
+
+      if ( !window.requestAnimationFrame ) {
+
+        window.requestAnimationFrame = ( function() {
+
+          return window.webkitRequestAnimationFrame ||
+            window.mozRequestAnimationFrame ||
+            window.oRequestAnimationFrame ||
+            window.msRequestAnimationFrame ||
+            function ( callback, element ) {
+
+              window.setTimeout( callback, 1000 / 60 );
+
+            };
+
+        } )();
+
+      }
+
+      // Get older browsers safely through init code, so users can read the
+      // message about how to download newer browsers.
+      if (!Date.now) {
+        Date.now = function() {
+          return +new Date();
+        };
+      }
+
+      // Greetings to Iq/RGBA! ;)
+
+      var quality = 2, quality_levels = [ 0.5, 1, 2, 4, 8 ];
+      var toolbar, compileButton, fullscreenButton, compileTimer, errorLines = [];
+      var code, canvas, gl, buffer, currentProgram, vertexPosition, screenVertexPosition, panButton,
+      parameters = { startTime: Date.now(), time: 0, mouseX: 0.5, mouseY: 0.5, screenWidth: 0, screenHeight: 0 },
+      surface = { centerX: 0, centerY: 0, width: 1, height: 1, isPanning: false, isZooming: false, lastX: 0, lastY: 0 },
+      frontTarget, backTarget, screenProgram, getWebGL, resizer = {}, compileOnChangeCode = true;
+
+      init();
+      if (gl) { animate(); }
+
+      function init() {
+
+        if (!document.addEventListener) {
+          document.location = 'http://get.webgl.org/';
+          return;
+        }
+
+        canvas = document.createElement( 'canvas' );
+        canvas.style.display = 'block';
+        document.body.appendChild( canvas );
+
+        compileButton = document.createElement( 'button' );
+        compileButton.textContent = 'compile';
+        compileButton.addEventListener( 'click', function ( event ) {
+
+          compile();
+
+        }, false );
+        // toolbar.appendChild( compileButton );
+
+        // from helper.js
+        add_server_buttons();
+
+        // Initialise WebGL
+
+        try {
+
+          gl = canvas.getContext( 'experimental-webgl', { preserveDrawingBuffer: true } );
+
+        } catch( error ) { }
+
+        if ( !gl ) {
+
+          alert("WebGL not supported, but code will be shown.");
+
+        } else {
+          
+          // enable dFdx, dFdy, fwidth
+          gl.getExtension('OES_standard_derivatives');
+
+          // Create vertex buffer (2 triangles)
+
+          buffer = gl.createBuffer();
+          gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+          gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( [ - 1.0, - 1.0, 1.0, - 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0, 1.0, - 1.0, 1.0 ] ), gl.STATIC_DRAW );
+
+          // Create surface buffer (coordinates at screen corners)
+
+          surface.buffer = gl.createBuffer();
+        }
+
+        // initialize code editor
+        code = CodeMirror(document.body, {
+          lineNumbers: true,
+          matchBrackets: true,
+          indentWithTabs: true,
+          tabSize: 8,
+          indentUnit: 8,
+          mode: "text/x-glsl",
+          onChange: function () {
+            if (compileOnChangeCode) {
+              clearTimeout(compileTimer);
+              compileTimer = setTimeout(compile, 500);
+            }
+          }
+        });
+        code.getWrapperElement().style.display = '';
+
+        resizer.offsetMouseX = 0;
+        resizer.offsetMouseY = 0;
+        resizer.isResizing = false;
+        resizer.currentWidth = 100;
+        resizer.currentHeight = 100;
+        resizer.minWidth = 100;
+        resizer.minHeight = 100;
+        resizer.maxWidth = 100;
+        resizer.maxHeight = 100;
+        resizer.element = document.createElement( 'div' );
+        resizer.element.className = 'resizer';
+        code.getWrapperElement().appendChild(resizer.element);
+
+        resizer.element.addEventListener( 'mousedown', function ( event ) {
+          if (event.button !== 2) {
+            resizer.offsetMouseX = event.clientX - resizer.currentWidth;
+            resizer.offsetMouseY = event.clientY - resizer.currentHeight;
+            resizer.isResizing = true;
+            event.preventDefault();
+          }
+        }, false );
+        
+        if (gl) {
+
+          var surfaceMouseDown = function ( event ) {
+
+            if (event.shiftKey) {
+              resetSurface();
+            }
+
+            if (event.button === 0) {
+              surface.isPanning = true;
+              document.body.style.cursor = 'move';
+            } else {
+              surface.isZooming = true;
+              document.body.style.cursor = 'se-resize';
+              // panButton.style.cursor = 'se-resize';
+            }
+
+            surface.lastX = event.clientX;
+            surface.lastY = event.clientY;
+            event.preventDefault();
+
+          };
+
+          var noContextMenu = function ( event ) {
+
+            event.preventDefault();
+
+          };
+
+          canvas.addEventListener( 'mousedown', surfaceMouseDown, false );
+          // panButton.addEventListener( 'mousedown', surfaceMouseDown, false );
+
+          canvas.addEventListener( 'contextmenu', noContextMenu, false);
+          // panButton.addEventListener( 'contextmenu', noContextMenu, false);
+        }
+        
+        var clientXLast, clientYLast;
+
+        document.addEventListener( 'mousemove', function ( event ) {
+
+          var clientX = event.clientX;
+          var clientY = event.clientY;
+
+          if (clientXLast == clientX && clientYLast == clientY)
+            return;
+
+          clientXLast = clientX;
+          clientYLast = clientY;
+
+          // stopHideUI();
+
+          var codeElement, dx, dy;
+          
+          parameters.mouseX = clientX / window.innerWidth;
+          parameters.mouseY = 1 - clientY / window.innerHeight;
+            
+          if (resizer.isResizing) {
+
+            resizer.currentWidth = Math.max(Math.min(clientX - resizer.offsetMouseX, resizer.maxWidth), resizer.minWidth);
+            resizer.currentHeight = Math.max(Math.min(clientY - resizer.offsetMouseY, resizer.maxHeight), resizer.minWidth);
+            codeElement = code.getWrapperElement();
+            codeElement.style.width = resizer.currentWidth + 'px';
+            codeElement.style.height = resizer.currentHeight + 'px';
+            code.refresh();
+            event.preventDefault();
+
+          } else if (surface.isPanning) {
+
+            dx = clientX - surface.lastX;
+            dy = clientY - surface.lastY;
+            surface.centerX -= dx * surface.width / window.innerWidth;
+            surface.centerY += dy * surface.height / window.innerHeight;
+            surface.lastX = clientX;
+            surface.lastY = clientY;
+            computeSurfaceCorners();
+            event.preventDefault();
+
+          } else if (surface.isZooming) {
+
+            dx = clientX - surface.lastX;
+            dy = clientY - surface.lastY;
+            surface.height *= Math.pow(0.997, dx + dy);
+            surface.lastX = clientX;
+            surface.lastY = clientY;
+            computeSurfaceCorners();
+            event.preventDefault();
+
+          }
+        }, false );
+
+        function settleDown ( event ) {
+          resizer.isResizing = surface.isPanning = surface.isZooming = false;
+          document.body.style.cursor = 'default';
+          // panButton.style.cursor = 'move';
+        }
+
+        function mouseLeave(event) {
+          settleDown(event);
+
+          if (!isCodeVisible())
+            startHideUITimer();
+        }
+
+        document.addEventListener( 'mouseup', settleDown, false );
+        document.addEventListener( 'mouseleave', mouseLeave, false );
+
+        onWindowResize();
+        window.addEventListener( 'resize', onWindowResize, false );
+        load_url_code();
+
+        compileScreenProgram();
+
+      }
+
+      function isCodeVisible() {
+        return code && code.getWrapperElement().style.display !== 'none';
+      }
+
+      var hideUITimer;
+      var isUIHidden = false;
+
+      function startHideUITimer () {
+
+        stopHideUITimer();
+        if (!isUIHidden && !isCodeVisible())
+          hideUITimer = window.setTimeout(onHideUITimer, 1000 * 5 );
+
+        function onHideUITimer() {
+
+          stopHideUITimer();
+          if (!isUIHidden && !isCodeVisible()) {
+
+            isUIHidden = true;
+            // toolbar.style.display = 'none';
+            document.body.style.cursor = 'none';
+          }
+        }
+
+        function stopHideUITimer () {
+
+          if (hideUITimer) {
+
+            window.clearTimeout(hideUITimer);
+            hideUITimer = 0;
+          }
+        }
+      }
+
+      function stopHideUI () {
+
+        if (isUIHidden) {
+
+          isUIHidden = false;
+          // toolbar.style.display = '';
+          document.body.style.cursor = '';
+        }
+        startHideUITimer();
+      }
+
+
+      function computeSurfaceCorners() {
+
+        if (gl) {
+
+          surface.width = surface.height * parameters.screenWidth / parameters.screenHeight;
+          
+          var halfWidth = surface.width * 0.5, halfHeight = surface.height * 0.5;
+          
+          gl.bindBuffer( gl.ARRAY_BUFFER, surface.buffer );
+          gl.bufferData( gl.ARRAY_BUFFER, new Float32Array( [
+            surface.centerX - halfWidth, surface.centerY - halfHeight,
+            surface.centerX + halfWidth, surface.centerY - halfHeight,
+            surface.centerX - halfWidth, surface.centerY + halfHeight,
+            surface.centerX + halfWidth, surface.centerY - halfHeight,
+            surface.centerX + halfWidth, surface.centerY + halfHeight,
+            surface.centerX - halfWidth, surface.centerY + halfHeight ] ), gl.STATIC_DRAW );
+
+        }
+
+      }
+
+      function resetSurface() {
+
+        surface.centerX = surface.centerY = 0;
+        surface.height = 1;
+        computeSurfaceCorners();
+
+      }
+
+      function compile() {
+      
+        if (!gl) {
+        
+          if (!getWebGL) {
+          
+            getWebGL = true;
+            compileButton.addEventListener( 'click', function ( event ) {
+
+              document.location = 'http://get.webgl.org/';
+
+            }, false );
+            compileButton.title = 'http://get.webgl.org/';
+            compileButton.style.color = '#ff0000';
+            compileButton.textContent = 'WebGL not supported!';
+            set_save_button('hidden');
+            
+          }
+          return;
+          
+        }
+
+        var program = gl.createProgram();
+        var fragment = code.getValue();
+        var vertex = document.getElementById( 'surfaceVertexShader' ).textContent;
+
+        var vs = createShader( vertex, gl.VERTEX_SHADER );
+        var fs = createShader( fragment, gl.FRAGMENT_SHADER );
+
+        if ( vs == null || fs == null ) return null;
+
+        gl.attachShader( program, vs );
+        gl.attachShader( program, fs );
+
+        gl.deleteShader( vs );
+        gl.deleteShader( fs );
+
+        gl.linkProgram( program );
+
+        if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+
+          var error = gl.getProgramInfoLog( program );
+
+          compileButton.title = error;
+          console.error( error );
+
+          console.error( 'VALIDATE_STATUS: ' + gl.getProgramParameter( program, gl.VALIDATE_STATUS ), 'ERROR: ' + gl.getError() );
+          compileButton.style.color = '#ff0000';
+          compileButton.textContent = 'compiled with errors';
+
+          set_save_button('hidden');
+
+          return;
+
+        }
+
+        if ( currentProgram ) {
+
+          gl.deleteProgram( currentProgram );
+          setURL( fragment );
+
+        }
+
+        currentProgram = program;
+
+        compileButton.style.color = '#00ff00';
+        compileButton.textContent = 'compiled successfully';
+
+        set_save_button('visible');
+
+        // panButton.style.display = (fragment.indexOf('varying vec2 surfacePosition;') >= 0) ? 'inline' : 'none';
+
+        // Cache uniforms
+
+        cacheUniformLocation( program, 'time' );
+        cacheUniformLocation( program, 'mouse' );
+        cacheUniformLocation( program, 'resolution' );
+        cacheUniformLocation( program, 'backbuffer' );
+        cacheUniformLocation( program, 'surfaceSize' );
+
+        // Load program into GPU
+
+        gl.useProgram( currentProgram );
+
+        // Set up buffers
+
+        surface.positionAttribute = gl.getAttribLocation(currentProgram, "surfacePosAttrib");
+        gl.enableVertexAttribArray(surface.positionAttribute);
+
+        vertexPosition = gl.getAttribLocation(currentProgram, "position");
+        gl.enableVertexAttribArray( vertexPosition );
+
+      }
+
+      function compileScreenProgram() {
+      
+        if (!gl) { return; }
+
+        var program = gl.createProgram();
+        var fragment = document.getElementById( 'fragmentShader' ).textContent;
+        var vertex = document.getElementById( 'vertexShader' ).textContent;
+
+        var vs = createShader( vertex, gl.VERTEX_SHADER );
+        var fs = createShader( fragment, gl.FRAGMENT_SHADER );
+
+        gl.attachShader( program, vs );
+        gl.attachShader( program, fs );
+
+        gl.deleteShader( vs );
+        gl.deleteShader( fs );
+
+        gl.linkProgram( program );
+
+        if ( !gl.getProgramParameter( program, gl.LINK_STATUS ) ) {
+
+          console.error( 'VALIDATE_STATUS: ' + gl.getProgramParameter( program, gl.VALIDATE_STATUS ), 'ERROR: ' + gl.getError() );
+
+          return;
+
+        }
+
+        screenProgram = program;
+
+        gl.useProgram( screenProgram );
+
+        cacheUniformLocation( program, 'resolution' );
+        cacheUniformLocation( program, 'texture' );
+
+        screenVertexPosition = gl.getAttribLocation(screenProgram, "position");
+        gl.enableVertexAttribArray( screenVertexPosition );
+
+      }
+
+      function cacheUniformLocation( program, label ) {
+
+        if ( program.uniformsCache === undefined ) {
+
+          program.uniformsCache = {};
+
+        }
+
+        program.uniformsCache[ label ] = gl.getUniformLocation( program, label );
+
+      }
+
+      //
+
+      function createTarget( width, height ) {
+
+        var target = {};
+
+        target.framebuffer = gl.createFramebuffer();
+        target.renderbuffer = gl.createRenderbuffer();
+        target.texture = gl.createTexture();
+
+        // set up framebuffer
+
+        gl.bindTexture( gl.TEXTURE_2D, target.texture );
+        gl.texImage2D( gl.TEXTURE_2D, 0, gl.RGBA, width, height, 0, gl.RGBA, gl.UNSIGNED_BYTE, null );
+
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE );
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE );
+
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST );
+        gl.texParameteri( gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST );
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, target.framebuffer );
+        gl.framebufferTexture2D( gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, target.texture, 0 );
+
+        // set up renderbuffer
+
+        gl.bindRenderbuffer( gl.RENDERBUFFER, target.renderbuffer );
+
+        gl.renderbufferStorage( gl.RENDERBUFFER, gl.DEPTH_COMPONENT16, width, height );
+        gl.framebufferRenderbuffer( gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.RENDERBUFFER, target.renderbuffer );
+
+        // clean up
+
+        gl.bindTexture( gl.TEXTURE_2D, null );
+        gl.bindRenderbuffer( gl.RENDERBUFFER, null );
+        gl.bindFramebuffer( gl.FRAMEBUFFER, null);
+
+        return target;
+
+      }
+
+      function createRenderTargets() {
+
+        frontTarget = createTarget( parameters.screenWidth, parameters.screenHeight );
+        backTarget = createTarget( parameters.screenWidth, parameters.screenHeight );
+
+      }
+
+      //
+
+      var dummyFunction = function() {};
+
+
+      //
+      
+      function htmlEncode(str){
+
+        return String(str)
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+
+      }
+
+      //
+
+      function createShader( src, type ) {
+      
+        var shader = gl.createShader( type );
+        var line, lineNum, lineError, index = 0, indexEnd;
+
+        while (errorLines.length > 0) {
+          line = errorLines.pop();
+          code.setLineClass(line, null);
+          code.clearMarker(line);
+        }
+
+        gl.shaderSource( shader, src );
+        gl.compileShader( shader );
+
+        compileButton.title = '';
+
+        if ( !gl.getShaderParameter( shader, gl.COMPILE_STATUS ) ) {
+
+          var error = gl.getShaderInfoLog( shader );
+          
+          // Remove trailing linefeed, for FireFox's benefit.
+          while ((error.length > 1) && (error.charCodeAt(error.length - 1) < 32)) {
+            error = error.substring(0, error.length - 1);
+          }
+
+          compileButton.title = error;
+          console.error( error );
+
+          compileButton.style.color = '#ff0000';
+          compileButton.textContent = 'compiled with errors';
+
+          set_save_button('hidden');
+
+          while (index >= 0) {
+            index = error.indexOf("ERROR: 0:", index);
+            if (index < 0) { break; }
+            index += 9;
+            indexEnd = error.indexOf(':', index);
+            if (indexEnd > index) {
+              lineNum = parseInt(error.substring(index, indexEnd));
+              if ((!isNaN(lineNum)) && (lineNum > 0)) {
+                index = indexEnd + 1;
+                indexEnd = error.indexOf("ERROR: 0:", index);
+                lineError = htmlEncode((indexEnd > index) ? error.substring(index, indexEnd) : error.substring(index));
+                line = code.setMarker(lineNum - 1, '<abbr title="' + lineError + '">' + lineNum + '</abbr>', "errorMarker");
+                code.setLineClass(line, "errorLine");
+                errorLines.push(line);
+              }
+            }
+          }
+
+          return null;
+
+        }
+
+        return shader;
+
+      }
+
+      //
+
+      function onWindowResize( event ) {
+
+        var isMaxWidth = ((resizer.currentWidth === resizer.maxWidth) || (resizer.currentWidth === resizer.minWidth)),
+          isMaxHeight = ((resizer.currentHeight === resizer.maxHeight) || (resizer.currentHeight === resizer.minHeight));
+
+        // toolbar.style.width = window.innerWidth - 47 + 'px';
+
+        resizer.isResizing = false;
+        resizer.maxWidth = window.innerWidth - 75;
+        resizer.maxHeight = window.innerHeight - 125;
+        if (isMaxWidth || (resizer.currentWidth > resizer.maxWidth)) {
+          resizer.currentWidth = resizer.maxWidth;
+        }
+        if (isMaxHeight || (resizer.currentHeight > resizer.maxHeight)) {
+          resizer.currentHeight = resizer.maxHeight;
+        }
+        if (resizer.currentWidth < resizer.minWidth) { resizer.currentWidth = resizer.minWidth; }
+        if (resizer.currentHeight < resizer.minHeight) { resizer.currentHeight = resizer.minHeight; }
+
+        code.getWrapperElement().style.top = '75px';
+        code.getWrapperElement().style.left = '25px';
+        code.getWrapperElement().style.width = resizer.currentWidth + 'px';
+        code.getWrapperElement().style.height = resizer.currentHeight + 'px';
+
+        canvas.width = window.innerWidth / quality;
+        canvas.height = window.innerHeight / quality;
+
+        canvas.style.width = window.innerWidth + 'px';
+        canvas.style.height = window.innerHeight + 'px';
+
+        parameters.screenWidth = canvas.width;
+        parameters.screenHeight = canvas.height;
+
+        computeSurfaceCorners();
+
+        if (gl) {
+        
+          gl.viewport( 0, 0, canvas.width, canvas.height );
+
+          createRenderTargets();
+          
+        }
+      }
+
+      //
+
+      function animate() {
+
+        requestAnimationFrame( animate );
+        render();
+
+      }
+
+      function render() {
+
+        if ( !currentProgram ) return;
+
+        parameters.time = Date.now() - parameters.startTime;
+
+        // Set uniforms for custom shader
+
+        gl.useProgram( currentProgram );
+
+        gl.uniform1f( currentProgram.uniformsCache[ 'time' ], parameters.time / 1000 );
+        gl.uniform2f( currentProgram.uniformsCache[ 'mouse' ], parameters.mouseX, parameters.mouseY );
+        gl.uniform2f( currentProgram.uniformsCache[ 'resolution' ], parameters.screenWidth, parameters.screenHeight );
+        gl.uniform1i( currentProgram.uniformsCache[ 'backbuffer' ], 0 );
+        gl.uniform2f( currentProgram.uniformsCache[ 'surfaceSize' ], surface.width, surface.height );
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, surface.buffer );
+        gl.vertexAttribPointer( surface.positionAttribute, 2, gl.FLOAT, false, 0, 0 );
+        
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+        gl.vertexAttribPointer( vertexPosition, 2, gl.FLOAT, false, 0, 0 );
+
+        gl.activeTexture( gl.TEXTURE0 );
+        gl.bindTexture( gl.TEXTURE_2D, backTarget.texture );
+
+        // Render custom shader to front buffer
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, frontTarget.framebuffer );
+
+        gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+        gl.drawArrays( gl.TRIANGLES, 0, 6 );
+
+        // Set uniforms for screen shader
+
+        gl.useProgram( screenProgram );
+
+        gl.uniform2f( screenProgram.uniformsCache[ 'resolution' ], parameters.screenWidth, parameters.screenHeight );
+        gl.uniform1i( screenProgram.uniformsCache[ 'texture' ], 1 );
+
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer );
+        gl.vertexAttribPointer( screenVertexPosition, 2, gl.FLOAT, false, 0, 0 );
+        
+        gl.activeTexture( gl.TEXTURE1 );
+        gl.bindTexture( gl.TEXTURE_2D, frontTarget.texture );
+
+        // Render front buffer to screen
+
+        gl.bindFramebuffer( gl.FRAMEBUFFER, null );
+
+        gl.clear( gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT );
+        gl.drawArrays( gl.TRIANGLES, 0, 6 );
+
+        // Swap buffers
+
+        var tmp = frontTarget;
+        frontTarget = backTarget;
+        backTarget = tmp;
+
+
+
+      }
+      code.getWrapperElement().style.display = 'none';
+    </script><canvas style="display: block; width: 583px; height: 682px;" width="291" height="341"></canvas><div style="position: absolute; top: -125px; left: 25px; width: 536px;"><div style="float: right;"><button title="Pan: left-drag, Zoom: right-drag. Use &#39;hide code&#39; for a large pan/zoom area." style="cursor: move; display: inline;">pan/zoom</button><button title="Press F11 to enter or leave fullscreen mode">fullscreen</button><a href="http://www.glslsandbox.com/">gallery</a></div>
+
+<div style="position: fixed;top :0px;left:80px;right:0px;bottom:0px;font:20px 宋体;word-spacing:direction:rtl;overflow:auto;rgba(255,255,255,0.15);text-align:left;">
+<!--changeTag-->
+<body>
+<section id="吴-晓" class="level1">
+<h1>吴 晓</h1>
+<section id="图-形-工-程-师" class="level2">
+<h2>图 形 工 程 师</h2>
+<ul>
+<li>电 话: <a href="tel://86-15861657693">86-15861657693</a></li>
+<li>邮 件: <a href="mailto:tinysilk@hotmail.com">tinysilk@hotmail.com</a></li>
+<li>博 客（墙 外）: <a href="http://tinyslik.github.io">tinyslik.github.io</a></li>
+<li>博 客（墙 内）: <a href="http://tinyslik.coding.me">tinyslik.coding.me</a></li>
+<li>Github: <a href="http://github.com/TinySlik">TinySlik</a></li>
+</ul>
+</section>
+<section id="简-介" class="level2">
+<h2>简 介</h2>
+<p>一个有四年开发经验的小司机。 开发过很多款上线的项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；</p>
+</section>
+<section id="技-能" class="level2">
+<h2>技 能</h2>
+<p>能胜任android（java），ios（OC）单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；<br />
+对openGL有良好的掌握度，对shader优化编写使用熟练。对图形数学有良好的认识和基础。 长期使用cocos2d-x,uinity3d游戏引擎，对游戏引擎的工具编写也有良好的习惯。</p>
+</section>
+<section id="工-作-经-验" class="level2">
+<h2>工 作 经 验</h2>
+<section id="cocos2d-x-开-发-工-程-师-在-mochang-科-技-有-限-公-司" class="level3">
+<h3><strong>cocos2d-x 开 发 工 程 师</strong> 在 <a href="https://www.mochang.net/">MoChang 科 技 有 限 公 司</a></h3>
+<p><em>2014.1 - 2015.6</em></p>
+<p>1.在公司主要从事cocos2d-x游戏的制作和维护工作，使用C++重构代码，配置更多的功能模块. 2.作为从事生物科技工作的我来说，这是一次挑战，我学习到了很多C++基本的语法及表驱动，插件架构等常用的语言设计模式。补习了很多程序及系统的基础原理，对linux系统的学习了一段时间，能独立编写小型的c++服务器。 3.在公司我工作了一年半，上架了一些比较简单的欧美儿童游戏，有大量的功能模块重用和维护。 4.期间也独立完成很多 ios 及安卓端的 sdk包括广告的和功能的接入。 5.制作小型游戏制定文档并按照需求文档在较短的时间内提交上线。 6.由于团队小，所以大量的与美术的协调工作都由我独立完成，团队的策划担任高层领导角色，团队具有比较高的自由度。</p>
+</section>
+<section id="cc-开-发-工-程-师-在-南-京-光-辉-互-动-网-络-科-技-有-限-公-司熊-大-叔-儿-童-教-育" class="level3">
+<h3><strong>C/C++ 开 发 工 程 师</strong> 在 <a href="https://bie-plc.com/">南 京 光 辉 互 动 网 络 科 技 有 限 公 司</a>/<a href="https://www.biemore.com/zh-cn/index.html">熊 大 叔 儿 童 教 育</a></h3>
+<p><em>2015.6 - 2016.2</em></p>
+<p>1.一线开发游戏项目，对多个产品线不同语言的项目代码进行检查和修改重构，使用代码包括包括js,Lua,C++。 2.实现shader等渲染技术方面的技术优化和难点。 3.负责一些产品最后阶段的代码调试和检查工作，接入一些商业代码和库。</p>
+</section>
+<section id="前-端-工-程-师-兼-培-训-师-在-南-京-触-控-科-技-办-事-处" class="level3">
+<h3><strong>前 端 工 程 师 兼 培 训 师</strong> 在 <a href="http://www.chukong-inc.com/">南 京 触 控 科 技 办 事 处</a></h3>
+<p><em>2016.3 - 2016.10</em> 1.参与3.x的cocos2d-x引擎代码的修改和维护，上架一些以前的成品代码游戏。 2.培训新员工，培训git，lua部分内容。</p>
+</section>
+<section id="主-要-语-言-技-能" class="level3">
+<h3>主 要 语 言 技 能</h3>
+<ul>
+<li><a href>C/C++</a><sup>†</sup></li>
+<li><a href>Lua</a><sup>†</sup></li>
+<li><a href>javaScript</a><sup>†</sup></li>
+<li><a href>java</a></li>
+<li><a href>object-C</a></li>
+<li><a href>jason</a><sup>†</sup></li>
+<li><a href>xml</a><sup>†</sup></li>
+<li><a href>C#</a></li>
+<li><a href>shader</a><sup>†</sup></li>
+</ul>
+</section>
+<section id="格-式-类-型-使-用" class="level3">
+<h3>格 式 类 型 使 用</h3>
+<ul>
+<li><a href="http://www.w3.org/Style/CSS/Overview.en.html">CSS</a><sup>†</sup></li>
+<li><a href="http://developers.whatwg.org">HTML</a><sup>†</sup></li>
+<li><a href="http://daringfireball.net/projects/markdown">Markdown</a><sup>†</sup></li>
+<li><a href>XML</a></li>
+<li><a href>jason</a></li>
+<li><a href>http</a></li>
+</ul>
+</section>
+<section id="框-架" class="level3">
+<h3>框 架</h3>
+<ul>
+<li><a href>OpenGL</a><sup>†</sup></li>
+<li><a href>Boost</a></li>
+<li><a href>Cocos2d-x</a><sup>†</sup></li>
+<li><a href>Uinity3d</a></li>
+<li><a href>hexo</a><sup>†</sup></li>
+</ul>
+</section>
+<section id="软-件" class="level3">
+<h3>软 件</h3>
+<ul>
+<li><a href="http://developer.apple.com">Apple XCode</a></li>
+<li><a href="http://git-scm.com">Git</a><sup>†</sup></li>
+<li><a href="http://atlassian.com/software/jira">JIRA</a><sup>†</sup></li>
+<li><a href="http://apple.com/macosx">Mac OS X</a><sup>†</sup></li>
+<li><a href="http://mysql.com">MySQL</a></li>
+<li><a href="http://wiki.nginx.org">Nginx</a></li>
+<li><a href="http://johnmacfarlane.net/pandoc">Pandoc</a></li>
+<li><a href="http://www.sublimetext.com">Sublime Text</a></li>
+<li><a href="http://svn.apache.org">Subversion</a></li>
+<li><a href="http://ubuntu.com">Ubuntu Linux</a></li>
+<li><a href="http://www.vim.org">Vim</a><sup>†</sup></li>
+<li><a href="http://jetbrains.com/webstorm">WebStorm</a></li>
+<li><a href="http://www.zsh.org">zsh</a><sup>†</sup></li>
+<li><a href>source tree</a></li>
+<li><a href>VisualStudio</a><sup>†</sup></li>
+<li><a href>AndroidStudio</a></li>
+<li><a href>grub</a></li>
+<li><a href>doxygen</a></li>
+<li><a href>latex</a></li>
+</ul>
+</section>
+</section>
+<section id="教-育" class="level2">
+<h2>### 教 育</h2>
+<p><a href>扬州大学</a>, 2008 - 2012</p>
+</section>
+<section id="兴-趣" class="level2">
+<h2>### 兴 趣</h2>
+<ul>
+<li>玩卡牌游戏（炉石）</li>
+<li>听音乐</li>
+<li>养猫</li>
+<li>弹吉他</li>
+</ul>
+</section>
+<section id="下-载" class="level2">
+<h2>### 下 载</h2>
+<p>以下是我的多个格式下的简历，如有需要请自行下载：</p>
+<p><a href="https://github.com/TinySlik/resume/raw/master/resume_cn.docx">doc</a></p>
+<p><a href="https://github.com/TinySlik/resume/raw/master/resume_cn.pdf">pdf</a></p>
+<p><a href="https://github.com/TinySlik/resume/raw/master/resume_cn.epub">epub</a></p>
+<p>谢谢对我的关注.</p>
+<p>©2016 <a href="http://tinyslik.coding.me/resume">Tiny Oh</a>. All rights reserved.</p>
+</section>
+</section>
+</body>
+</html>

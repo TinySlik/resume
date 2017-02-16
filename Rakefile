@@ -35,6 +35,24 @@ namespace :html do
     puts "Done"
   end
 end
+namespace :html_cn do
+  desc "Compile stylesheet"
+  task :styles do
+    puts "Compiling CSS file"
+    system("compass compile")
+  end
+
+  desc "Generate standalone HTML file"
+  task :generate => [:styles] do
+    puts "Generating standalone HTML cn file from Markdown"
+    system("pandoc -s -S resume_cn.markdown -o resume_cn.html -t html5 --self-contained --section-divs --template=resume-template-cn.html -T \"吴晓的简历\" -c css/main.css")
+    system("sed -n '1,/^<!--changeTag-->/p' index_cn.html >tmp ")
+    system("cat <<EOF >>tmp")
+    system("sed -n '/^<body>/,$p' resume_cn.html >>tmp")
+    system("mv tmp index_cn.html")
+    puts "Done"
+  end
+end
 
 namespace :tex_cn do
   desc "Generate LaTeX file"
@@ -92,7 +110,7 @@ namespace :word do
   desc "Generate docx file"
   task :generate do
     puts "Generating docx file from Markdown"
-    system("pandoc -s -S resume.markdown -o resume.docx --reference-docx=resume-reference.docx")
+    system("pandoc -s -S resume.markdown -o resume.docx --reference-docx=resume-reference-cn.docx")
     puts "Done"
   end
 end
@@ -178,8 +196,8 @@ task :all => [
   "rst:generate",
   "rst_cn:generate",
   "html:generate",
+  "html_cn:generate",
   "pdf:generate",
-  "pdf_cn:generate",
   "rtf:generate",
   "rtf_cn:generate",
   "word:generate",
