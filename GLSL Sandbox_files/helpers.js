@@ -54,16 +54,16 @@ function load_url_code() {
 			'color lines',
 			'toon cloud',
 			'small flower',
-			'colorful voronoi',
 			'big tree',
 			'cloud',
 			'rubiks cube',
 			'shui long tou',
-			'big lines',
+			//'big lines',
 			'sunset',
-			'building',
+			//'building',
 			'paint',
-			'balls'
+			'balls',
+			'colorful voronoi',
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
