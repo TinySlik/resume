@@ -193,12 +193,12 @@ end
 
 desc "check to origin"
 task :check do
-  system("git branch origin")
+  system("git checkout origin")
 end
 
 desc "check to ch"
 task :check_ch do
-  system("git branch ch")
+  system("git checkout ch")
 end
 
 desc "Generate all formats"
