@@ -193,7 +193,7 @@ end
 
 desc "check to origin"
 task :check do
-  system("git checkout origin")
+  system("git checkout master")
 end
 
 desc "check to ch"
