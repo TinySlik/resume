@@ -195,7 +195,7 @@ task :update_ch do
   system("git add . -A")
   system("git commit -m'auto commit push'")
   system("git push origin")
-  system("git push second")
+  system("git push second/master")
   puts "Done"
 end
 
