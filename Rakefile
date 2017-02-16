@@ -227,10 +227,8 @@ task :all => [
   "epub_cn:generate",
   "readme",
   "update",
-  "check_ch",
   "html_cn:generate",
   "update_ch",
-  "check",
 ]
 
 
