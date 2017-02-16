@@ -19,7 +19,7 @@ if not utilitydata.job.variables then utilitydata.job.variables = { } end
 
 utilitydata.job.variables.collected={
  ["macros"]={},
- ["randomseed"]=0.24351848114446,
+ ["randomseed"]=0.83557906599509,
  ["sectionblockorder"]={},
 }
 
@@ -28,7 +28,7 @@ if not utilitydata.job.structure then utilitydata.job.structure = { } end
 
 utilitydata.job.structure.collected={
  ["branches"]={},
- ["name"]="resume",
+ ["name"]="resume_cn",
  ["type"]="text",
 }
 
@@ -49,13 +49,13 @@ utilitydata.job.passes.collected={
   { 9, 0 },
  },
  ["itemgroup:itemize:3"]={
-  { 3, 0 },
- },
- ["itemgroup:itemize:4"]={
   { 6, 0 },
  },
+ ["itemgroup:itemize:4"]={
+  { 5, 0 },
+ },
  ["itemgroup:itemize:5"]={
-  { 16, 0 },
+  { 19, 0 },
  },
  ["itemgroup:itemize:6"]={
   { 4, 0 },
@@ -109,7 +109,7 @@ utilitydata.structures.counters.collected={
   { 0 },
  },
  ["itemgroup:itemize"]={
-  { 0, 5, 9, 3, 6, 16, 4 },
+  { 0, 5, 9, 6, 5, 19, 4 },
  },
  ["linenote"]={
   { 0 },
@@ -142,14 +142,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=1,
    ["realpage"]=1,
-   ["reference"]="tiny-oh",
+   ["reference"]="吴晓",
    ["section"]=1,
    ["tag"]=1,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="section",
-   ["title"]="Tiny Oh",
+   ["title"]="吴晓",
   },
  },
  {
@@ -159,14 +159,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=2,
    ["realpage"]=1,
-   ["reference"]="graphics-developer",
+   ["reference"]="图形工程师",
    ["section"]=2,
    ["tag"]=2,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="Graphics Developer",
+   ["title"]="图形工程师",
   },
  },
  {
@@ -176,14 +176,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=3,
    ["realpage"]=1,
-   ["reference"]="summary",
+   ["reference"]="简介",
    ["section"]=3,
    ["tag"]=3,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="Summary",
+   ["title"]="简介",
   },
  },
  {
@@ -193,14 +193,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=4,
    ["realpage"]=1,
-   ["reference"]="specialties",
+   ["reference"]="技能",
    ["section"]=4,
    ["tag"]=4,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="Specialties",
+   ["title"]="技能",
   },
  },
  {
@@ -210,14 +210,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=5,
    ["realpage"]=1,
-   ["reference"]="experience",
+   ["reference"]="工作经验",
    ["section"]=5,
    ["tag"]=5,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="Experience",
+   ["title"]="工作经验",
   },
  },
  {
@@ -227,14 +227,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=6,
    ["realpage"]=1,
-   ["reference"]="cc-developer-at-mochang-inc",
+   ["reference"]="cocos2d-x开发工程师-在-mochang-科技有限公司",
    ["section"]=6,
    ["tag"]=6,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="{\\bf C/C++ Developer} at \\useURL [url6][https://www.mochang.net/][][MoChang inc]\\from [url6]",
+   ["title"]="{\\bf cocos2d-x开发工程师} 在 \\useURL [url6][https://www.mochang.net/][][MoChang 科技有限公司]\\from [url6]",
   },
  },
  {
@@ -243,15 +243,15 @@ utilitydata.structures.lists.collected={
   ["references"]={
    ["block"]="bodypart",
    ["internal"]=7,
-   ["realpage"]=2,
-   ["reference"]="programming-languages",
+   ["realpage"]=1,
+   ["reference"]="cc开发工程师-在-南京光辉互动网络科技有限公司熊大叔儿童教育",
    ["section"]=7,
    ["tag"]=7,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="Programming Languages",
+   ["title"]="{\\bf C/C++开发工程师} 在 \\useURL [url7][https://bie-plc.com/][][南京光辉互动网络科技有限公司]\\from [url7]/\\useURL [url8][https://www.biemore.com/zh-cn/index.html][][熊大叔儿童教育]\\from [url8]",
   },
  },
  {
@@ -260,15 +260,15 @@ utilitydata.structures.lists.collected={
   ["references"]={
    ["block"]="bodypart",
    ["internal"]=8,
-   ["realpage"]=2,
-   ["reference"]="markuptemplating-languages-preprocessors",
+   ["realpage"]=1,
+   ["reference"]="前端工程师兼培训师-在-南京触控科技办事处",
    ["section"]=8,
    ["tag"]=8,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="Markup/Templating Languages & Preprocessors",
+   ["title"]="{\\bf 前端工程师兼培训师} 在 \\useURL [url9][http://www.chukong-inc.com/][][南京触控科技办事处]\\from [url9]",
   },
  },
  {
@@ -278,14 +278,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=9,
    ["realpage"]=2,
-   ["reference"]="frameworks-apis",
+   ["reference"]="主要语言技能",
    ["section"]=9,
    ["tag"]=9,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="Frameworks & APIs",
+   ["title"]="主要语言技能",
   },
  },
  {
@@ -295,48 +295,48 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=10,
    ["realpage"]=2,
-   ["reference"]="software-tools",
+   ["reference"]="格式类型使用",
    ["section"]=10,
    ["tag"]=10,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="Software & Tools",
+   ["title"]="格式类型使用",
   },
  },
  {
-  ["metadata"]=4,
+  ["metadata"]=13,
   ["numberdata"]=25,
   ["references"]={
    ["block"]="bodypart",
    ["internal"]=11,
-   ["realpage"]=3,
-   ["reference"]="education",
+   ["realpage"]=2,
+   ["reference"]="框架",
    ["section"]=11,
    ["tag"]=11,
    ["used"]="fit",
   },
   ["titledata"]={
-   ["label"]="subsection",
-   ["title"]="Education",
+   ["label"]="subsubsection",
+   ["title"]="框架",
   },
  },
  {
-  ["metadata"]=4,
+  ["metadata"]=13,
   ["numberdata"]=27,
   ["references"]={
    ["block"]="bodypart",
    ["internal"]=12,
-   ["realpage"]=3,
-   ["reference"]="interests",
+   ["realpage"]=2,
+   ["reference"]="软件",
    ["section"]=12,
    ["tag"]=12,
    ["used"]="fit",
   },
   ["titledata"]={
-   ["label"]="subsection",
-   ["title"]="Interests",
+   ["label"]="subsubsection",
+   ["title"]="软件",
   },
  },
  {
@@ -346,14 +346,48 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=13,
    ["realpage"]=3,
-   ["reference"]="download",
+   ["reference"]="教育",
    ["section"]=13,
    ["tag"]=13,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="Download",
+   ["title"]="教育",
+  },
+ },
+ {
+  ["metadata"]=4,
+  ["numberdata"]=31,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=14,
+   ["realpage"]=3,
+   ["reference"]="兴趣",
+   ["section"]=14,
+   ["tag"]=14,
+   ["used"]="fit",
+  },
+  ["titledata"]={
+   ["label"]="subsection",
+   ["title"]="兴趣",
+  },
+ },
+ {
+  ["metadata"]=4,
+  ["numberdata"]=33,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=15,
+   ["realpage"]=3,
+   ["reference"]="下载",
+   ["section"]=15,
+   ["tag"]=15,
+   ["used"]="fit",
+  },
+  ["titledata"]={
+   ["label"]="subsection",
+   ["title"]="下载",
   },
  },
 }
@@ -365,22 +399,22 @@ utilitydata.structures.pages.collected={
  {
   ["block"]="bodypart",
   ["number"]=1,
-  ["numberdata"]=30,
-  ["prefixdata"]=31,
+  ["numberdata"]=34,
+  ["prefixdata"]=35,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=2,
-  ["numberdata"]=30,
-  ["prefixdata"]=31,
+  ["numberdata"]=34,
+  ["prefixdata"]=35,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=3,
-  ["numberdata"]=30,
-  ["prefixdata"]=31,
+  ["numberdata"]=34,
+  ["prefixdata"]=35,
   ["state"]="start",
  },
 }
@@ -396,10 +430,10 @@ if not utilitydata.structures.references then utilitydata.structures.references 
 
 utilitydata.structures.references.referred={
  { 1, 1 },
- { 2, 16 },
- { 2, 25 },
- { 3, 36 },
- { 3, 41 },
+ { 2, 19 },
+ { 2, 30 },
+ { 3, 39 },
+ { 3, 50 },
 }
 
 if not utilitydata.job then utilitydata.job = { } end
@@ -569,7 +603,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 5 },
+  { 0, 0, 1, 4, 6 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -579,7 +613,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 6 },
+  { 0, 0, 1, 4, 7 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -589,13 +623,33 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 7 },
+  { 0, 0, 1, 5 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
    ["hidenumber"]=true,
    ["language"]="en",
    ["numbers"]=28,
+   ["separatorset"]="default",
+   ["set"]="all",
+  },
+  { 0, 0, 1, 6 },
+  {
+   ["block"]="bodypart",
+   ["conversionset"]="default",
+   ["hidenumber"]=true,
+   ["language"]="en",
+   ["numbers"]=30,
+   ["separatorset"]="default",
+   ["set"]="all",
+  },
+  { 0, 0, 1, 7 },
+  {
+   ["block"]="bodypart",
+   ["conversionset"]="default",
+   ["hidenumber"]=true,
+   ["language"]="en",
+   ["numbers"]=32,
    ["separatorset"]="default",
    ["set"]="all",
   },

@@ -8,6 +8,14 @@ namespace :rst do
     puts "Done"
   end
 end
+namespace :rst_cn do
+  desc "Generate reStructuredText file"
+  task :generate do
+    puts "Generating reStructuredText file from Markdown"
+    system("pandoc -s -w rst resume_cn.markdown -o resume_cn.rst")
+    puts "Done"
+  end
+end
 
 namespace :html do
   desc "Compile stylesheet"
@@ -24,6 +32,15 @@ namespace :html do
     system("cat <<EOF >>tmp")
     system("sed -n '/^<body>/,$p' resume.html >>tmp")
     system("mv tmp index.html")
+    puts "Done"
+  end
+end
+
+namespace :tex_cn do
+  desc "Generate LaTeX file"
+  task :generate do
+    puts "Generating LaTeX file from Markdown"
+    system("pandoc -s -w context resume_cn.markdown -o resume_cn.tex")
     puts "Done"
   end
 end
@@ -45,12 +62,28 @@ namespace :pdf do
     puts "Done"
   end
 end
+namespace :pdf_cn do
+  desc "Generate PDF file"
+  task :generate => ["tex_cn:generate"] do
+    puts "Generating cn PDF file from LaTeX"
+    system("context --pdf resume_cn.tex")
+    puts "Done"
+  end
+end
 
 namespace :rtf do
   desc "Generate RTF file"
   task :generate do
     puts "Generating RTF file from Markdown"
     system("pandoc -s -S resume.markdown -o resume.rtf")
+    puts "Done"
+  end
+end
+namespace :rtf_cn do
+  desc "Generate RTF file"
+  task :generate do
+    puts "Generating RTF file from Markdown"
+    system("pandoc -s -S resume_cn.markdown -o resume_cn.rtf")
     puts "Done"
   end
 end
@@ -63,6 +96,14 @@ namespace :word do
     puts "Done"
   end
 end
+namespace :word_cn do
+  desc "Generate docx file"
+  task :generate do
+    puts "Generating docx file from Markdown"
+    system("pandoc -s -S resume_cn.markdown -o resume_cn.docx --reference-docx=resume-reference.docx")
+    puts "Done"
+  end
+end
 
 namespace :odt do
   desc "Generate ODT file"
@@ -72,12 +113,28 @@ namespace :odt do
     puts "Done"
   end
 end
+namespace :odt_cn do
+  desc "Generate ODT file"
+  task :generate do
+    puts "Generating ODT file from Markdown"
+    system("pandoc -s -S resume_cn.markdown -o resume_cn.odt")
+    puts "Done"
+  end
+end
 
 namespace :epub do
   desc "Generate EPUB file"
   task :generate do
     puts "Generating EPUB file from Markdown"
     system("pandoc -s -S resume.markdown -o resume.epub")
+    puts "Done"
+  end
+end
+namespace :epub_cn do
+  desc "Generate EPUB file"
+  task :generate do
+    puts "Generating EPUB file from Markdown"
+    system("pandoc -s -S resume_cn.markdown -o resume_cn.epub")
     puts "Done"
   end
 end
@@ -119,12 +176,18 @@ end
 desc "Generate all formats"
 task :all => [
   "rst:generate",
+  "rst_cn:generate",
   "html:generate",
   "pdf:generate",
+  "pdf_cn:generate",
   "rtf:generate",
+  "rtf_cn:generate",
   "word:generate",
+  "word_cn:generate",
   "odt:generate",
+  "odt_cn:generate",
   "epub:generate",
+  "epub_cn:generate",
   "asciidoc:generate",
   "docbook:generate",
   "readme",
