@@ -218,11 +218,11 @@ task :all => [
   "odt_cn:generate",
   "epub_cn:generate",
   "readme",
-  "update"
-  "check_ch:generate",
+  "update",
+  "check_ch",
   "html_cn:generate",
-  "update"
-  "check:generate",
+  "update",
+  "check",
 ]
 
 
