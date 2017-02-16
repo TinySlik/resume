@@ -1,34 +1,34 @@
 吴  晓
 =============
 
-图 形 工 程 师
+图形工程师
 -----------------------
 
-- 电 话: [86-15861657693](tel://86-15861657693)
-- 邮 件: <tinysilk@hotmail.com>
-- 博 客（墙 外）: [tinyslik.github.io](http://tinyslik.github.io)
-- 博 客（墙 内）: [tinyslik.coding.me](http://tinyslik.coding.me)
+- 电话: [86-15861657693](tel://86-15861657693)
+- 邮件: <tinysilk@hotmail.com>
+- 博客（墙外）: [tinyslik.github.io](http://tinyslik.github.io)
+- 博客（墙内）: [tinyslik.coding.me](http://tinyslik.coding.me)
 - Github: [TinySlik](http://github.com/TinySlik)
 
 
-简 介
+简介
 -------
 
 一个有四年开发经验的小司机。
 开发过很多款上线的项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
 
 
-技 能
+技能
 -----------
 
 能胜任android（java），ios（OC）单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；  
 对openGL有良好的掌握度，对shader优化编写使用熟练。对图形数学有良好的认识和基础。
 长期使用cocos2d-x,uinity3d游戏引擎，对游戏引擎的工具编写也有良好的习惯。
 
-工 作 经 验
+工作经验
 ----------
 
-### **cocos2d-x 开 发 工 程 师** 在 [MoChang 科 技 有 限 公 司](https://www.mochang.net/)
+### **cocos2d-x 开发工程师** 在 [MoChang有限公司](https://www.mochang.net/)
 
 *2014.1 - 2015.6*
 
@@ -39,7 +39,7 @@
 5.制作小型游戏制定文档并按照需求文档在较短的时间内提交上线。
 6.由于团队小，所以大量的与美术的协调工作都由我独立完成，团队的策划担任高层领导角色，团队具有比较高的自由度。
 
-### **C/C++ 开 发 工 程 师** 在 [南 京 光 辉 互 动 网 络 科 技 有 限 公 司](https://bie-plc.com/)/[熊 大 叔 儿 童 教 育](https://www.biemore.com/zh-cn/index.html)
+### **C/C++ 开发工程师** 在 [南京光辉互动网络科技有限公司](https://bie-plc.com/)/[熊大叔儿童教育](https://www.biemore.com/zh-cn/index.html)
 
 *2015.6 - 2016.2*
 
@@ -47,13 +47,13 @@
 2.实现shader等渲染技术方面的技术优化和难点。
 3.负责一些产品最后阶段的代码调试和检查工作，接入一些商业代码和库。
 
-### **前 端 工 程 师 兼 培 训 师** 在 [南 京 触 控 科 技 办 事 处](http://www.chukong-inc.com/)
+### **前端工程师兼培训师** 在 [南京触控科技办事处](http://www.chukong-inc.com/)
 
 *2016.3 - 2016.10*
 1.参与3.x的cocos2d-x引擎代码的修改和维护，上架一些以前的成品代码游戏。
 2.培训新员工，培训git，lua部分内容。
 
-### 主 要 语 言 技 能
+### 主要语言技能
 
 - [C/C++]()^†^
 - [Lua]()^†^
@@ -65,7 +65,7 @@
 - [C#]()
 - [shader]()^†^
 
-### 格 式 类 型 使 用
+### 格式类型使用
 
 - [CSS](http://www.w3.org/Style/CSS/Overview.en.html)^†^
 - [HTML](http://developers.whatwg.org)^†^
@@ -75,7 +75,7 @@
 - [http]()
 
 
-### 框 架
+### 框架
 
 - [OpenGL]()^†^
 - [Boost]()
@@ -84,7 +84,7 @@
 - [hexo]()^†^
 
 
-### 软 件
+### 软件
 
 - [Apple XCode](http://developer.apple.com)
 - [Git](http://git-scm.com)^†^
@@ -106,12 +106,12 @@
 - [doxygen]()
 - [latex]()
 
-教 育
+教育
 ---------
 
 [扬州大学](), 2008 - 2012
 
-兴 趣
+兴趣
 ---------
 
 - 玩卡牌游戏（炉石）
@@ -119,7 +119,7 @@
 - 养猫
 - 弹吉他
 
-下 载
+下载
 ---------
 
 以下是我的多个格式下的简历，如有需要请自行下载：
