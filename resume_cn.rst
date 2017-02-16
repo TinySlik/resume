@@ -16,7 +16,7 @@
 一个有四年开发经验的小司机。
 开发过很多款上线的项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
 
-技能
+特长
 ----
 
 | 能胜任android（java），ios（OC）单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
@@ -51,8 +51,9 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *2016.3 - 2016.10*
+
 1.参与3.x的cocos2d-x引擎代码的修改和维护，上架一些以前的成品代码游戏。
-2.培训新员工，培训git，lua部分内容。
+2.培训新员工，培训git，lua部分内容。 3.修改和上线u3d项目.
 
 主要语言技能
 ~~~~~~~~~~~~
@@ -89,7 +90,7 @@
 软件
 ~~~~
 
--  `Apple XCode <http://developer.apple.com>`__
+-  `Apple Xcode <http://developer.apple.com>`__
 -  `Git <http://git-scm.com>`__\ :sup:`†`
 -  `JIRA <http://atlassian.com/software/jira>`__\ :sup:`†`
 -  `Mac OS X <http://apple.com/macosx>`__\ :sup:`†`
@@ -105,7 +106,7 @@
 -  `source tree <>`__
 -  `VisualStudio <>`__\ :sup:`†`
 -  `AndroidStudio <>`__
--  `grub <>`__
+-  `grub/grub2 <>`__
 -  `doxygen <>`__
 -  `latex <>`__
 
@@ -125,13 +126,11 @@
 下载
 ----
 
-以下是我的多个格式下的简历，如有需要请自行下载：
+以下是我的多种格式下的简历，如有需要请自行下载：
 
 `doc <https://github.com/TinySlik/resume/raw/master/resume_cn.docx>`__
 
-`pdf <https://github.com/TinySlik/resume/raw/master/resume_cn.pdf>`__
-
-`epub <https://github.com/TinySlik/resume/raw/master/resume_cn.epub>`__
+`ePub <https://github.com/TinySlik/resume/raw/master/resume_cn.epub>`__
 
 谢谢对我的关注.
 
