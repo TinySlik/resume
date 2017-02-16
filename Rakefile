@@ -191,7 +191,15 @@ task :update do
   puts "Done"
 end
 
-desc "check to origin"
+task :update_ch do
+  system("git add . -A")
+  system("git commit -m'auto commit push'")
+  system("git push origin")
+  system("git push second")
+  puts "Done"
+end
+
+desc "check to master"
 task :check do
   system("git checkout master")
 end
@@ -221,7 +229,7 @@ task :all => [
   "update",
   "check_ch",
   "html_cn:generate",
-  "update",
+  "update_ch",
   "check",
 ]
 
