@@ -49,7 +49,7 @@ function load_url_code() {
 			'cement flower',
 			'electricty country',
 			'beautiful wait',
-			'big white lines',
+			//'big white lines',
 			'old wall',
 			'color lines',
 			'toon cloud',
