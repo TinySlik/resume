@@ -64,8 +64,8 @@ function load_url_code() {
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
-		code.setValue(document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text);
-		original_code = document.getElementById( list[Math.floor(Math.random()*(list.length ))] ).text;
+		code.setValue(document.getElementById( 'balls' ).text);
+		original_code = document.getElementById( 'balls' ).text;
 
 	}
 }
