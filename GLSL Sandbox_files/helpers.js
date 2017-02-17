@@ -43,24 +43,24 @@ function load_url_code() {
 			'sea',
 			'vertigo',
 			'bunge bedstraw herb',
-			'ripple',
-			'tree',
+			//'ripple',
+			//'tree',
 			'pillar',
-			'cement flower',
-			'electricty country',
+			//'cement flower',
+			//'electricty country',
 			'beautiful wait',
-			'old wall',
+			//'old wall',
 			'color lines',
 			'toon cloud',
 			'small flower',
-			'big tree',
+			//'big tree',
 			'cloud',
 			'rubiks cube',
-			'shui long tou',
-			'sunset',
+			//'shui long tou',
+			//'sunset',
 			'paint',
 			'balls',
-			'colorful voronoi'
+			//'colorful voronoi'
 			);
 		
 		// list[Math.floor(Math.random()*(list.length ))]
