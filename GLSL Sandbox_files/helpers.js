@@ -59,7 +59,7 @@ function load_url_code() {
 			//'shui long tou',
 			//'sunset',
 			'paint',
-			'balls',
+			'balls'
 			//'colorful voronoi'
 			);
 		
