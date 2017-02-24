@@ -41,7 +41,7 @@ function load_url_code() {
 	} else {
 		var list=new Array(
 			'sea',
-			'vertigo',
+			//'vertigo',
 			'bunge bedstraw herb',
 			//'ripple',
 			//'tree',

@@ -77,7 +77,7 @@
 
 ### 框架
 
-- [OpenGL]()^†^
+- [OpenGL （web,ES,glut,glew…）]()^†^
 - [Boost]()
 - [Cocos2d-x]()^†^
 - [Uinity3d]()

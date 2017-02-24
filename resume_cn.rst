@@ -81,7 +81,7 @@
 框架
 ~~~~
 
--  `OpenGL <>`__\ :sup:`†`
+-  `OpenGL （web,ES,glut,glew…） <>`__\ :sup:`†`
 -  `Boost <>`__
 -  `Cocos2d-x <>`__\ :sup:`†`
 -  `Uinity3d <>`__
