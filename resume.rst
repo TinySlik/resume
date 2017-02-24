@@ -63,21 +63,22 @@ Markup/Templating Languages & Preprocessors
 -  `CSS <http://www.w3.org/Style/CSS/Overview.en.html>`__\ :sup:`†`
 -  `HTML <http://developers.whatwg.org>`__\ :sup:`†`
 -  `Markdown <http://daringfireball.net/projects/markdown>`__\ :sup:`†`
+-  `XML <>`__
+-  `jason <>`__
+-  `http <>`__
+-  .. rubric:: Frameworks & APIs
+      :name: frameworks-apis
 
-Frameworks & APIs
-~~~~~~~~~~~~~~~~~
-
--  `OpenGL <>`__\ :sup:`†`
+-  `OpenGL （web,ES,glut,glew…） <>`__\ :sup:`†`
 -  `Boost <>`__
 -  `Cocos2d-x <>`__\ :sup:`†`
 -  `Uinity3d <>`__
 -  `hexo <>`__\ :sup:`†`
--  `latex <>`__
 
 Software & Tools
 ~~~~~~~~~~~~~~~~
 
--  `Apple XCode <http://developer.apple.com>`__
+-  `Apple Xcode <http://developer.apple.com>`__
 -  `Git <http://git-scm.com>`__\ :sup:`†`
 -  `JIRA <http://atlassian.com/software/jira>`__\ :sup:`†`
 -  `Mac OS X <http://apple.com/macosx>`__\ :sup:`†`
@@ -93,6 +94,9 @@ Software & Tools
 -  `source tree <>`__
 -  `VisualStudio <>`__\ :sup:`†`
 -  `AndroidStudio <>`__
+-  `grub/grub2 <>`__
+-  `doxygen <>`__
+-  `latex <>`__
 
 Education
 ---------

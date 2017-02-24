@@ -58,19 +58,21 @@ denoted with a ^†^ symbol.
 - [CSS](http://www.w3.org/Style/CSS/Overview.en.html)^†^
 - [HTML](http://developers.whatwg.org)^†^
 - [Markdown](http://daringfireball.net/projects/markdown)^†^
-
+- [XML]()
+- [jason]()
+- [http]()
+- 
 ### Frameworks & APIs
 
-- [OpenGL]()^†^
+- [OpenGL （web,ES,glut,glew…）]()^†^
 - [Boost]()
 - [Cocos2d-x]()^†^
 - [Uinity3d]()
 - [hexo]()^†^
-- [latex]()
 
 ### Software & Tools
 
-- [Apple XCode](http://developer.apple.com)
+- [Apple Xcode](http://developer.apple.com)
 - [Git](http://git-scm.com)^†^
 - [JIRA](http://atlassian.com/software/jira)^†^
 - [Mac OS X](http://apple.com/macosx)^†^
@@ -86,6 +88,9 @@ denoted with a ^†^ symbol.
 - [source tree]()
 - [VisualStudio]()^†^
 - [AndroidStudio]()
+- [grub/grub2]()
+- [doxygen]()
+- [latex]()
 
 Education
 ---------

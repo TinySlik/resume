@@ -134,7 +134,7 @@
     </sect3>
     <sect3 id="markuptemplating-languages-preprocessors">
       <title>Markup/Templating Languages &amp; Preprocessors</title>
-      <itemizedlist spacing="compact">
+      <itemizedlist>
         <listitem>
           <para>
             <ulink url="http://www.w3.org/Style/CSS/Overview.en.html">CSS</ulink><superscript>†</superscript>
@@ -150,14 +150,27 @@
             <ulink url="http://daringfireball.net/projects/markdown">Markdown</ulink><superscript>†</superscript>
           </para>
         </listitem>
-      </itemizedlist>
-    </sect3>
-    <sect3 id="frameworks-apis">
-      <title>Frameworks &amp; APIs</title>
-      <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <ulink url="">OpenGL</ulink><superscript>†</superscript>
+            <ulink url="">XML</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">jason</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">http</ulink>
+          </para>
+        </listitem>
+        <listitem>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">OpenGL
+            （web,ES,glut,glew…）</ulink><superscript>†</superscript>
           </para>
         </listitem>
         <listitem>
@@ -180,11 +193,6 @@
             <ulink url="">hexo</ulink><superscript>†</superscript>
           </para>
         </listitem>
-        <listitem>
-          <para>
-            <ulink url="">latex</ulink>
-          </para>
-        </listitem>
       </itemizedlist>
     </sect3>
     <sect3 id="software-tools">
@@ -192,7 +200,7 @@
       <itemizedlist spacing="compact">
         <listitem>
           <para>
-            <ulink url="http://developer.apple.com">Apple XCode</ulink>
+            <ulink url="http://developer.apple.com">Apple Xcode</ulink>
           </para>
         </listitem>
         <listitem>
@@ -269,6 +277,21 @@
         <listitem>
           <para>
             <ulink url="">AndroidStudio</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">grub/grub2</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">doxygen</ulink>
+          </para>
+        </listitem>
+        <listitem>
+          <para>
+            <ulink url="">latex</ulink>
           </para>
         </listitem>
       </itemizedlist>

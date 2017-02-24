@@ -71,23 +71,23 @@ Markup/Templating Languages & Preprocessors
 * http://www.w3.org/Style/CSS/Overview.en.html[CSS]^†^
 * http://developers.whatwg.org[HTML]^†^
 * http://daringfireball.net/projects/markdown[Markdown]^†^
-
-[[frameworks-apis]]
+* link:[XML]
+* link:[jason]
+* link:[http]
+* [[frameworks-apis]]
 Frameworks & APIs
 ^^^^^^^^^^^^^^^^^
-
-* link:[OpenGL]^†^
+* link:[OpenGL （web,ES,glut,glew…）]^†^
 * link:[Boost]
 * link:[Cocos2d-x]^†^
 * link:[Uinity3d]
 * link:[hexo]^†^
-* link:[latex]
 
 [[software-tools]]
 Software & Tools
 ^^^^^^^^^^^^^^^^
 
-* http://developer.apple.com[Apple XCode]
+* http://developer.apple.com[Apple Xcode]
 * http://git-scm.com[Git]^†^
 * http://atlassian.com/software/jira[JIRA]^†^
 * http://apple.com/macosx[Mac OS X]^†^
@@ -103,6 +103,9 @@ Software & Tools
 * link:[source tree]
 * link:[VisualStudio]^†^
 * link:[AndroidStudio]
+* link:[grub/grub2]
+* link:[doxygen]
+* link:[latex]
 
 [[education]]
 Education
