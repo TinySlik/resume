@@ -1,6 +1,6 @@
 吴  晓
 =============
-![](http://img.mp.itc.cn/upload/20170208/b2d0bd0d1c8843448b4ea507f3693d03_th.jpeg)
+
 图形工程师
 -----------------------
 
@@ -9,6 +9,9 @@
 - 博客（墙外）: [tinyslik.github.io](http://tinyslik.github.io)
 - 博客（墙内）: [tinyslik.coding.me](http://tinyslik.coding.me)
 - Github: [TinySlik](http://github.com/TinySlik)
+
+
+![](http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.JPG)
 
 简介
 -------

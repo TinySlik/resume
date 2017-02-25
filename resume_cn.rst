@@ -1,13 +1,17 @@
 吴 晓
 =====
 
-|image0| 图形工程师 -----------------------
+图形工程师
+----------
 
 -  电话: `86-15861657693 <tel://86-15861657693>`__
 -  邮件: tinysilk@hotmail.com
 -  博客（墙外）: `tinyslik.github.io <http://tinyslik.github.io>`__
 -  博客（墙内）: `tinyslik.coding.me <http://tinyslik.coding.me>`__
 -  Github: `TinySlik <http://github.com/TinySlik>`__
+
+.. figure:: http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.JPG
+   :alt: 
 
 简介
 ----
@@ -166,5 +170,3 @@
 
 ©2016 `Tiny Oh <http://tinyslik.coding.me/resume>`__. All rights
 reserved.
-
-.. |image0| image:: http://img.mp.itc.cn/upload/20170208/b2d0bd0d1c8843448b4ea507f3693d03_th.jpeg
