@@ -10,6 +10,14 @@
 -  博客（墙内）: `tinyslik.coding.me <http://tinyslik.coding.me>`__
 -  Github: `TinySlik <http://github.com/TinySlik>`__
 
+.. raw:: html
+
+   <div align="center">
+
+.. raw:: html
+
+   </div>
+
 简介
 ----
 
