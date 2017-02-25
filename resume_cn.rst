@@ -1,8 +1,7 @@
 吴 晓
 =====
 
-图形工程师
-----------
+|image0| 图形工程师 -----------------------
 
 -  电话: `86-15861657693 <tel://86-15861657693>`__
 -  邮件: tinysilk@hotmail.com
@@ -149,9 +148,9 @@
 
 -  玩卡牌游戏（炉石）,至今未上传说...
 -  听音乐,玩一些器材,中西内外新旧都听
--  养猫,叫毛毛，一只英短蓝色的小母猫
+-  养猫,叫毛毛,一只英短蓝色的小母猫
 -  弹吉他,准备周末去卖艺
--  逛github,知乎,Bilibili 找基佬
+-  逛github,知乎,Bilibili 找基佬玩耍
 -  另外已婚未育
 
 下载
@@ -167,3 +166,5 @@
 
 ©2016 `Tiny Oh <http://tinyslik.coding.me/resume>`__. All rights
 reserved.
+
+.. |image0| image:: http://img.mp.itc.cn/upload/20170208/b2d0bd0d1c8843448b4ea507f3693d03_th.jpeg
