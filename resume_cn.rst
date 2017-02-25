@@ -1,6 +1,6 @@
 .. raw:: html
 
-   <div align="center">
+   <div align="left">
 
 .. raw:: html
 

@@ -1,4 +1,4 @@
-<div align=center>
+<div align=left>
 <img src="http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.png" width=130 height=190/>
 </div>
 
