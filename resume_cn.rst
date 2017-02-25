@@ -1,6 +1,3 @@
-吴 晓
-=====
-
 .. raw:: html
 
    <div align="left" margin-left="9">
@@ -8,6 +5,9 @@
 .. raw:: html
 
    </div>
+
+吴 晓
+=====
 
 图形工程师
 ----------
