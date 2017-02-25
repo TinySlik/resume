@@ -10,7 +10,7 @@
 - 博客（墙内）: [tinyslik.coding.me](http://tinyslik.coding.me)
 - Github: [TinySlik](http://github.com/TinySlik)
 
-<img src="http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.png" width=70 height=100 align=center/>
+<img src="http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.png" width=130 height=190 align=center/>
 
 简介
 -------
