@@ -10,9 +10,6 @@
 -  博客（墙内）: `tinyslik.coding.me <http://tinyslik.coding.me>`__
 -  Github: `TinySlik <http://github.com/TinySlik>`__
 
-.. figure:: http://7xt003.com1.z0.glb.clouddn.com/%E8%AF%81%E4%BB%B6%E7%85%A7.JPG
-   :alt: 
-
 简介
 ----
 
