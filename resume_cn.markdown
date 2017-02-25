@@ -10,12 +10,11 @@
 - 博客（墙内）: [tinyslik.coding.me](http://tinyslik.coding.me)
 - Github: [TinySlik](http://github.com/TinySlik)
 
-
 简介
 -------
 
 一个有四年开发经验的小司机。
-开发过很多款上线的项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
+开发过很多款上线手游项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
 
 特长
 -----------
@@ -43,80 +42,105 @@
 *2015.6 - 2016.2*
 
 1.一线开发游戏项目，对多个产品线不同语言的项目代码进行检查和修改重构，使用代码包括包括js,Lua,C++。
-2.实现shader等渲染技术方面的技术优化和难点。
-3.负责一些产品最后阶段的代码调试和检查工作，接入一些商业代码和库。
+2.实现shader技术优化和难点。
+3.负责一些产品最后阶段的代码调试和检查工作，接入一些商业代码,sdk。
 
 ### **前端工程师兼培训师** 在 [南京触控科技办事处](http://www.chukong-inc.com/)
 
 *2016.3 - 2016.10*
 
 1.参与3.x的cocos2d-x引擎代码的修改和维护，上架一些以前的成品代码游戏。
-2.培训新员工，培训git，lua部分内容。
+2.培训新员工，培训git，lua,quick-cocos部分内容。
 3.修改和上线u3d项目.
 
 ### 主要语言技能
+注：  
++：使用过，了解语法，能够上手修改现有的浅层代码逻辑  
+++：全盘学习过，理解语言全盘的语法，对语言的相关设计理念有认识，对相关特性够熟练运用
++++：相关语言的基本设计模式能够完全应用于实践，能够胜任框架的搭建
 
-- [C/C++]()^†^
-- [Lua]()^†^
-- [javaScript]()^†^
-- [java]()
-- [object-C]()
-- [jason]()^†^
-- [xml]()^†^
-- [C#]()
-- [shader]()^†^
+- [C++](http://www.cplusplus.com/)+++
+- C++
+- [Lua](http://www.lua.org/)+++
+- [java](https://www.java.com/zh_CN/)+
+- [objective-C](https://developer.apple.com/)+
+- [C#](https://www.microsoft.com/net/)++
+- [shader](https://www.glslsandbox.com/)+++
+- [javaScript](https://www.javascript.com/)++
+- [HTML](http://developers.whatwg.org)++
+- [CSS](http://www.w3.org/Style/CSS/Overview.en.html)+
+- [python](https://www.python.org/)+
+- [Ruby (Rake)](http://www.ruby-lang.org/zh_cn/)++
+- [UML](http://www.uml.org/)+
 
 ### 格式类型使用
+注：  
++：了解并修改过小于5次。
+++：全盘学习过，熟练使用语法书写内容或修改配置。
++++：查看过底层格式实现原理，并修改使用过自己的衍生格式。
 
-- [CSS](http://www.w3.org/Style/CSS/Overview.en.html)^†^
-- [HTML](http://developers.whatwg.org)^†^
-- [Markdown](http://daringfireball.net/projects/markdown)^†^
-- [XML]()
-- [jason]()
-- [http]()
+- [Markdown](http://daringfireball.net/projects/markdown)++
+- [XML](https://www.xml.com/)+
+- [Jason](http://www.json.org.cn/)++
+- [ini](https://github.com/Winnerhust/inifile2)++
 
 ### 框架
+注*：  
++：使用过，了接口用法，能够快速使用。
+++：模块化地学习过，理解框架下原理，能够熟练进行相关优化。
++++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
 
-- [OpenGL （web,ES,glut,glew…）]()^†^
-- [Boost]()
-- [Cocos2d-x]()^†^
-- [Uinity3d]()
-- [hexo]()^†^
+- [OpenGL （web,ES,glut,glew,glsl…）](https://www.opengl.org/)++
+- [openCV](http://opencv.org/)+
+- [Boost (shared_ptr,λ,tuple,thread…)](http://www.boost.org/)++
+- [Cocos2d-x](http://www.cocos2d-x.org/)+++
+- [Uinity3d](https://unity3d.com/cn/)++
+- [hexo](https://hexo.io/)++
+- http,tcp/ip,udp+
 
 ### 软件
+注*：  
++：使用过，能够完成常规的工具功能 
+++：熟练使用，包括快捷键和高度自定义的功能
++++：查看过软件源码，修改衍生过相关的商用版本
 
-- [Apple Xcode](http://developer.apple.com)
-- [Git](http://git-scm.com)^†^
-- [JIRA](http://atlassian.com/software/jira)^†^
-- [Mac OS X](http://apple.com/macosx)^†^
-- [MySQL](http://mysql.com)
-- [Nginx](http://wiki.nginx.org)
-- [Pandoc](http://johnmacfarlane.net/pandoc)
-- [Sublime Text](http://www.sublimetext.com)
-- [Subversion](http://svn.apache.org)
-- [Ubuntu Linux](http://ubuntu.com)
-- [Vim](http://www.vim.org)^†^
-- [WebStorm](http://jetbrains.com/webstorm)
-- [zsh](http://www.zsh.org)^†^
-- [source tree]()
-- [VisualStudio]()^†^
-- [AndroidStudio]()
-- [grub/grub2]()
-- [doxygen]()
-- [latex]()
+- IDE:[Apple Xcode](http://developer.apple.com)++/[VisualStudio](https://www.visualstudio.com/)++/[AndroidStudio](http://www.android-studio.org/)+
+
+- [Git](http://git-scm.com)++
+- [Subversion](http://svn.apache.org)+
+- [SourceTree(win)](https://www.sourcetreeapp.com/)/[Tower(mac)](https://www.git-tower.com/)++
+- [JIRA](http://atlassian.com/software/jira)+
+
+- [grub/grub2](http://www.gnu.org/software/grub/)++
+- [Mac OS X](http://apple.com/macosx)++/[Ubuntu Linux](http://ubuntu.com)++
+
+- [Sublime Text](http://www.sublimetext.com)++
+- [Vim](http://www.vim.org)++
+- [zsh](http://www.zsh.org)++
+- [bash](http://www.gnu.org/software/bash/)++
+- [WebStorm](http://jetbrains.com/webstorm)+
+
+- [Pandoc](http://johnmacfarlane.net/pandoc)+
+- [Doxygen](https://github.com/doxygen/doxygen)+
+- [Latex](http://www.latex-project.org/)+
+
+- [Nginx](http://wiki.nginx.org)+
+- [MySQL](http://mysql.com)+
 
 教育
 ---------
 
-[扬州大学](), 2008 - 2012
+[扬州大学 动物医学](), 2008 - 2012
 
 兴趣
 ---------
 
-- 玩卡牌游戏（炉石）
-- 听音乐
-- 养猫
-- 弹吉他
+- 玩卡牌游戏（炉石）,至今未上传说...
+- 听音乐,玩一些器材,中西内外新旧都听
+- 养猫,叫猫猫，一只英短蓝色的小母猫
+- 弹吉他,准备周末去卖艺
+- 逛github,知乎,Bilibili 找基佬
+- 另外已婚未育
 
 下载
 ---------
