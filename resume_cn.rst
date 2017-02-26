@@ -1,11 +1,3 @@
-.. raw:: html
-
-   <div align="left" margin-left="20">
-
-.. raw:: html
-
-   </div>
-
 吴 晓
 =====
 
