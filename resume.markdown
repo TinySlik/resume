@@ -1,6 +1,6 @@
 Tiny Oh
 =============
-
+你可能需要我的[中文简历](http://tinyslik.coding.me/resume)
 Graphics Developer
 -----------------------
 
