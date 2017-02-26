@@ -1,6 +1,8 @@
 吴 晓
 =====
 
+Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
+
 图形工程师
 ----------
 
