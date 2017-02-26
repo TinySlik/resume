@@ -100,7 +100,6 @@ Education
 Interests
 ---------
 
-- Being a dad and spending time with my family
 - Playing [board and card games](http://boardgamegeek.com/user/smtudor) (and video games, too)
 - Making and listening to [music](http://www.rdio.com/people/smtudor)
 - Watching and contributing to Open Source Software
