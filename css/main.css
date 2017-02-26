@@ -13,7 +13,7 @@ body {
         margin: 0 ;
         padding: 0;
         text-align: left;
-        overflow: hidden;
+        overflow-y:visible;
         text-shadow:0 0px, 1px 1px #000000;
       }
 
