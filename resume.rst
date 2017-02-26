@@ -1,8 +1,8 @@
 Tiny Oh
 =======
 
-你可能需要我的\ `中文简历 <http://tinyslik.coding.me/resume>`__ Graphics
-Developer -----------------------
+Maybe you need my `Chinese resume <http://tinyslik.coding.me/resume>`__
+Graphics Developer -----------------------
 
 -  Phone: `86-15861657693 <tel://86-15861657693>`__
 -  Email: tinysilk@hotmail.com
