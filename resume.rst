@@ -106,7 +106,6 @@ Education
 Interests
 ---------
 
--  Being a dad and spending time with my family
 -  Playing `board and card
    games <http://boardgamegeek.com/user/smtudor>`__ (and video games,
    too)
