@@ -1,6 +1,7 @@
 Tiny Oh
 =============
 Maybe you need my [Chinese resume](http://tinyslik.coding.me/resume)
+
 Graphics Developer
 -----------------------
 

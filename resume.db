@@ -10,37 +10,41 @@
   <para>
     Maybe you need my
     <ulink url="http://tinyslik.coding.me/resume">Chinese resume</ulink>
-    Graphics Developer ———————–
   </para>
-  <itemizedlist spacing="compact">
-    <listitem>
-      <para>
-        Phone: <ulink url="tel://86-15861657693">86-15861657693</ulink>
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Email: <email>tinysilk@hotmail.com</email>
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Blog out of China:
-        <ulink url="http://tinyslik.github.io">tinyslik.github.io</ulink>
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Blog in China:
-        <ulink url="http://tinyslik.coding.me">tinyslik.coding.me</ulink>
-      </para>
-    </listitem>
-    <listitem>
-      <para>
-        Github: <ulink url="http://github.com/TinySlik">TinySlik</ulink>
-      </para>
-    </listitem>
-  </itemizedlist>
+  <sect2 id="graphics-developer">
+    <title>Graphics Developer</title>
+    <itemizedlist spacing="compact">
+      <listitem>
+        <para>
+          Phone:
+          <ulink url="tel://86-15861657693">86-15861657693</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Email: <email>tinysilk@hotmail.com</email>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Blog out of China:
+          <ulink url="http://tinyslik.github.io">tinyslik.github.io</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Blog in China:
+          <ulink url="http://tinyslik.coding.me">tinyslik.coding.me</ulink>
+        </para>
+      </listitem>
+      <listitem>
+        <para>
+          Github:
+          <ulink url="http://github.com/TinySlik">TinySlik</ulink>
+        </para>
+      </listitem>
+    </itemizedlist>
+  </sect2>
   <sect2 id="summary">
     <title>Summary</title>
     <para>
