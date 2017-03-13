@@ -220,15 +220,15 @@ task :all => [
   "epub:generate",
   "asciidoc:generate",
   "docbook:generate",
-  #"rst_cn:generate",
-  #"rtf_cn:generate",
-  #"word_cn:generate",
-  #"odt_cn:generate",
-  #"epub_cn:generate",
+  "rst_cn:generate",
+  "rtf_cn:generate",
+  "word_cn:generate",
+  "odt_cn:generate",
+  "epub_cn:generate",
   "readme",
   "update",
-  #"html_cn:generate",
-  #"update_ch",
+  "html_cn:generate",
+  "update_ch",
 ]
 
 desc "Generate cn formats"
