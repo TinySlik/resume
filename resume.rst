@@ -23,7 +23,7 @@ Specialties
 -----------
 
 Authoring great user experiences with openGL(include ES and web),
-HTML5+CSS, C/C++ ,Lua; use cocos2d-x,uinity3d for a lone time .
+HTML5+CSS, C/C++ ,Lua; use cocos2d-x,QT,win32,uinity3d for a lone time .
 
 Experience
 ----------

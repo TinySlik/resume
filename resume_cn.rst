@@ -21,9 +21,11 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 特长
 ----
 
-| 能胜任android（java），ios（OC）单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
-| 对openGL有良好的掌握度，对shader优化编写使用熟练。对图形数学有良好的认识和基础。
-  长期使用cocos2d-x,uinity3d游戏引擎，对游戏引擎的工具编写也有良好的习惯。
+| 能胜任android（java），ios/mac（OC）,win32,linux
+  单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
+| 对openGL
+  web/ES/2.x+管线有良好的掌握度，对shader优化编写使用熟练。对3d图形数学有良好的认识和基础。
+  长期使用cocos2d-x,uinity3d游戏引擎,基于win32,QT有丰富的C++架构经验，对游戏引擎的工具编写也有良好的习惯。
 
 工作经验
 --------
@@ -46,16 +48,28 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 *2015.6 - 2016.2*
 
 1.一线开发游戏项目，对多个产品线不同语言的项目代码进行检查和修改重构，使用代码包括包括js,Lua,C++。
-2.实现shader技术优化和难点。
+2.实现shader技术优化和难点（水纹，模糊）。
 3.负责一些产品最后阶段的代码调试和检查工作，接入一些商业代码,sdk。
+4.具体在这里同时修改了多个项目的代码，包括捕鱼达人3D（Lua），宝宝熊教育系列（JavaScript），并完成了最后的上线。
 
-**前端工程师兼培训师** 在 `南京触控科技办事处 <http://www.chukong-inc.com/>`__
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+**前端工程师兼职小团队项目管理** 在 `南京触控科技办事处 <http://www.chukong-inc.com/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 *2016.3 - 2016.10*
 
 1.参与3.x的cocos2d-x引擎代码的修改和维护，上架一些以前的成品代码游戏。
 2.培训新员工，培训git，lua,quick-cocos部分内容。 3.修改和上线u3d项目.
+4.管理部分员工并上线一些小的游戏项目类似手机三国志，棋牌等等。
+
+**openGL工程师兼图形算法工程师** 在 `无锡威莱斯科技有限公司 <http://vless.net/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*2016.11 - 2017.8*
+
+1.在开源框架openNI的基础上定制化公司需求的视频流架构用于算法分析。
+2.使用openCV完成轮廓提取，去背景等简单图像算法问题。
+3.完成openGL的图形界面软件，包括传感器信息的展示，量程，摄像机，彩虹色，录像，播放，多路同步分析等等软件框架下的数据基础工作。
+4.上线公司的产品，测试新的软件产物并完成文档。
 
 主要语言技能
 ~~~~~~~~~~~~
@@ -91,6 +105,7 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  `XML <https://www.xml.com/>`__\ +
 -  `Jason <http://www.json.org.cn/>`__\ ++
 -  `ini <https://github.com/Winnerhust/inifile2>`__\ ++
+-  `wix toolset <http://wixtoolset.org/>`__\ +
 
 框架
 ~~~~
@@ -101,11 +116,13 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
   +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
 
 -  `OpenGL （web,ES,glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
--  `openCV <http://opencv.org/>`__\ +
+-  `OpenCV <http://opencv.org/>`__\ +
+-  `QT <https://www.qt.io/>`__\ +++
 -  `Boost (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++
 -  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++
--  `Uinity3d <https://unity3d.com/cn/>`__\ ++
+-  `Uinity3d <https://unity3d.com/cn/>`__\ +
 -  `hexo <https://hexo.io/>`__\ ++
+-  `OpenAI <https://www.openai.com/>`__\ +
 -  http,tcp/ip,udp+
 
 软件
@@ -119,10 +136,10 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  IDE:\ `Apple
    Xcode <http://developer.apple.com>`__\ ++/\ `VisualStudio <https://www.visualstudio.com/>`__\ ++/\ `AndroidStudio <http://www.android-studio.org/>`__\ +
 
+-  MAKE: make / Cmake / Rake / XMake
 -  `Git <http://git-scm.com>`__\ ++
 -  `Subversion <http://svn.apache.org>`__\ +
 -  `SourceTree(win) <https://www.sourcetreeapp.com/>`__/`Tower(mac) <https://www.git-tower.com/>`__\ ++
--  `JIRA <http://atlassian.com/software/jira>`__\ +
 
 -  `grub/grub2 <http://www.gnu.org/software/grub/>`__\ ++
 -  `Mac OS X <http://apple.com/macosx>`__\ ++/\ `Ubuntu
