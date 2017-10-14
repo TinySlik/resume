@@ -40,7 +40,7 @@ function load_url_code() {
 
 	} else {
 		var list=new Array(
-			'sea',
+			//'sea',
 			//'vertigo',
 			'bunge bedstraw herb',
 			//'ripple',
@@ -53,13 +53,13 @@ function load_url_code() {
 			'color lines',
 			'toon cloud',
 			'small flower',
-			//'big tree',
+			'big tree',
 			'cloud',
 			'rubiks cube',
 			//'shui long tou',
 			//'sunset',
 			'paint',
-			'balls'
+			//'balls'
 			//'colorful voronoi'
 			);
 		
