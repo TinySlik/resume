@@ -61,7 +61,7 @@ function load_url_code() {
 			'rubiks cube',
 			//'shui long tou',
 			//'sunset',
-			'paint',
+			'paint'
 			//'balls'
 			//'colorful voronoi'
 			);
