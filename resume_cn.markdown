@@ -2,7 +2,7 @@
 =============
 Maybe you need my [English resume](http://tinyslik.github.io/resume)
 
-图形工程师
+万金油C++图形工程师
 -----------------------
 
 - 电话: [86-15861657693](tel://86-15861657693)
@@ -23,9 +23,9 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 特长
 -----------
 
-能胜任android（java），ios/mac（OC）,win32,linux 单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；  
-对openGL web/ES/2.x+管线有良好的掌握度，对shader优化编写使用熟练。对3d图形数学有良好的认识和基础。
-长期使用cocos2d-x,uinity3d游戏引擎,基于win32,QT有丰富的C++架构经验，对游戏引擎的工具编写也有良好的习惯。
+能胜任android（java），ios/mac（OC）,win32,linux 单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
+对openGL web/ES/2.x+管线有良好的掌握度。对3d图形数学有良好的认识和基础。
+长期使用cocos2d-x游戏引擎,基于win32,QT有丰富的C++架构经验，对工具编写也有良好的习惯。
 
 工作经验
 ----------
@@ -80,13 +80,13 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 - [java](https://www.java.com/zh_CN/)+
 - [objective-C](https://developer.apple.com/)+
 - [C#](https://www.microsoft.com/net/)++
-- [shader](https://www.glslsandbox.com/)+++
-- [javaScript](https://www.javascript.com/)++
-- [HTML](http://developers.whatwg.org)++
-- [CSS](http://www.w3.org/Style/CSS/Overview.en.html)+
-- [python](https://www.python.org/)+
+- [shader](https://www.glslsandbox.com/)++
+- [javaScript](https://www.javascript.com/)+++
+- [HTML](http://developers.whatwg.org)+++
+- [CSS](http://www.w3.org/Style/CSS/Overview.en.html)++
+- [python](https://www.python.org/)++
 - [Ruby (Rake)](http://www.ruby-lang.org/zh_cn/)++
-- [UML](http://www.uml.org/)+
+- [UML](http://www.uml.org/)++
 
 ### 格式类型使用
 注：  
@@ -95,7 +95,7 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 +++：查看过底层格式实现原理，并修改使用过自己的衍生格式。
 
 - [Markdown](http://daringfireball.net/projects/markdown)++
-- [XML](https://www.xml.com/)+
+- [XML](https://www.xml.com/)++
 - [Jason](http://www.json.org.cn/)++
 - [ini](https://github.com/Winnerhust/inifile2)++
 - [wix toolset](http://wixtoolset.org/)+
@@ -108,13 +108,11 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 
 - [OpenGL （web,ES,glut,glew,glsl…）](https://www.opengl.org/)++
 - [OpenCV](http://opencv.org/)+
-- [QT](https://www.qt.io/)+++
+- [QT](https://www.qt.io/)++
 - [Boost (shared_ptr,λ,tuple,thread…)](http://www.boost.org/)++
 - [Cocos2d-x](http://www.cocos2d-x.org/)+++
-- [Uinity3d](https://unity3d.com/cn/)+
 - [hexo](https://hexo.io/)++
 - [OpenAI](https://www.openai.com/)+
-- http,tcp/ip,udp+
 
 ### 软件
 注*：  
@@ -124,7 +122,7 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 
 - IDE:[Apple Xcode](http://developer.apple.com)++/[VisualStudio](https://www.visualstudio.com/)++/[AndroidStudio](http://www.android-studio.org/)+
 
-- MAKE: make / Cmake / Rake / XMake
+- MAKE: make / Cmake / Rake / XMake +
 - [Git](http://git-scm.com)++
 - [Subversion](http://svn.apache.org)+
 - [SourceTree(win)](https://www.sourcetreeapp.com/)/[Tower(mac)](https://www.git-tower.com/)++
@@ -134,8 +132,7 @@ Maybe you need my [English resume](http://tinyslik.github.io/resume)
 
 - [Sublime Text](http://www.sublimetext.com)++
 - [Vim](http://www.vim.org)++
-- [zsh](http://www.zsh.org)++
-- [bash](http://www.gnu.org/software/bash/)++
+- [bash](http://www.gnu.org/software/bash/)++ / [zsh](http://www.zsh.org)++
 - [WebStorm](http://jetbrains.com/webstorm)+
 
 - [Pandoc](http://johnmacfarlane.net/pandoc)+

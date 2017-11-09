@@ -3,8 +3,8 @@
 
 Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 
-图形工程师
-----------
+万金油C++图形工程师
+-------------------
 
 -  电话: `86-15861657693 <tel://86-15861657693>`__
 -  邮件: tinysilk@hotmail.com
@@ -21,11 +21,10 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 特长
 ----
 
-| 能胜任android（java），ios/mac（OC）,win32,linux
-  单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
-| 对openGL
-  web/ES/2.x+管线有良好的掌握度，对shader优化编写使用熟练。对3d图形数学有良好的认识和基础。
-  长期使用cocos2d-x,uinity3d游戏引擎,基于win32,QT有丰富的C++架构经验，对游戏引擎的工具编写也有良好的习惯。
+能胜任android（java），ios/mac（OC）,win32,linux
+单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
+对openGL web/ES/2.x+管线有良好的掌握度。对3d图形数学有良好的认识和基础。
+长期使用cocos2d-x游戏引擎,基于win32,QT有丰富的C++架构经验，对工具编写也有良好的习惯。
 
 工作经验
 --------
@@ -85,13 +84,13 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  `java <https://www.java.com/zh_CN/>`__\ +
 -  `objective-C <https://developer.apple.com/>`__\ +
 -  `C# <https://www.microsoft.com/net/>`__\ ++
--  `shader <https://www.glslsandbox.com/>`__\ +++
--  `javaScript <https://www.javascript.com/>`__\ ++
--  `HTML <http://developers.whatwg.org>`__\ ++
--  `CSS <http://www.w3.org/Style/CSS/Overview.en.html>`__\ +
--  `python <https://www.python.org/>`__\ +
+-  `shader <https://www.glslsandbox.com/>`__\ ++
+-  `javaScript <https://www.javascript.com/>`__\ +++
+-  `HTML <http://developers.whatwg.org>`__\ +++
+-  `CSS <http://www.w3.org/Style/CSS/Overview.en.html>`__\ ++
+-  `python <https://www.python.org/>`__\ ++
 -  `Ruby (Rake) <http://www.ruby-lang.org/zh_cn/>`__\ ++
--  `UML <http://www.uml.org/>`__\ +
+-  `UML <http://www.uml.org/>`__\ ++
 
 格式类型使用
 ~~~~~~~~~~~~
@@ -102,7 +101,7 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
   +++：查看过底层格式实现原理，并修改使用过自己的衍生格式。
 
 -  `Markdown <http://daringfireball.net/projects/markdown>`__\ ++
--  `XML <https://www.xml.com/>`__\ +
+-  `XML <https://www.xml.com/>`__\ ++
 -  `Jason <http://www.json.org.cn/>`__\ ++
 -  `ini <https://github.com/Winnerhust/inifile2>`__\ ++
 -  `wix toolset <http://wixtoolset.org/>`__\ +
@@ -117,13 +116,11 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 
 -  `OpenGL （web,ES,glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
 -  `OpenCV <http://opencv.org/>`__\ +
--  `QT <https://www.qt.io/>`__\ +++
+-  `QT <https://www.qt.io/>`__\ ++
 -  `Boost (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++
 -  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++
--  `Uinity3d <https://unity3d.com/cn/>`__\ +
 -  `hexo <https://hexo.io/>`__\ ++
 -  `OpenAI <https://www.openai.com/>`__\ +
--  http,tcp/ip,udp+
 
 软件
 ~~~~
@@ -136,7 +133,7 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  IDE:\ `Apple
    Xcode <http://developer.apple.com>`__\ ++/\ `VisualStudio <https://www.visualstudio.com/>`__\ ++/\ `AndroidStudio <http://www.android-studio.org/>`__\ +
 
--  MAKE: make / Cmake / Rake / XMake
+-  MAKE: make / Cmake / Rake / XMake +
 -  `Git <http://git-scm.com>`__\ ++
 -  `Subversion <http://svn.apache.org>`__\ +
 -  `SourceTree(win) <https://www.sourcetreeapp.com/>`__/`Tower(mac) <https://www.git-tower.com/>`__\ ++
@@ -147,8 +144,8 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 
 -  `Sublime Text <http://www.sublimetext.com>`__\ ++
 -  `Vim <http://www.vim.org>`__\ ++
--  `zsh <http://www.zsh.org>`__\ ++
--  `bash <http://www.gnu.org/software/bash/>`__\ ++
+-  `bash <http://www.gnu.org/software/bash/>`__\ ++ /
+   `zsh <http://www.zsh.org>`__\ ++
 -  `WebStorm <http://jetbrains.com/webstorm>`__\ +
 
 -  `Pandoc <http://johnmacfarlane.net/pandoc>`__\ +
