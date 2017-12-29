@@ -46,16 +46,16 @@ utilitydata.job.passes.collected={
   { 5, 0 },
  },
  ["itemgroup:itemize:2"]={
-  { 13, 0 },
+  { 14, 0 },
  },
  ["itemgroup:itemize:3"]={
   { 5, 0 },
  },
  ["itemgroup:itemize:4"]={
-  { 7, 0 },
+  { 14, 0 },
  },
  ["itemgroup:itemize:5"]={
-  { 16, 0 },
+  { 15, 0 },
  },
  ["itemgroup:itemize:6"]={
   { 6, 0 },
@@ -109,7 +109,7 @@ utilitydata.structures.counters.collected={
   { 0 },
  },
  ["itemgroup:itemize"]={
-  { 0, 5, 13, 5, 7, 16, 6 },
+  { 0, 5, 14, 5, 14, 15, 6 },
  },
  ["linenote"]={
   { 0 },
@@ -159,14 +159,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=2,
    ["realpage"]=1,
-   ["reference"]="万金油c图形工程师",
+   ["reference"]="万金油c工程师",
    ["section"]=2,
    ["tag"]=2,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="万金油C++图形工程师",
+   ["title"]="万金油C++工程师",
   },
  },
  {
@@ -295,14 +295,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=10,
    ["realpage"]=2,
-   ["reference"]="主要语言技能",
+   ["reference"]="高级软件开发工程师-在-无锡皓空",
    ["section"]=10,
    ["tag"]=10,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="主要语言技能",
+   ["title"]="{\\bf 高级软件开发工程师} 在 \\useURL [url12][http://www.whitesky.com.cn/][][无锡皓空]\\from [url12]",
   },
  },
  {
@@ -312,14 +312,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=11,
    ["realpage"]=2,
-   ["reference"]="格式类型使用",
+   ["reference"]="主要语言技能",
    ["section"]=11,
    ["tag"]=11,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="格式类型使用",
+   ["title"]="主要语言技能",
   },
  },
  {
@@ -329,14 +329,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=12,
    ["realpage"]=2,
-   ["reference"]="框架",
+   ["reference"]="格式类型使用",
    ["section"]=12,
    ["tag"]=12,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="框架",
+   ["title"]="格式类型使用",
   },
  },
  {
@@ -346,9 +346,26 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=13,
    ["realpage"]=3,
-   ["reference"]="软件",
+   ["reference"]="框架",
    ["section"]=13,
    ["tag"]=13,
+   ["used"]="fit",
+  },
+  ["titledata"]={
+   ["label"]="subsubsection",
+   ["title"]="框架",
+  },
+ },
+ {
+  ["metadata"]=13,
+  ["numberdata"]=31,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=14,
+   ["realpage"]=3,
+   ["reference"]="软件",
+   ["section"]=14,
+   ["tag"]=14,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -358,14 +375,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=31,
+  ["numberdata"]=33,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=14,
-   ["realpage"]=3,
+   ["internal"]=15,
+   ["realpage"]=4,
    ["reference"]="教育",
-   ["section"]=14,
-   ["tag"]=14,
+   ["section"]=15,
+   ["tag"]=15,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -375,14 +392,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=33,
+  ["numberdata"]=35,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=15,
+   ["internal"]=16,
    ["realpage"]=4,
    ["reference"]="兴趣",
-   ["section"]=15,
-   ["tag"]=15,
+   ["section"]=16,
+   ["tag"]=16,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -392,14 +409,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=35,
+  ["numberdata"]=37,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=16,
+   ["internal"]=17,
    ["realpage"]=4,
    ["reference"]="下载",
-   ["section"]=16,
-   ["tag"]=16,
+   ["section"]=17,
+   ["tag"]=17,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -416,29 +433,29 @@ utilitydata.structures.pages.collected={
  {
   ["block"]="bodypart",
   ["number"]=1,
-  ["numberdata"]=36,
-  ["prefixdata"]=37,
+  ["numberdata"]=38,
+  ["prefixdata"]=39,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=2,
-  ["numberdata"]=36,
-  ["prefixdata"]=37,
+  ["numberdata"]=38,
+  ["prefixdata"]=39,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=3,
-  ["numberdata"]=36,
-  ["prefixdata"]=37,
+  ["numberdata"]=38,
+  ["prefixdata"]=39,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=4,
-  ["numberdata"]=36,
-  ["prefixdata"]=37,
+  ["numberdata"]=38,
+  ["prefixdata"]=39,
   ["state"]="start",
  },
 }
@@ -455,8 +472,9 @@ if not utilitydata.structures.references then utilitydata.structures.references 
 utilitydata.structures.references.referred={
  { 1, 1 },
  { 2, 11 },
- { 3, 31 },
- { 4, 57 },
+ { 3, 28 },
+ { 4, 55 },
+ { 4, 65 },
 }
 
 if not utilitydata.job then utilitydata.job = { } end
@@ -656,7 +674,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 5 },
+  { 0, 0, 1, 4, 9 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -666,7 +684,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 6 },
+  { 0, 0, 1, 5 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -676,13 +694,23 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 7 },
+  { 0, 0, 1, 6 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
    ["hidenumber"]=true,
    ["language"]="en",
    ["numbers"]=34,
+   ["separatorset"]="default",
+   ["set"]="all",
+  },
+  { 0, 0, 1, 7 },
+  {
+   ["block"]="bodypart",
+   ["conversionset"]="default",
+   ["hidenumber"]=true,
+   ["language"]="en",
+   ["numbers"]=36,
    ["separatorset"]="default",
    ["set"]="all",
   },

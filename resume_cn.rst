@@ -3,8 +3,8 @@
 
 Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 
-万金油C++图形工程师
--------------------
+万金油C++工程师
+---------------
 
 -  电话: `86-15861657693 <tel://86-15861657693>`__
 -  邮件: tinysilk@hotmail.com
@@ -16,15 +16,22 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 ----
 
 一个有四年开发经验的小司机。
-开发过很多款上线手游项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
+开发过很多款上线ios/android手游项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
+完成过商业化的高度定制的图形显示软件，商业化的人像识别软件。
 
 特长
 ----
 
 能胜任android（java），ios/mac（OC）,win32,linux
 单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
-对openGL web/ES/2.x+管线有良好的掌握度。对3d图形数学有良好的认识和基础。
-长期使用cocos2d-x游戏引擎,基于win32,QT有丰富的C++架构经验，对工具编写也有良好的习惯。
+对openGL
+web/ES/2.x+管线有良好的掌握度。对3d图形数学矩阵运算，线性代数有良好的认识和基础。
+曾长期使用cocos2d-x游戏引擎,对渲染架构和开源渲染框架设计有一定研究
+基于win32,QT有丰富的C++架构经验，对工具编写有良好的习惯。
+opencv下完成过商业的人脸追踪装饰美颜功能，在交叉编译的linux
+arm环境下，对常规滤波，
+能使用CNN训练和采集数据完成分类器制作，对检测和跟踪算法有一定研究。
+neon使用，sse使用以及多线程，GLshader，cuda此类并行优化均有一定采坑经验。
 
 工作经验
 --------
@@ -70,6 +77,16 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 3.完成openGL的图形界面软件，包括传感器信息的展示，量程，摄像机，彩虹色，录像，播放，多路同步分析等等软件框架下的数据基础工作。
 4.上线公司的产品，测试新的软件产物并完成文档。
 
+**高级软件开发工程师** 在 `无锡皓空 <http://www.whitesky.com.cn/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*2017.8 - now*
+
+1.编写嵌入式项目的测试用例，测试代码，厂测文档，协助产品交付。
+2.使用openCV完成人像提取，人像追踪，抠像，叠加等图像算法。
+3.使用可能的手段在低效能的嵌入式产品上提高算法运行效率，使用了neon，多线程等等技术。
+4.查阅相关的大量学术文档，寻找可行性方案。
+
 主要语言技能
 ~~~~~~~~~~~~
 
@@ -79,8 +96,9 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
   +++：相关语言的基本设计模式能够完全应用于实践，能够胜任框架的搭建
 
 -  `C++ <http://www.cplusplus.com/>`__\ +++
--  C++
+-  `C <https://baike.baidu.com/item/c%E8%AF%AD%E8%A8%80/105958?fr=aladdin>`__\ ++
 -  `Lua <http://www.lua.org/>`__\ +++
+-  MAKE: make / Cmake / Rake / XMake /qMake +
 -  `java <https://www.java.com/zh_CN/>`__\ +
 -  `objective-C <https://developer.apple.com/>`__\ +
 -  `C# <https://www.microsoft.com/net/>`__\ ++
@@ -89,7 +107,7 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  `HTML <http://developers.whatwg.org>`__\ +++
 -  `CSS <http://www.w3.org/Style/CSS/Overview.en.html>`__\ ++
 -  `python <https://www.python.org/>`__\ ++
--  `Ruby (Rake) <http://www.ruby-lang.org/zh_cn/>`__\ ++
+-  `Ruby (Rake) <http://www.ruby-lang.org/zh_cn/>`__\ +
 -  `UML <http://www.uml.org/>`__\ ++
 
 格式类型使用
@@ -114,13 +132,21 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
   ++：模块化地学习过，理解框架下原理，能够熟练进行相关优化。
   +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
 
--  `OpenGL （web,ES,glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
--  `OpenCV <http://opencv.org/>`__\ +
+-  `OpenGL
+   （web,ES,glfw/glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
+-  `OpenCV <http://opencv.org/>`__\ (人像，滤波，形态学)++
 -  `QT <https://www.qt.io/>`__\ ++
 -  `Boost (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++
 -  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++
 -  `hexo <https://hexo.io/>`__\ ++
+-  `nuklear <https://github.com/vurtun/nuklear>`__\ +
+-  `PCL <http://pointclouds.org/>`__\ +
 -  `OpenAI <https://www.openai.com/>`__\ +
+-  `jequery <http://jquery.com/>`__\ +
+-  `OpenNI2 <https://github.com/OpenNI/OpenNI>`__\ ++
+-  `libfreenect2 <https://github.com/OpenKinect/libfreenect2>`__\ ++
+-  [CNN]+
+-  `TensorFlow <https://github.com/tensorflow/tensorflow>`__\ +
 
 软件
 ~~~~
@@ -133,7 +159,6 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 -  IDE:\ `Apple
    Xcode <http://developer.apple.com>`__\ ++/\ `VisualStudio <https://www.visualstudio.com/>`__\ ++/\ `AndroidStudio <http://www.android-studio.org/>`__\ +
 
--  MAKE: make / Cmake / Rake / XMake +
 -  `Git <http://git-scm.com>`__\ ++
 -  `Subversion <http://svn.apache.org>`__\ +
 -  `SourceTree(win) <https://www.sourcetreeapp.com/>`__/`Tower(mac) <https://www.git-tower.com/>`__\ ++
