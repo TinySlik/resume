@@ -220,6 +220,7 @@ task :all => [
   "epub:generate",
   "asciidoc:generate",
   "docbook:generate",
+  "pdf_cn:generate",
   "rst_cn:generate",
   "rtf_cn:generate",
   "word_cn:generate",

@@ -46,19 +46,19 @@ utilitydata.job.passes.collected={
   { 5, 0 },
  },
  ["itemgroup:itemize:2"]={
-  { 9, 0 },
+  { 13, 0 },
  },
  ["itemgroup:itemize:3"]={
-  { 6, 0 },
- },
- ["itemgroup:itemize:4"]={
   { 5, 0 },
  },
+ ["itemgroup:itemize:4"]={
+  { 7, 0 },
+ },
  ["itemgroup:itemize:5"]={
-  { 19, 0 },
+  { 16, 0 },
  },
  ["itemgroup:itemize:6"]={
-  { 4, 0 },
+  { 6, 0 },
  },
 }
 
@@ -109,7 +109,7 @@ utilitydata.structures.counters.collected={
   { 0 },
  },
  ["itemgroup:itemize"]={
-  { 0, 5, 9, 6, 5, 19, 4 },
+  { 0, 5, 13, 5, 7, 16, 6 },
  },
  ["linenote"]={
   { 0 },
@@ -118,7 +118,7 @@ utilitydata.structures.counters.collected={
   { 0 },
  },
  ["realpage"]={
-  { 3 },
+  { 4 },
  },
  ["subpage"]={
   { 0 },
@@ -127,7 +127,7 @@ utilitydata.structures.counters.collected={
   { 0 },
  },
  ["userpage"]={
-  { 3 },
+  { 4 },
  },
 }
 
@@ -142,14 +142,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=1,
    ["realpage"]=1,
-   ["reference"]="吴晓",
+   ["reference"]="吴-晓",
    ["section"]=1,
    ["tag"]=1,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="section",
-   ["title"]="吴晓",
+   ["title"]="吴 晓",
   },
  },
  {
@@ -159,14 +159,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=2,
    ["realpage"]=1,
-   ["reference"]="图形工程师",
+   ["reference"]="万金油c图形工程师",
    ["section"]=2,
    ["tag"]=2,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="图形工程师",
+   ["title"]="万金油C++图形工程师",
   },
  },
  {
@@ -193,14 +193,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=4,
    ["realpage"]=1,
-   ["reference"]="技能",
+   ["reference"]="特长",
    ["section"]=4,
    ["tag"]=4,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsection",
-   ["title"]="技能",
+   ["title"]="特长",
   },
  },
  {
@@ -227,14 +227,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=6,
    ["realpage"]=1,
-   ["reference"]="cocos2d-x开发工程师-在-mochang-科技有限公司",
+   ["reference"]="cocos2d-x-开发工程师-在-mochang有限公司",
    ["section"]=6,
    ["tag"]=6,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="{\\bf cocos2d-x开发工程师} 在 \\useURL [url6][https://www.mochang.net/][][MoChang 科技有限公司]\\from [url6]",
+   ["title"]="{\\bf cocos2d-x 开发工程师} 在 \\useURL [url7][https://www.mochang.net/][][MoChang有限公司]\\from [url7]",
   },
  },
  {
@@ -244,14 +244,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=7,
    ["realpage"]=1,
-   ["reference"]="cc开发工程师-在-南京光辉互动网络科技有限公司熊大叔儿童教育",
+   ["reference"]="cc-开发工程师-在-南京光辉互动网络科技有限公司熊大叔儿童教育",
    ["section"]=7,
    ["tag"]=7,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="{\\bf C/C++开发工程师} 在 \\useURL [url7][https://bie-plc.com/][][南京光辉互动网络科技有限公司]\\from [url7]/\\useURL [url8][https://www.biemore.com/zh-cn/index.html][][熊大叔儿童教育]\\from [url8]",
+   ["title"]="{\\bf C/C++ 开发工程师} 在 \\useURL [url8][https://bie-plc.com/][][南京光辉互动网络科技有限公司]\\from [url8]/\\useURL [url9][https://www.biemore.com/zh-cn/index.html][][熊大叔儿童教育]\\from [url9]",
   },
  },
  {
@@ -261,14 +261,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=8,
    ["realpage"]=1,
-   ["reference"]="前端工程师兼培训师-在-南京触控科技办事处",
+   ["reference"]="前端工程师兼职小团队项目管理-在-南京触控科技办事处",
    ["section"]=8,
    ["tag"]=8,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="{\\bf 前端工程师兼培训师} 在 \\useURL [url9][http://www.chukong-inc.com/][][南京触控科技办事处]\\from [url9]",
+   ["title"]="{\\bf 前端工程师兼职小团队项目管理} 在 \\useURL [url10][http://www.chukong-inc.com/][][南京触控科技办事处]\\from [url10]",
   },
  },
  {
@@ -278,14 +278,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=9,
    ["realpage"]=2,
-   ["reference"]="主要语言技能",
+   ["reference"]="opengl工程师兼图形算法工程师-在-无锡威莱斯科技有限公司",
    ["section"]=9,
    ["tag"]=9,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="主要语言技能",
+   ["title"]="{\\bf openGL工程师兼图形算法工程师} 在 \\useURL [url11][http://vless.net/][][无锡威莱斯科技有限公司]\\from [url11]",
   },
  },
  {
@@ -295,14 +295,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=10,
    ["realpage"]=2,
-   ["reference"]="格式类型使用",
+   ["reference"]="主要语言技能",
    ["section"]=10,
    ["tag"]=10,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="格式类型使用",
+   ["title"]="主要语言技能",
   },
  },
  {
@@ -312,14 +312,14 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=11,
    ["realpage"]=2,
-   ["reference"]="框架",
+   ["reference"]="格式类型使用",
    ["section"]=11,
    ["tag"]=11,
    ["used"]="fit",
   },
   ["titledata"]={
    ["label"]="subsubsection",
-   ["title"]="框架",
+   ["title"]="格式类型使用",
   },
  },
  {
@@ -329,9 +329,26 @@ utilitydata.structures.lists.collected={
    ["block"]="bodypart",
    ["internal"]=12,
    ["realpage"]=2,
-   ["reference"]="软件",
+   ["reference"]="框架",
    ["section"]=12,
    ["tag"]=12,
+   ["used"]="fit",
+  },
+  ["titledata"]={
+   ["label"]="subsubsection",
+   ["title"]="框架",
+  },
+ },
+ {
+  ["metadata"]=13,
+  ["numberdata"]=29,
+  ["references"]={
+   ["block"]="bodypart",
+   ["internal"]=13,
+   ["realpage"]=3,
+   ["reference"]="软件",
+   ["section"]=13,
+   ["tag"]=13,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -341,14 +358,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=29,
+  ["numberdata"]=31,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=13,
+   ["internal"]=14,
    ["realpage"]=3,
    ["reference"]="教育",
-   ["section"]=13,
-   ["tag"]=13,
+   ["section"]=14,
+   ["tag"]=14,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -358,14 +375,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=31,
+  ["numberdata"]=33,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=14,
-   ["realpage"]=3,
+   ["internal"]=15,
+   ["realpage"]=4,
    ["reference"]="兴趣",
-   ["section"]=14,
-   ["tag"]=14,
+   ["section"]=15,
+   ["tag"]=15,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -375,14 +392,14 @@ utilitydata.structures.lists.collected={
  },
  {
   ["metadata"]=4,
-  ["numberdata"]=33,
+  ["numberdata"]=35,
   ["references"]={
    ["block"]="bodypart",
-   ["internal"]=15,
-   ["realpage"]=3,
+   ["internal"]=16,
+   ["realpage"]=4,
    ["reference"]="下载",
-   ["section"]=15,
-   ["tag"]=15,
+   ["section"]=16,
+   ["tag"]=16,
    ["used"]="fit",
   },
   ["titledata"]={
@@ -399,22 +416,29 @@ utilitydata.structures.pages.collected={
  {
   ["block"]="bodypart",
   ["number"]=1,
-  ["numberdata"]=34,
-  ["prefixdata"]=35,
+  ["numberdata"]=36,
+  ["prefixdata"]=37,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=2,
-  ["numberdata"]=34,
-  ["prefixdata"]=35,
+  ["numberdata"]=36,
+  ["prefixdata"]=37,
   ["state"]="start",
  },
  {
   ["block"]="bodypart",
   ["number"]=3,
-  ["numberdata"]=34,
-  ["prefixdata"]=35,
+  ["numberdata"]=36,
+  ["prefixdata"]=37,
+  ["state"]="start",
+ },
+ {
+  ["block"]="bodypart",
+  ["number"]=4,
+  ["numberdata"]=36,
+  ["prefixdata"]=37,
   ["state"]="start",
  },
 }
@@ -430,10 +454,9 @@ if not utilitydata.structures.references then utilitydata.structures.references 
 
 utilitydata.structures.references.referred={
  { 1, 1 },
- { 2, 19 },
- { 2, 30 },
- { 3, 39 },
- { 3, 50 },
+ { 2, 11 },
+ { 3, 31 },
+ { 4, 57 },
 }
 
 if not utilitydata.job then utilitydata.job = { } end
@@ -623,7 +646,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 5 },
+  { 0, 0, 1, 4, 8 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -633,7 +656,7 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 6 },
+  { 0, 0, 1, 5 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
@@ -643,13 +666,23 @@ utilitydata.job.packed={
    ["separatorset"]="default",
    ["set"]="all",
   },
-  { 0, 0, 1, 7 },
+  { 0, 0, 1, 6 },
   {
    ["block"]="bodypart",
    ["conversionset"]="default",
    ["hidenumber"]=true,
    ["language"]="en",
    ["numbers"]=32,
+   ["separatorset"]="default",
+   ["set"]="all",
+  },
+  { 0, 0, 1, 7 },
+  {
+   ["block"]="bodypart",
+   ["conversionset"]="default",
+   ["hidenumber"]=true,
+   ["language"]="en",
+   ["numbers"]=34,
    ["separatorset"]="default",
    ["set"]="all",
   },
