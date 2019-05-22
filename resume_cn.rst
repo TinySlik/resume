@@ -15,23 +15,22 @@ Maybe you need my `English resume <http://tinyslik.github.io/resume>`__
 简介
 ----
 
-一个有四年开发经验的小司机。
+一个有5年开发经验的司机。
 开发过很多款上线ios/android手游项目，上架了appStroe，googlePlay以及国内大量的杂鱼渠道；
-完成过商业化的高度定制的图形显示软件，商业化的人像识别软件。
+独立完成过商业化的高度定制的图形显示软件，商业化的人像识别软件。
 
 特长
 ----
 
 能胜任android（java），ios/mac（OC）,win32,linux
-单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发；
-对openGL
-web/ES/2.x+管线有良好的掌握度。对3d图形数学矩阵运算，线性代数有良好的认识和基础。
+单平台或者跨平台C++的开发工作，对css，html5，js均有良好的掌握度，能够进行前端开发
 曾长期使用cocos2d-x游戏引擎,对渲染架构和开源渲染框架设计有一定研究
 基于win32,QT有丰富的C++架构经验，对工具编写有良好的习惯。
 opencv下完成过商业的人脸追踪装饰美颜功能，在交叉编译的linux
-arm环境下，对常规滤波，
-能使用CNN训练和采集数据完成分类器制作，对检测和跟踪算法有一定研究。
-neon使用，sse使用以及多线程，GLshader，cuda此类并行优化均有一定采坑经验。
+arm环境下，对常规滤波，neon使用，sse使用以及多线程，GLshader，cuda此类并行优化均有一定采坑经验。
+slam的调试落地自适配等工作。并使用dlib，kcf和cnn的分类器完成过商业的人脸识别和追踪，并使用gl的画布添加了美颜，大眼的功能。
+参与多款双目相机，tof相机的sdk开发和维护，对点云计算和标定有一定经验。
+嵌入式产品的内网调试页面，调试协议，http，tcp，ginix均具备独立开发使用的能力
 
 工作经验
 --------
@@ -80,12 +79,21 @@ neon使用，sse使用以及多线程，GLshader，cuda此类并行优化均有�
 **高级软件开发工程师** 在 `无锡皓空 <http://www.whitesky.com.cn/>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-*2017.8 - now*
+*2017.8 - 2018.5*
 
 1.编写嵌入式项目的测试用例，测试代码，厂测文档，协助产品交付。
 2.使用openCV完成人像提取，人像追踪，抠像，叠加等图像算法。
 3.使用可能的手段在低效能的嵌入式产品上提高算法运行效率，使用了neon，多线程等等技术。
 4.查阅相关的大量学术文档，寻找可行性方案。
+
+**高级软件开发工程师** 在 `小觅智能 <http://www.myntai.com/>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*2018.6 - now*
+
+1. 面向公司的双目摄像机产品线sdk部分，负责一部分双目产品的研发和迭代，在团队中主要负责ROS节点，算法模型移植优化，标定模型移植，部分跨平台的功能开发和迭代，主要语言C++。
+   2.架构扫地机的本地/远端3方网络通信自定义协议，内网页面服务.
+   3.vins-mono，vins-fusion，orb-slam，viorb等开源算法的调教测试，独立开发维护
 
 主要语言技能
 ~~~~~~~~~~~~
@@ -130,23 +138,21 @@ neon使用，sse使用以及多线程，GLshader，cuda此类并行优化均有�
 | 注\*：
 | +：使用过，了接口用法，能够快速使用。
   ++：模块化地学习过，理解框架下原理，能够熟练进行相关优化。
-  +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
-
--  `OpenGL
-   （web,ES,glfw/glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
--  `OpenCV <http://opencv.org/>`__\ (人像，滤波，形态学)++
--  `QT <https://www.qt.io/>`__\ ++
--  `Boost (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++
--  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++
--  `hexo <https://hexo.io/>`__\ ++
--  `nuklear <https://github.com/vurtun/nuklear>`__\ +
--  `PCL <http://pointclouds.org/>`__\ +
--  `OpenAI <https://www.openai.com/>`__\ +
--  `jequery <http://jquery.com/>`__\ +
--  `OpenNI2 <https://github.com/OpenNI/OpenNI>`__\ ++
--  `libfreenect2 <https://github.com/OpenKinect/libfreenect2>`__\ ++
--  [CNN]+
--  `TensorFlow <https://github.com/tensorflow/tensorflow>`__\ +
+  +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。 -
+  `ROS <http://www.ros.org/>`__\ ++ - `OpenGL
+  （web,ES,glfw/glut,glew,glsl…） <https://www.opengl.org/>`__\ ++ -
+  `OpenCV <http://opencv.org/>`__\ (人像，滤波，形态学)++ -
+  `QT <https://www.qt.io/>`__\ ++ - `Boost
+  (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++ -
+  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++ -
+  `hexo <https://hexo.io/>`__\ ++ -
+  `nuklear <https://github.com/vurtun/nuklear>`__\ + -
+  `PCL <http://pointclouds.org/>`__\ + -
+  `OpenAI <https://www.openai.com/>`__\ + -
+  `jequery <http://jquery.com/>`__\ + -
+  `OpenNI2 <https://github.com/OpenNI/OpenNI>`__\ ++ -
+  `libfreenect2 <https://github.com/OpenKinect/libfreenect2>`__\ ++ -
+  [CNN]+ - `TensorFlow <https://github.com/tensorflow/tensorflow>`__\ +
 
 软件
 ~~~~
