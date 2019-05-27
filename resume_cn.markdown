@@ -128,7 +128,8 @@ slam的调试落地自适配等工作。并使用dlib，kcf和cnn的分类器完
 注*：  
 +：使用过，了接口用法，能够快速使用。
 ++：模块化地学习过，理解框架下原理，能够熟练进行相关优化。
-+++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
++++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。   
+
 - [ROS](http://www.ros.org/)++
 - [OpenGL （web,ES,glfw/glut,glew,glsl…）](https://www.opengl.org/)++
 - [OpenCV](http://opencv.org/)(人像，滤波，形态学)++
@@ -161,15 +162,16 @@ slam的调试落地自适配等工作。并使用dlib，kcf和cnn的分类器完
 - [Mac OS X](http://apple.com/macosx)++/[Ubuntu Linux](http://ubuntu.com)++
 
 - [Sublime Text](http://www.sublimetext.com)++
+- [VSCode](https://code.visualstudio.com/)+++
 - [Vim](http://www.vim.org)++
-- [bash](http://www.gnu.org/software/bash/)++ / [zsh](http://www.zsh.org)++
+- [bash](http://www.gnu.org/software/bash/)++ / [zsh](http://www.zsh.org)+++
 - [WebStorm](http://jetbrains.com/webstorm)+
 
-- [Pandoc](http://johnmacfarlane.net/pandoc)+
+- [Pandoc](http://johnmacfarlane.net/pandoc)++
 - [Doxygen](https://github.com/doxygen/doxygen)+
 - [Latex](http://www.latex-project.org/)+
 
-- [Nginx](http://wiki.nginx.org)+
+- [Nginx](http://wiki.nginx.org)++
 - [MySQL](http://mysql.com)+
 
 教育

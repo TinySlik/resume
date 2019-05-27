@@ -138,21 +138,24 @@ slam的调试落地自适配等工作。并使用dlib，kcf和cnn的分类器完
 | 注\*：
 | +：使用过，了接口用法，能够快速使用。
   ++：模块化地学习过，理解框架下原理，能够熟练进行相关优化。
-  +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。 -
-  `ROS <http://www.ros.org/>`__\ ++ - `OpenGL
-  （web,ES,glfw/glut,glew,glsl…） <https://www.opengl.org/>`__\ ++ -
-  `OpenCV <http://opencv.org/>`__\ (人像，滤波，形态学)++ -
-  `QT <https://www.qt.io/>`__\ ++ - `Boost
-  (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++ -
-  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++ -
-  `hexo <https://hexo.io/>`__\ ++ -
-  `nuklear <https://github.com/vurtun/nuklear>`__\ + -
-  `PCL <http://pointclouds.org/>`__\ + -
-  `OpenAI <https://www.openai.com/>`__\ + -
-  `jequery <http://jquery.com/>`__\ + -
-  `OpenNI2 <https://github.com/OpenNI/OpenNI>`__\ ++ -
-  `libfreenect2 <https://github.com/OpenKinect/libfreenect2>`__\ ++ -
-  [CNN]+ - `TensorFlow <https://github.com/tensorflow/tensorflow>`__\ +
+  +++：查看学习过框架源码，修改框架内部实现并商用化过相关的代码。
+
+-  `ROS <http://www.ros.org/>`__\ ++
+-  `OpenGL
+   （web,ES,glfw/glut,glew,glsl…） <https://www.opengl.org/>`__\ ++
+-  `OpenCV <http://opencv.org/>`__\ (人像，滤波，形态学)++
+-  `QT <https://www.qt.io/>`__\ ++
+-  `Boost (shared\_ptr,λ,tuple,thread…) <http://www.boost.org/>`__\ ++
+-  `Cocos2d-x <http://www.cocos2d-x.org/>`__\ +++
+-  `hexo <https://hexo.io/>`__\ ++
+-  `nuklear <https://github.com/vurtun/nuklear>`__\ +
+-  `PCL <http://pointclouds.org/>`__\ +
+-  `OpenAI <https://www.openai.com/>`__\ +
+-  `jequery <http://jquery.com/>`__\ +
+-  `OpenNI2 <https://github.com/OpenNI/OpenNI>`__\ ++
+-  `libfreenect2 <https://github.com/OpenKinect/libfreenect2>`__\ ++
+-  [CNN]+
+-  `TensorFlow <https://github.com/tensorflow/tensorflow>`__\ +
 
 软件
 ~~~~
@@ -174,16 +177,17 @@ slam的调试落地自适配等工作。并使用dlib，kcf和cnn的分类器完
    Linux <http://ubuntu.com>`__\ ++
 
 -  `Sublime Text <http://www.sublimetext.com>`__\ ++
+-  `VSCode <https://code.visualstudio.com/>`__\ +++
 -  `Vim <http://www.vim.org>`__\ ++
 -  `bash <http://www.gnu.org/software/bash/>`__\ ++ /
-   `zsh <http://www.zsh.org>`__\ ++
+   `zsh <http://www.zsh.org>`__\ +++
 -  `WebStorm <http://jetbrains.com/webstorm>`__\ +
 
--  `Pandoc <http://johnmacfarlane.net/pandoc>`__\ +
+-  `Pandoc <http://johnmacfarlane.net/pandoc>`__\ ++
 -  `Doxygen <https://github.com/doxygen/doxygen>`__\ +
 -  `Latex <http://www.latex-project.org/>`__\ +
 
--  `Nginx <http://wiki.nginx.org>`__\ +
+-  `Nginx <http://wiki.nginx.org>`__\ ++
 -  `MySQL <http://mysql.com>`__\ +
 
 教育
