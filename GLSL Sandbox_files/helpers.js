@@ -42,26 +42,26 @@ function load_url_code() {
 		var list=new Array(
 			//'sea',
 			//'vertigo',
-			'bunge bedstraw herb',
+			// 'bunge bedstraw herb',
 			//'ripple',
 			//'tree',
-			'more hexagon stuff 1',
-			'more hexagon stuff 2',
-			'cole kissane',
-			'pillar',
+			// 'more hexagon stuff 1',
+			// 'more hexagon stuff 2',
+			// 'cole kissane',
+			// 'pillar',
 			//'cement flower',
 			//'electricty country',
-			'beautiful wait',
+			// 'beautiful wait',
 			//'old wall',
-			'color lines',
-			'toon cloud',
-			'small flower',
+			// 'color lines',
+			// 'toon cloud',
+			// 'small flower',
 			//'big tree',
 			'cloud',
-			'rubiks cube',
+			// 'rubiks cube',
 			//'shui long tou',
 			//'sunset',
-			'paint'
+			// 'paint'
 			//'balls'
 			//'colorful voronoi'
 			);
