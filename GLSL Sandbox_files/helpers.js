@@ -54,14 +54,14 @@ function load_url_code() {
 			// 'beautiful wait',
 			//'old wall',
 			// 'color lines',
-			// 'toon cloud',
+			'toon cloud',
 			// 'small flower',
 			//'big tree',
-			'cloud',
+			// 'cloud',
 			// 'rubiks cube',
 			//'shui long tou',
 			//'sunset',
-			// 'paint'
+			'paint'
 			//'balls'
 			//'colorful voronoi'
 			);
